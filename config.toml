@@ -36,7 +36,7 @@ googleAnalytics = "UA-XXXXXXX-Y"
 
     [params.contact]
         enable = true
-        location = "New York"
+        location = "India"
 
         [[params.contact.list]]
         icon = "fas fa-phone-square"
