@@ -2,12 +2,12 @@
   <img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif" width="30"/> Hola, I'm Valerian.
 </h1>
 
-<p>Software developer from <b>Mumbai, India</b> — I build developer tooling, small CLIs, GitHub Actions and voice apps. Most of what's here started as "this chore should automate itself".</p>
+<p>I lead the <b>Data team at BookMyShow</b>, from <b>Mumbai, India</b>. Off the clock I build developer tooling, small CLIs, GitHub Actions and voice apps — most of it started as "this chore should automate itself".</p>
 
-<a href="mailto:valerianpereira25@gmail.com?subject=%5BGitHub%5D%20%F0%9F%94%A5Contact&body=Hello%20Valerian%2C%0D%0A%0D%0AI've%20seen%20your%20Github%20Profile%2C%20I%20want%20to"><img src="https://img.shields.io/badge/-D14836?style=flat-square&logo=gmail&logoColor=white" height="22" /></a>
-<a href="https://linkedin.com/in/valerianpereira"><img src="https://img.shields.io/badge/-0077B5?style=flat-square&logo=linkedin&logoColor=white" height="22" /></a>
-<a href="https://x.com/valerianper_era"><img src="https://img.shields.io/badge/-000000?style=flat-square&logo=x&logoColor=white" height="22" /></a>
-<a href="https://valerianpereira.in"><img src="https://img.shields.io/badge/-4B32C3?style=flat-square&logo=hugo&logoColor=white" height="22" /></a>
+[![Email](https://img.shields.io/badge/-valerianpereira25@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:valerianpereira25@gmail.com?subject=%5BGitHub%5D%20%F0%9F%94%A5Contact&body=Hello%20Valerian%2C%0D%0A%0D%0AI've%20seen%20your%20Github%20Profile%2C%20I%20want%20to)
+[![LinkedIn](https://img.shields.io/badge/-Valerian_Pereira-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/valerianpereira)
+[![X](https://img.shields.io/badge/-@valerianper__era-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/valerianper_era)
+[![Website](https://img.shields.io/badge/-valerianpereira.in-4B32C3?style=flat-square&logo=hugo&logoColor=white)](https://valerianpereira.in)
 
 ## 🧰 Stack
 
@@ -38,3 +38,15 @@ Plus a shelf of Alexa skills for the fun of it — [movieBuzz](https://github.co
   <a href="https://github.com/valerianpereira?tab=followers"><img src="https://img.shields.io/github/followers/valerianpereira?style=flat-square&logo=github&logoColor=white&color=181717&labelColor=181717" /></a>
   <a href="https://github.com/valerianpereira/backup-action"><img src="https://img.shields.io/github/stars/valerianpereira/backup-action?style=flat-square&logo=github&logoColor=white&color=181717&labelColor=181717&label=backup-action" /></a>
 </p>
+
+---
+
+<details>
+<summary>Random facts</summary>
+
+- Day job is data at scale; night job is a 40-line shell script that saves me five minutes a week
+- Every CLI here exists because I got tired of opening a browser tab
+- `backup-action` started as a cron job on one server, now it runs on other people's
+- Powered by cutting chai, not coffee
+
+</details>
