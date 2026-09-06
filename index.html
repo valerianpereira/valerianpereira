@@ -1,516 +1,646 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
-
 <head>
-	<meta name="generator" content="Hugo 0.56.0" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valerian Pereira — Head of Data Platform, BookMyShow</title>
+<meta name="description" content="Valerian Pereira leads the Data Platform team at BookMyShow in Mumbai. Fifteen years building data infrastructure, APIs and developer tooling.">
+<link rel="canonical" href="https://valerianpereira.in/">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Valerian Pereira — Head of Data Platform, BookMyShow">
+<meta property="og:description" content="Data platform at scale by day, small command-line tools by night. Mumbai, India.">
+<meta property="og:url" content="https://valerianpereira.in/">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/5975506?v=4">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#15121C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%2315121C'/><path d='M22 28h16l12 34 12-34h16L58 76H42z' fill='%23FFB627'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --house:#15121C;
+  --stage:#1F1A2B;
+  --riser:#282137;
+  --edge:#372E4B;
+  --type:#EFEAF6;
+  --dim:#9E94B4;
+  --bulb:#FFB627;
+  --rose:#FF5C8A;
+  --gut:clamp(1.25rem,5vw,2.5rem);
+  --col:64rem;
+  --nav-h:60px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 1.5rem);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--house);color:var(--type);
+  font:400 1rem/1.7 "IBM Plex Sans",ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+/* auditorium wash — two dim marquee lamps, no motion */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(48rem 30rem at 12% -8%, rgba(255,182,39,.10), transparent 68%),
+    radial-gradient(40rem 28rem at 92% 4%, rgba(255,92,138,.09), transparent 66%);
+}
+.shell{position:relative;z-index:1}
+.col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
+a{color:var(--type)}
+h1,h2,h3{margin:0;font-family:Archivo,"Arial Black",system-ui,sans-serif;font-variation-settings:"wdth" 125;line-height:.92}
+p{margin:0}
+::selection{background:var(--bulb);color:var(--house)}
+:focus-visible{outline:2px solid var(--bulb);outline-offset:3px;border-radius:2px}
 
-    
-    <title></title>
+/* ─────────── nav ─────────── */
+.nav{
+  position:sticky;top:0;z-index:40;height:var(--nav-h);
+  background:rgba(21,18,28,.78);backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--edge);
+}
+.nav .col{height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.mark{
+  display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:600;
+  font-size:.9375rem;letter-spacing:.01em;
+}
+.mark b{
+  font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-weight:800;
+  background:var(--bulb);color:var(--house);width:26px;height:26px;border-radius:5px;
+  display:grid;place-items:center;font-size:.9rem;flex:none;
+}
+.mark span{color:var(--dim);font-weight:400}
+.menu{display:flex;align-items:center;gap:.25rem;position:relative}
+.menu a{
+  position:relative;padding:.45rem .7rem;text-decoration:none;color:var(--dim);
+  font-size:.875rem;transition:color .18s ease;border-radius:6px;
+}
+.menu a:hover{color:var(--type)}
+.menu a[aria-current]{color:var(--type)}
+.ink{
+  position:absolute;bottom:-2px;height:2px;background:var(--bulb);border-radius:2px;
+  transition:transform .34s cubic-bezier(.6,.05,.2,1),width .34s cubic-bezier(.6,.05,.2,1),opacity .2s;
+  opacity:0;left:0;width:0;box-shadow:0 0 12px rgba(255,182,39,.7);
+}
+.burger{
+  display:none;width:40px;height:36px;border:1px solid var(--edge);border-radius:8px;
+  background:transparent;cursor:pointer;padding:0;place-items:center;
+}
+.burger i{display:block;width:16px;height:1.5px;background:var(--type);position:relative;transition:background .2s}
+.burger i::before,.burger i::after{
+  content:"";position:absolute;left:0;width:16px;height:1.5px;background:var(--type);
+  transition:transform .28s cubic-bezier(.6,.05,.2,1);
+}
+.burger i::before{transform:translateY(-5px)}
+.burger i::after{transform:translateY(5px)}
+.burger[aria-expanded=true] i{background:transparent}
+.burger[aria-expanded=true] i::before{transform:rotate(45deg)}
+.burger[aria-expanded=true] i::after{transform:rotate(-45deg)}
 
-    
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DevResume - Bootstrap 4 Resume/CV Template For Software Developers">
-    <meta name="author" content="Valerian Pereira">
+/* ─────────── hero ─────────── */
+.hero{padding:clamp(3rem,9vw,6rem) 0 clamp(3rem,7vw,5rem)}
+.ticket{
+  display:grid;grid-template-columns:1fr 13.5rem;
+  background:linear-gradient(158deg,var(--stage),#1A1626);
+  border:1px solid var(--edge);border-radius:14px;position:relative;
+  box-shadow:0 30px 80px -40px #000;
+}
+.ticket::after{ /* sheen */
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.045) 50%,transparent 58%);
+}
+.stub{padding:clamp(1.5rem,4vw,2.75rem)}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:.6875rem;letter-spacing:.18em;
+  color:var(--dim);display:flex;justify-content:space-between;gap:1rem;
+}
+.stamp{
+  display:inline-block;color:var(--bulb);border:1.5px solid var(--bulb);
+  padding:.1rem .45rem;border-radius:3px;transform:rotate(-4deg);
+}
+h1{
+  font-size:clamp(2.9rem,10.5vw,5.75rem);font-weight:800;letter-spacing:-.015em;
+  margin:1.5rem 0 0;
+}
+h1 .line{display:block;overflow:hidden}
+h1 .line em{display:block;font-style:normal}
+h1 .rose{color:var(--rose)}
+.title{
+  margin-top:1.25rem;font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:500;line-height:1.35;
+}
+.title s{text-decoration:none;color:var(--bulb)}
+.lede{margin-top:1.25rem;color:var(--dim);max-width:44ch}
+.cta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
+.btn{
+  text-decoration:none;font-size:.875rem;font-weight:500;padding:.55rem 1.05rem;
+  border-radius:8px;border:1px solid var(--edge);color:var(--type);
+  transition:border-color .2s ease,color .2s ease,background .2s ease;
+}
+.btn:hover{border-color:var(--bulb);color:var(--bulb)}
+.btn.solid{background:var(--bulb);border-color:var(--bulb);color:var(--house);font-weight:600}
+.btn.solid:hover{background:#FFC64A;color:var(--house)}
 
-    <link rel="shortcut icon" href="favicon.ico">
+/* counterfoil */
+.foil{
+  border-left:2px dashed var(--edge);padding:clamp(1.5rem,4vw,2.75rem) 1.5rem;
+  display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem;
+  background:rgba(0,0,0,.16);
+}
+.ticket > .notch{position:absolute;left:calc(100% - 13.5rem);width:18px;height:18px;border-radius:50%;background:var(--house);border:1px solid var(--edge);transform:translateX(-9px);z-index:2}
+.ticket > .notch.t{top:-9px;clip-path:inset(0 0 45% 0)}
+.ticket > .notch.b{bottom:-9px;clip-path:inset(45% 0 0 0)}
+.fact dt{font-family:"IBM Plex Mono",monospace;font-size:.625rem;letter-spacing:.16em;color:var(--dim);margin:0}
+.fact dd{
+  margin:.15rem 0 0;font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;
+  font-weight:800;font-size:1.75rem;line-height:1;
+}
+.fact + .fact{margin-top:1.4rem}
+.fact .u{font-size:.75rem;color:var(--dim);font-weight:500;margin-left:.25rem;font-variation-settings:"wdth" 100;letter-spacing:.02em}
+.serial{font-family:"IBM Plex Mono",monospace;font-size:.625rem;letter-spacing:.14em;color:var(--dim)}
 
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
-    
-    
-    <link rel="stylesheet" href="http://valerianpereira.in/assets/css/devresume.min.274586ff8c1244f9474830351646ffe36b21d080d4dff84291cf4908879ed243.css">
+/* ─────────── sections ─────────── */
+section{padding:clamp(3.5rem,8vw,6rem) 0;position:relative}
+section + section{border-top:1px solid var(--edge)}
+h2{
+  font-size:clamp(1.75rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:.9rem;margin-bottom:2.5rem;
+}
+h2 .n{
+  font-family:"IBM Plex Mono",monospace;font-size:.6875rem;font-weight:400;
+  color:var(--bulb);letter-spacing:.14em;
+}
 
+/* showtimes board */
+.venue + .venue{margin-top:3rem}
+.venue > h3{
+  font-size:1.5rem;font-weight:800;display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;
+}
+.venue > h3 .run{
+  font-family:"IBM Plex Mono",monospace;font-size:.75rem;font-weight:400;
+  color:var(--bulb);font-variation-settings:"wdth" 100;letter-spacing:.06em;
+}
+.venue > p{color:var(--dim);font-size:.9375rem;margin-top:.4rem}
+.board{list-style:none;margin:1.5rem 0 0;padding:0}
+.board li{padding:1rem 0;border-top:1px solid var(--edge)}
+.board li:first-child{border-top:0}
+.row{display:flex;align-items:baseline;gap:.75rem}
+.row .what{font-weight:600;font-size:1.0625rem;flex:none;max-width:74%}
+.row .dots{
+  flex:1;height:1px;min-width:1.5rem;position:relative;overflow:hidden;
+}
+.row .dots::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.22) 1px,transparent 1.2px);
+  background-size:6px 6px;background-position:0 50%;
+  transform:scaleX(0);transform-origin:left;
+}
+.reveal .dots::before{animation:draw .7s cubic-bezier(.4,0,.2,1) forwards}
+.reveal li:nth-child(2) .dots::before{animation-delay:.08s}
+.reveal li:nth-child(3) .dots::before{animation-delay:.16s}
+.reveal li:nth-child(4) .dots::before{animation-delay:.24s}
+.reveal li:nth-child(5) .dots::before{animation-delay:.32s}
+@keyframes draw{to{transform:scaleX(1)}}
+.row .when{
+  font-family:"IBM Plex Mono",monospace;font-size:.8125rem;color:var(--dim);
+  white-space:nowrap;flex:none;
+}
+.board .now .what::after{
+  content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--bulb);margin-left:.55rem;vertical-align:middle;
+  box-shadow:0 0 0 0 rgba(255,182,39,.6);animation:pulse 2.4s ease-out infinite;
+}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(255,182,39,0)}100%{box-shadow:0 0 0 0 rgba(255,182,39,0)}}
+.board .note{margin-top:.5rem;color:var(--dim);font-size:.9375rem;max-width:62ch}
 
+/* builds — small stubs */
+.builds{list-style:none;margin:0;padding:0;display:grid;gap:.75rem;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr))}
+.build{
+  position:relative;background:var(--stage);border:1px solid var(--edge);
+  border-radius:10px;padding:1.15rem 1.25rem 1.15rem 1.6rem;
+  transition:border-color .22s ease,transform .22s cubic-bezier(.4,0,.2,1),background .22s ease;
+}
+.build::before{ /* tear edge */
+  content:"";position:absolute;left:.55rem;top:.9rem;bottom:.9rem;width:2px;
+  background-image:linear-gradient(var(--edge) 3px,transparent 3px);background-size:2px 7px;
+  transition:background-image .22s ease;
+}
+.build:hover{transform:translateY(-3px);border-color:var(--bulb);background:var(--riser)}
+.build:hover::before{background-image:linear-gradient(var(--bulb) 3px,transparent 3px)}
+.build a{text-decoration:none;font-weight:600;font-size:1.0625rem}
+.build a::after{content:"";position:absolute;inset:0}
+.build .meta{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-top:.1rem}
+.build .tech{font-family:"IBM Plex Mono",monospace;font-size:.6875rem;color:var(--dim);letter-spacing:.06em}
+.build .stars{font-family:"IBM Plex Mono",monospace;font-size:.6875rem;color:var(--bulb)}
+.build p{margin-top:.5rem;color:var(--dim);font-size:.9375rem;line-height:1.6}
+.build code{font-family:"IBM Plex Mono",monospace;font-size:.85em;color:var(--type);background:rgba(255,255,255,.05);padding:.05em .35em;border-radius:4px}
+.more{display:inline-block;margin-top:1.5rem;font-size:.9375rem;color:var(--bulb);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.more:hover{border-color:var(--bulb)}
+
+/* stack */
+.rack{display:grid;gap:1.75rem 2.5rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.rack h3{font-family:"IBM Plex Mono",monospace;font-variation-settings:normal;font-size:.6875rem;font-weight:500;letter-spacing:.16em;color:var(--bulb);margin-bottom:.85rem}
+.rack ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.rack li{
+  font-size:.8125rem;color:var(--dim);border:1px solid var(--edge);
+  border-radius:6px;padding:.22rem .6rem;transition:color .18s,border-color .18s;
+}
+.rack li:hover{color:var(--type);border-color:var(--dim)}
+
+/* credits */
+.credits{display:grid;gap:1.75rem 2.5rem;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr))}
+.credits h3{font-size:1.0625rem;font-weight:800;font-variation-settings:"wdth" 110}
+.credits p{color:var(--dim);font-size:.9375rem;margin-top:.25rem}
+.credits .yr{font-family:"IBM Plex Mono",monospace;font-size:.8125rem}
+
+/* contact */
+.close{display:grid;gap:2rem;grid-template-columns:1.3fr 1fr;align-items:start}
+.close p{color:var(--dim);max-width:46ch}
+.close .big{
+  font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-weight:800;
+  font-size:clamp(1.5rem,4vw,2.25rem);color:var(--type);line-height:1.05;margin-bottom:1rem;
+}
+.close a.mailto{color:var(--bulb);text-decoration:none;border-bottom:1px solid rgba(255,182,39,.4)}
+.close a.mailto:hover{border-bottom-color:var(--bulb)}
+.elsewhere{list-style:none;margin:0;padding:0}
+.elsewhere li{border-top:1px solid var(--edge)}
+.elsewhere a{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.8rem 0;text-decoration:none;color:var(--dim);font-size:.9375rem;
+  transition:color .2s ease,padding-left .2s ease;
+}
+.elsewhere a:hover{color:var(--type);padding-left:.4rem}
+.elsewhere .h{font-family:"IBM Plex Mono",monospace;font-size:.75rem}
+.elsewhere a:hover .h{color:var(--bulb)}
+
+footer{border-top:1px solid var(--edge);padding:1.75rem 0 3rem;color:var(--dim);font-size:.8125rem}
+footer .col{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer .serial{color:#6C6386}
+
+/* ─────────── load sequence ─────────── */
+.js h1 .line em{transform:translateY(105%);animation:rise .78s cubic-bezier(.16,.84,.28,1) forwards}
+.js h1 .line:nth-child(2) em{animation-delay:.08s}
+@keyframes rise{to{transform:translateY(0)}}
+.js .stamp{opacity:0;animation:thud .42s cubic-bezier(.2,1.5,.4,1) .5s forwards}
+@keyframes thud{
+  0%{opacity:0;transform:rotate(-14deg) scale(1.9)}
+  100%{opacity:1;transform:rotate(-4deg) scale(1)}
+}
+.js .foil,.js .title,.js .lede,.js .cta{opacity:0;animation:settle .6s ease .62s forwards}
+.js .title{animation-delay:.34s}
+.js .lede{animation-delay:.44s}
+.js .cta{animation-delay:.54s}
+@keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ─────────── responsive ─────────── */
+@media (max-width:52rem){
+  .ticket{grid-template-columns:1fr}
+  .foil{border-left:0;border-top:2px dashed var(--edge);flex-direction:row;flex-wrap:wrap;align-items:flex-end}
+  .ticket > .notch{display:none}
+  .fact + .fact{margin-top:0}
+  .close{grid-template-columns:1fr}
+}
+@media (max-width:44rem){
+  .burger{display:grid}
+  .menu{
+    position:fixed;inset:var(--nav-h) 0 auto;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--house);border-bottom:1px solid var(--edge);padding:.5rem var(--gut) 1.25rem;
+    transform:translateY(-8px);opacity:0;visibility:hidden;
+    transition:opacity .22s ease,transform .28s cubic-bezier(.4,0,.2,1),visibility .28s;
+  }
+  .menu[data-open=true]{opacity:1;visibility:visible;transform:none}
+  .menu a{padding:.85rem .25rem;font-size:1.0625rem;border-bottom:1px solid var(--edge);border-radius:0;
+    opacity:0;transform:translateY(-6px);}
+  .menu[data-open=true] a{animation:drop .3s ease forwards}
+  .menu[data-open=true] a:nth-child(2){animation-delay:.04s}
+  .menu[data-open=true] a:nth-child(3){animation-delay:.08s}
+  .menu[data-open=true] a:nth-child(4){animation-delay:.12s}
+  .menu[data-open=true] a:nth-child(5){animation-delay:.16s}
+  @keyframes drop{to{opacity:1;transform:none}}
+  .ink{display:none}
+  .row{flex-wrap:wrap}
+  .row .what{max-width:100%}
+  .row .dots{display:none}
+  .row .when{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}
+  .js h1 .line em,.js .stamp,.js .foil,.js .title,.js .lede,.js .cta{opacity:1;transform:none}
+  .row .dots::before{transform:scaleX(1)}
+}
+@media print{
+  body::before,.nav,.cta,.build::before,.more{display:none}
+  body{background:#fff;color:#000}
+  .ticket,.build{border-color:#bbb;background:#fff;box-shadow:none}
+  .foil{background:#fff;border-color:#bbb}
+  h1,h2,h3,.fact dd,.build a{color:#000}
+  .row .dots::before{transform:scaleX(1)}
+  section{break-inside:avoid;border-color:#ddd}
+}
+</style>
 </head>
-
 <body>
-
-    <div class="main-wrapper">
-
-        <div class="container px-3 px-lg-5">
-
-            <article class="resume-wrapper mx-auto theme-bg-light p-5 mb-5 my-5 shadow-lg">
-
-                
-                <div class="resume-header">
-
-                    <div class="row align-items-center">
-
-                        
-                        
-                        <div class="resume-title col-12 col-md-6 col-lg-8 col-xl-9">
-                            <h2 class="resume-name mb-0 text-uppercase">Valerian Pereira</h2>
-                            <div class="resume-tagline mb-3 mb-md-0">Software Engineer</div>
-                        </div>
-
-                        
-
-                        
-                        
-                        <div class="resume-contact col-12 col-md-6 col-lg-4 col-xl-3">
-                            <ul class="list-unstyled mb-0">
-                                
-                                <li class="mb-2"><i class="fas fa-phone-square fa-fw fa-lg mr-2"></i><a class="resume-link" href="tel:#">&#43;91 9920652827</a></li>
-                                
-                                <li class="mb-2"><i class="fas fa-envelope-square fa-fw fa-lg mr-2"></i><a class="resume-link" href="mailto:#">contact@valerianpereira.in</a></li>
-                                
-                                <li class="mb-2"><i class="fas fa-globe fa-fw fa-lg mr-2"></i><a class="resume-link" href="#">www.valerianpereira.in</a></li>
-                                
-                                <li class="mb-0"><i class="fas fa-map-marker-alt fa-fw fa-lg mr-2"></i>India</li>
-                            </ul>
-                        </div>
-
-                        
-
-                    </div>
-
-                </div>
-
-
-                <hr>
-
-                
-                
-                <div class="resume-intro py-3">
-
-                    <div class="media flex-column flex-md-row align-items-center">
-
-                        
-                        <img class="resume-profile-image mb-3 mb-md-0 mr-md-5 ml-md-0 rounded mx-auto" src="http://valerianpereira.in/assets/images/avatar.png" alt="image">
-                        
-
-                        <div class="media-body text-left">
-                            <p class="mb-0">Keen to learn new technologies related to Applications, web development. LAMP Developer by choice.
-Freelancing – Developing websites for small scale clients and further assisting and suggesting marketing techniques to grow business.
-Built Alexa Skills to explore the voice interaction domain.
-Hands-on practice on the Production Ready Linux Servers - CentOS, Ubuntu, Fedora, and the Windows environment as well.
-Other areas of interest include Virtualization, PHP Frameworks, WHMCS, ReactJS, Docker, k8s, MariaDB, MongoDB, dotnetcore, continuous integration with Bamboo and Jenkins.</p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                
-
-                <hr>
-
-                <div class="resume-body">
-
-                    <div class="row">
-
-                        <div class="resume-main col-12 col-lg-8 col-xl-9 pr-0 pr-lg-5">
-
-                            
-                            
-                            <section class="work-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Work Experience</h3>
-
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-6 mb-2 mb-md-0">Senior Software Engineer</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-6 text-muted text-left text-md-right">Google | 2019 - Present</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Donec pede justo, fringilla vel. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.</p>
-                                        <ul class="resume-list">
-                                            
-                                            <li>Lorem ipsum dolor sit amet, consectetuer.</li>
-                                            
-                                            <li>Aenean commodo ligula eget dolor.</li>
-                                            
-                                            <li>Etiam ultricies nisi vel augue.</li>
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-6 mb-2 mb-md-0">Lead Software Developer</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-6 text-muted text-left text-md-right">Apple | 2016 - 2019</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Donec pede justo, fringilla vel.</p>
-                                        <ul class="resume-list">
-                                            
-                                            <li>Lorem ipsum dolor sit amet, consectetuer.</li>
-                                            
-                                            <li>Aenean commodo ligula eget dolor.</li>
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-6 mb-2 mb-md-0">Senior Software Developer</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-6 text-muted text-left text-md-right">Dropbox | 2014 - 2016</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                        <ul class="resume-list">
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-6 mb-2 mb-md-0">Senior Developer</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-6 text-muted text-left text-md-right">Uber | 2013 - 2014</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
-                                        <ul class="resume-list">
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-6 mb-2 mb-md-0">Backend Developer</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-6 text-muted text-left text-md-right">Amazon | 2014 - 2016</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                        <ul class="resume-list">
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-6 mb-2 mb-md-0">Frontend Developer</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-6 text-muted text-left text-md-right">Startup | 2013 - 2014</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
-                                        <ul class="resume-list">
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-
-                            </section>
-
-                            
-
-                            
-                            
-                            <section class="project-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Projects</h3>
-
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Project Lorem Ipsum</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-left text-md-right">Open Source</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>You can use this section for your side projects. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Project Sed Fringilla</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-left text-md-right">Open Source</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>You can use this section for your side projects. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Project Praesent</h4>
-                                        <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-left text-md-right">Open Source</div>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>You can use this section for your side projects. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                                    </div>
-                                </div>
-                                
-
-                            </section>
-
-                            
-
-                            
-                            
-                            <section class="project-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Information</h3>
-
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-12 col-lg-12 mb-2 mb-md-0">Papers</h4>
-                                    </div>
-                                    <div class="item-content">
-                                        <p></p>
-                                        <ul class="list-unstyled resume-skills-list">
-                                            
-                                            <li class="mb-2">2018 · Lorem Ipsum</li>
-                                            
-                                            <li class="mb-2">2016 · Sed Fringilla</li>
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                                <div class="item mb-3">
-                                    <div class="item-heading row align-items-center mb-2">
-                                        <h4 class="item-title col-12 col-md-12 col-lg-12 mb-2 mb-md-0">Interests</h4>
-                                    </div>
-                                    <div class="item-content">
-                                        <p>Climbing, Photography, Travelling</p>
-                                        <ul class="list-unstyled resume-skills-list">
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-
-                            </section>
-
-                            
-
-                        </div>
-
-                        
-                        <aside class="resume-aside col-12 col-lg-4 col-xl-3 px-lg-4 pb-lg-4">
-
-
-                            
-                            
-                            <section class="education-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Education</h3>
-
-                                <ul class="list-unstyled resume-education-list">
-                                    
-                                    <li class="mb-3">
-                                        <div class="resume-degree font-weight-bold">Masters in Computer Application</div>
-                                        <div class="resume-degree-org text-muted">Indira Gandhi National Open University</div>
-                                        <div class="resume-degree-time text-muted">2014 - 2017</div>
-                                    </li>
-                                    
-                                    <li class="mb-3">
-                                        <div class="resume-degree font-weight-bold">Bachelor of Science in Information Technology</div>
-                                        <div class="resume-degree-org text-muted">Mumbai University</div>
-                                        <div class="resume-degree-time text-muted">2012 - 2015</div>
-                                    </li>
-                                    
-                                </ul>
-
-                            </section>
-
-                            
-
-                            
-                            
-                            <section class="education-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Awards</h3>
-
-                                <ul class="list-unstyled resume-awards-list">
-                                    
-                                    <li class="mb-3">
-                                        <div class="font-weight-bold">Award Lorem Ipsum</div>
-                                        <div class="text-muted">Microsoft lorem ipsum</div>
-                                        <div class="text-muted">2019</div>
-                                    </li>
-                                    
-                                    <li class="mb-3">
-                                        <div class="font-weight-bold">Award Donec Sodales</div>
-                                        <div class="text-muted">Oracle Aenean</div>
-                                        <div class="text-muted">2017</div>
-                                    </li>
-                                    
-                                </ul>
-
-                            </section>
-
-                            
-
-                            
-                            
-                            <section class="skills-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Skills</h3>
-
-                                
-                                <div class="item">
-                                    <h4 class="item-title">Technical</h4>
-                                    <ul class="list-unstyled resume-skills-list">
-                                        
-                                        <li class="mb-2">JavaScript/React</li>
-                                        
-                                        <li class="mb-2">PHP/Node.js</li>
-                                        
-                                        <li class="mb-2">Docker</li>
-                                        
-                                        <li class="mb-2">MySQL/MSSQL</li>
-                                        
-                                        <li class="mb-2">Object-oriented design</li>
-                                        
-                                        <li class="mb-2">Design and implement database structures</li>
-                                        
-                                        <li class="mb-2">Lead and deliver complex software systems</li>
-                                        
-                                    </ul>
-                                </div>
-                                
-                                <div class="item">
-                                    <h4 class="item-title">Professional</h4>
-                                    <ul class="list-unstyled resume-skills-list">
-                                        
-                                        <li class="mb-2">Effective communication</li>
-                                        
-                                        <li class="mb-2">Team player</li>
-                                        
-                                        <li class="mb-2">Strong problem solver</li>
-                                        
-                                        <li class="mb-2">Good time management</li>
-                                        
-                                    </ul>
-                                </div>
-                                
-
-                            </section>
-
-                            
-
-                            
-                            
-                            <section class="skills-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Languages</h3>
-
-                                <ul class="list-unstyled resume-lang-list">
-                                    
-                                    <li class="mb-2">English <span class="text-muted">(Professional)</span></li>
-                                    
-                                    <li class="mb-2">Hindi <span class="text-muted">(Professional)</span></li>
-                                    
-                                    <li class="mb-2">Marathi <span class="text-muted">(Professional)</span></li>
-                                    
-                                    <li class="mb-2">Konkanni <span class="text-muted">(Native)</span></li>
-                                    
-                                </ul>
-
-                            </section>
-
-                            
-
-                            
-                            
-                            <section class="skills-section py-3">
-
-                                <h3 class="text-uppercase resume-section-heading mb-4">Interests</h3>
-
-                                <ul class="list-unstyled resume-interests-list mb-0">
-                                    
-                                    <li class="mb-2">Climbing</li>
-                                    
-                                    <li class="mb-2">Photography</li>
-                                    
-                                    <li class="mb-2">Travelling</li>
-                                    
-                                </ul>
-
-                            </section>
-
-                            
-
-                        </aside>
-
-
-                    </div>
-
-                </div>
-
-                <hr>
-
-                
-                
-                <div class="resume-footer text-center">
-
-                    <ul class="resume-social-list list-inline mx-auto mb-0 d-inline-block text-muted">
-                        
-                        <li class="list-inline-item mb-lg-0 mr-3">
-                            <a class="resume-link" href="//github.com/valerianpereira" target="_blank">
-                                <i class="fab fa-github-square fa-2x mr-2" data-fa-transform="down-4"></i>
-                                <span class="d-none d-lg-inline-block text-muted">valerianpereira</span>
-                            </a>
-                        </li>
-                        
-                        <li class="list-inline-item mb-lg-0 mr-3">
-                            <a class="resume-link" href="//linkedin.com/in/valerianpereira" target="_blank">
-                                <i class="fab fa-linkedin fa-2x mr-2" data-fa-transform="down-4"></i>
-                                <span class="d-none d-lg-inline-block text-muted">valerianpereira</span>
-                            </a>
-                        </li>
-                        
-                        <li class="list-inline-item mb-lg-0 mr-3">
-                            <a class="resume-link" href="//twitter.com/walley0" target="_blank">
-                                <i class="fab fa-twitter-square fa-2x mr-2" data-fa-transform="down-4"></i>
-                                <span class="d-none d-lg-inline-block text-muted">@walley0</span>
-                            </a>
-                        </li>
-                        
-                    </ul>
-
-                </div>
-
-                
-
-            </article>
-
+<div class="shell">
+
+<nav class="nav" aria-label="Sections">
+  <div class="col">
+    <a class="mark" href="#top"><b>V</b>Valerian Pereira <span>· Mumbai</span></a>
+    <button class="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><i></i></button>
+    <div class="menu" id="menu">
+      <a href="#work">Work</a>
+      <a href="#builds">Builds</a>
+      <a href="#stack">Stack</a>
+      <a href="#credits">Credits</a>
+      <a href="#contact">Contact</a>
+      <span class="ink" aria-hidden="true"></span>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="col">
+    <div class="ticket">
+      <span class="notch t" aria-hidden="true"></span>
+      <span class="notch b" aria-hidden="true"></span>
+
+      <div class="stub">
+        <div class="eyebrow">
+          <span class="stamp">ADMIT ONE</span>
+          <span>MUMBAI · IN</span>
         </div>
 
-        
-        <footer class="footer text-center py-4">
+        <h1>
+          <span class="line"><em>Valerian</em></span>
+          <span class="line"><em class="rose">Pereira</em></span>
+        </h1>
 
-            
+        <p class="title">Head of Data Platform at <s>BookMyShow</s></p>
 
-            <small class="copyright text-muted">Designed with <i class="fas fa-heart"></i> by <a class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-            <br>
-            <small class="copyright">2020 &copy; Ported to Hugo by <a href="https://github.com/cowboysmall" target="_blank">CowboySmall</a></small>
-        </footer>
+        <p class="lede">
+          Fifteen years building the things other people's traffic runs on — data platforms,
+          APIs and the infrastructure underneath. After hours I build small command-line tools,
+          usually because some chore should have automated itself.
+        </p>
 
+        <div class="cta">
+          <a class="btn solid" href="#work">See the run</a>
+          <a class="btn" href="https://github.com/valerianpereira" rel="me noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/valerianpereira/" rel="me noopener">LinkedIn</a>
+        </div>
+      </div>
 
+      <aside class="foil">
+        <div>
+          <dl class="fact"><dt>SHIPPING SINCE</dt><dd>2011</dd></dl>
+          <dl class="fact"><dt>AT BOOKMYSHOW</dt><dd>11<span class="u">yrs</span></dd></dl>
+          <dl class="fact"><dt>PUBLIC REPOS</dt><dd>46</dd></dl>
+        </div>
+        <p class="serial">No. 5975506</p>
+      </aside>
     </div>
+  </div>
+</header>
 
-    
-    
-    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+<main>
 
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-XXXXXXX-Y', 'auto');
-	
-	ga('send', 'pageview');
+<section id="work">
+  <div class="col">
+    <h2><span class="n">01</span>Work</h2>
+
+    <article class="venue">
+      <h3>BookMyShow <span class="run">JUN 2015 — PRESENT</span></h3>
+      <p>India's largest entertainment ticketing platform.</p>
+      <ul class="board">
+        <li class="now">
+          <div class="row">
+            <span class="what">Engineering Manager III — Head of Data Platform</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Apr 2024 →</span>
+          </div>
+          <p class="note">Own the data platform end to end: Databricks and AWS infrastructure, ingestion
+            and warehousing, data operations, and the reporting and reconciliation systems the business runs on.</p>
+        </li>
+        <li>
+          <div class="row">
+            <span class="what">Engineering Manager II</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Feb 2022 — Apr 2024</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <span class="what">Engineering Manager I</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Apr 2020 — Feb 2022</span>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <span class="what">Assistant Manager</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Oct 2016 — Apr 2020</span>
+          </div>
+          <p class="note">Ran and tuned a high-traffic data platform on PHP and MySQL with Redis as the
+            caching layer, and built the APIs that served it across products.</p>
+        </li>
+        <li>
+          <div class="row">
+            <span class="what">Senior Software Developer</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Jun 2015 — Oct 2016</span>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article class="venue">
+      <h3>Softaculous <span class="run">JUN 2011 — JUN 2015</span></h3>
+      <p>Hosting automation and one-click application installers.</p>
+      <ul class="board">
+        <li>
+          <div class="row">
+            <span class="what">Senior Software Developer</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Mar 2013 — Jun 2015</span>
+          </div>
+          <p class="note">Built and maintained Webuzo, a single-user hosting control panel, and packaged
+            applications for the Softaculous one-click installer library.</p>
+        </li>
+        <li>
+          <div class="row">
+            <span class="what">Software Developer</span>
+            <span class="dots" aria-hidden="true"></span>
+            <span class="when">Jun 2011 — Mar 2013</span>
+          </div>
+          <p class="note">Core PHP, MySQL and JavaScript on distributed systems running on Linux.</p>
+        </li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section id="builds">
+  <div class="col">
+    <h2><span class="n">02</span>Builds</h2>
+    <ul class="builds">
+      <li class="build">
+        <a href="https://github.com/valerianpereira/backup-action">backup-action</a>
+        <div class="meta"><span class="stars">★ 54</span><span class="tech">SHELL · DOCKER</span></div>
+        <p>A GitHub Action that backs up MySQL, MongoDB and PostgreSQL databases and directories over SSH.
+           Published on the GitHub Marketplace.</p>
+      </li>
+      <li class="build">
+        <a href="https://github.com/valerianpereira/fifa-wc26">fifa-wc26</a>
+        <div class="meta"><span class="tech">TYPESCRIPT · NODE</span></div>
+        <p>World Cup 2026 in the terminal — fixtures, live scores, group standings and an ASCII bracket.
+           <code>npx fifa-wc26 next</code></p>
+      </li>
+      <li class="build">
+        <a href="https://github.com/valerianpereira/npx_valerianpereira">npx valerianpereira</a>
+        <div class="meta"><span class="tech">NODE · NPM</span></div>
+        <p>A business card that prints straight into your shell.</p>
+      </li>
+      <li class="build">
+        <a href="https://github.com/valerianpereira/who-is">who-is</a>
+        <div class="meta"><span class="tech">PHP · ALEXA</span></div>
+        <p>An Alexa skill that reads out domain WHOIS, expiry and hosting details.</p>
+      </li>
+      <li class="build">
+        <a href="https://github.com/valerianpereira/alexa-rail-info">alexa-rail-info</a>
+        <div class="meta"><span class="tech">NODE · LAMBDA</span></div>
+        <p>An Alexa skill for Indian Railways — cancellations, reschedules and PNR status.</p>
+      </li>
+      <li class="build">
+        <a href="https://github.com/valerianpereira/webuzo-docker-centos">webuzo-docker-centos</a>
+        <div class="meta"><span class="tech">DOCKERFILE</span></div>
+        <p>The Webuzo hosting control panel packed into a single container.</p>
+      </li>
+    </ul>
+    <a class="more" href="https://github.com/valerianpereira?tab=repositories">All 46 repositories on GitHub</a>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="col">
+    <h2><span class="n">03</span>Stack</h2>
+    <div class="rack">
+      <div>
+        <h3>DATA</h3>
+        <ul><li>Databricks</li><li>Spark</li><li>Delta Lake</li><li>MySQL</li><li>MariaDB</li><li>PostgreSQL</li><li>MongoDB</li><li>MSSQL</li><li>Redis</li></ul>
+      </div>
+      <div>
+        <h3>PLATFORM</h3>
+        <ul><li>AWS</li><li>Docker</li><li>Kubernetes</li><li>GitHub Actions</li><li>Jenkins</li><li>Bamboo</li><li>Linux</li></ul>
+      </div>
+      <div>
+        <h3>LANGUAGES</h3>
+        <ul><li>TypeScript</li><li>JavaScript</li><li>Node.js</li><li>Python</li><li>PHP</li><li>Bash</li><li>SQL</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="credits">
+  <div class="col">
+    <h2><span class="n">04</span>Credits</h2>
+    <div class="credits">
+      <div>
+        <h3>Master of Computer Applications</h3>
+        <p>Indira Gandhi National Open University<br><span class="yr">2013 — 2017</span></p>
+      </div>
+      <div>
+        <h3>B.Sc. Information Technology</h3>
+        <p>L. S. Raheja College, Mumbai University<br><span class="yr">2008 — 2011</span></p>
+      </div>
+      <div>
+        <h3>Professional Scrum Master I</h3>
+        <p>Scrum.org<br><span class="yr">2017</span></p>
+      </div>
+      <div>
+        <h3>Cloud Architecture</h3>
+        <p>Google Cloud Training<br><span class="yr">Certified</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="col">
+    <h2><span class="n">05</span>Contact</h2>
+    <div class="close">
+      <div>
+        <p class="big">Doors are open.</p>
+        <p>Happy to talk data platforms, engineering teams, or anything that should have been a script.
+           Write to <a class="mailto" href="mailto:valerianpereira25@gmail.com">valerianpereira25@gmail.com</a>.</p>
+      </div>
+      <ul class="elsewhere">
+        <li><a href="https://github.com/valerianpereira" rel="me noopener">GitHub<span class="h">@valerianpereira</span></a></li>
+        <li><a href="https://www.linkedin.com/in/valerianpereira/" rel="me noopener">LinkedIn<span class="h">in/valerianpereira</span></a></li>
+        <li><a href="https://x.com/valerianper_era" rel="me noopener">X<span class="h">@valerianper_era</span></a></li>
+        <li><a href="mailto:valerianpereira25@gmail.com">Email<span class="h">gmail</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="col">
+    <p>© 2026 Valerian Pereira · Mumbai, India</p>
+    <p class="serial">ADMIT ONE · NO. 5975506</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+
+// mobile menu
+var burger = document.querySelector('.burger'), menu = document.getElementById('menu');
+burger.addEventListener('click', function () {
+  var open = burger.getAttribute('aria-expanded') === 'true';
+  burger.setAttribute('aria-expanded', String(!open));
+  burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+  menu.dataset.open = String(!open);
+});
+menu.addEventListener('click', function (e) {
+  if (e.target.tagName === 'A') { menu.dataset.open = 'false'; burger.setAttribute('aria-expanded', 'false'); }
+});
+
+// scroll spy + sliding indicator
+var links = [].slice.call(menu.querySelectorAll('a')),
+    ink = menu.querySelector('.ink'),
+    sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+
+function moveInk(a) {
+  if (!a || window.matchMedia('(max-width:44rem)').matches) { ink.style.opacity = 0; return; }
+  ink.style.opacity = 1;
+  ink.style.width = a.offsetWidth + 'px';
+  ink.style.transform = 'translateX(' + a.offsetLeft + 'px)';
 }
+function setActive(i) {
+  links.forEach(function (a, j) { j === i ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'); });
+  moveInk(i > -1 ? links[i] : null);
+}
+
+var spy = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) { if (en.isIntersecting) setActive(sections.indexOf(en.target)); });
+}, { rootMargin: '-45% 0px -50% 0px' });
+sections.forEach(function (s) { if (s) spy.observe(s); });
+window.addEventListener('resize', function () {
+  var cur = menu.querySelector('a[aria-current]');
+  moveInk(cur);
+});
+
+// leader lines draw once, when a board scrolls into view
+var boards = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (en.isIntersecting) { en.target.classList.add('reveal'); boards.unobserve(en.target); }
+  });
+}, { threshold: 0.2 });
+[].forEach.call(document.querySelectorAll('.board'), function (b) { boards.observe(b); });
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
 </body>
-
 </html>
