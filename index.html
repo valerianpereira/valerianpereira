@@ -311,13 +311,14 @@
 
   /* macOS Terminal.app — "Basic" in light, "Pro" in dark */
   --term-bg:#FFFFFF;
-  --term-fg:#1A1A1A;
-  --term-dim:#6E6E6E;
+  --term-fg:#3B424D;        /* body: grey, so green reads as emphasis */
+  --term-dim:#6E7681;
   --term-chrome:linear-gradient(#EDEDEA,#DCDCD8);
   --term-chrome-edge:#C4C4BE;
   --term-title:#45454A;
-  --term-accent:#8A5200;
-  --term-live:#1A7F37;
+  --term-accent:#1A7F37;    /* prompt, echo, headings */
+  --term-link:#0969DA;      /* agent name, inline command refs */
+  --term-live:#B91C1C;      /* errors */
 
   --gut:clamp(1rem,3.5vw,2rem);
   --col:72rem;
@@ -343,14 +344,15 @@
     --bulb-glow:rgba(255,182,39,.7);
     --bulb-hover:#FFC64A;
 
-    --term-bg:#000000;
-    --term-fg:#D9D9D9;
-    --term-dim:#8A8A8A;
+    --term-bg:#0A0C10;
+    --term-fg:#A6AEBB;        /* body: grey, so green reads as emphasis */
+    --term-dim:#6E7681;
     --term-chrome:linear-gradient(#3A3A3C,#2C2C2E);
     --term-chrome-edge:#161618;
     --term-title:#C9C9CF;
-    --term-accent:#FFB627;
-    --term-live:#28C840;
+    --term-accent:#56D364;    /* prompt, echo, headings */
+    --term-link:#58A6FF;      /* agent name, inline command refs */
+    --term-live:#FF7B72;      /* errors */
   }
 }
 *{box-sizing:border-box}
@@ -476,26 +478,6 @@ h1 .line em{display:block;font-style:normal}
 }
 
 /* ── ticket furniture ── */
-.tear{margin-top:1.75rem;padding-top:1.1rem;border-top:1px dashed var(--edge)}
-.barcode{
-  display:block;height:34px;width:100%;
-  background:repeating-linear-gradient(90deg,
-    var(--type) 0 2px, transparent 2px 5px,
-    var(--type) 5px 6px, transparent 6px 8px,
-    var(--type) 8px 11px, transparent 11px 12px,
-    var(--type) 12px 13px, transparent 13px 17px,
-    var(--type) 17px 20px, transparent 20px 21px,
-    var(--type) 21px 22px, transparent 22px 26px);
-  opacity:.5;
-}
-.fine{
-  display:flex;flex-wrap:wrap;gap:.35rem .9rem;margin-top:.6rem;
-  font-family:"IBM Plex Mono",monospace;font-size:.625rem;letter-spacing:.1em;
-  color:var(--faint);text-transform:uppercase;
-}
-.fine span{position:relative}
-.fine span + span::before{content:"·";position:absolute;left:-.5rem;opacity:.6}
-
 .qr-box{margin:1.5rem 0 0;text-align:center}
 .qr{
   /* 57 modules incl. the spec's 4-module quiet zone, at exactly 2px per module.
@@ -507,7 +489,11 @@ h1 .line em{display:block;font-style:normal}
 }
 .qr-cap{
   margin-top:.5rem;font-family:"IBM Plex Mono",monospace;font-size:.625rem;
-  letter-spacing:.08em;color:var(--faint);
+  letter-spacing:.08em;color:var(--dim);
+}
+.qr-terms{
+  margin-top:.45rem;font-family:"IBM Plex Mono",monospace;font-size:.5625rem;
+  letter-spacing:.09em;line-height:1.6;color:var(--faint);text-transform:uppercase;
 }
 
 .rec dt{color:var(--dim);white-space:nowrap}
@@ -710,14 +696,39 @@ html[data-mode="console"] .burger{display:none}
 }
 .cn-out{
   flex:1 1 auto;overflow-y:auto;overflow-x:auto;padding:.9rem 1rem;
-  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
-  font-size:.8125rem;line-height:1.55;color:var(--term-fg);
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  font-size:.8125rem;line-height:1.6;color:var(--term-fg);
 }
 .cn-out pre{margin:0 0 .85rem;white-space:pre;font:inherit}
 .cn-out pre:last-child{margin-bottom:0}
 .cn-note{color:var(--term-dim)}
-.cn-boot{color:var(--term-fg)}
+.cn-boot{color:var(--term-dim)}
 .cn-game{color:var(--term-fg);line-height:1.05;letter-spacing:0}
+
+/* the working line, in the shape Claude Code uses in a terminal */
+.cn-status{color:var(--term-live);opacity:.85}
+
+/* ask */
+.cn-ask-head{color:var(--term-accent);font-weight:600}
+.cn-ask-note{color:var(--term-dim)}
+.cn-sugs{display:flex;flex-wrap:wrap;gap:.4rem;margin:.55rem 0 .85rem}
+.cn-sug{
+  font:inherit;font-size:.75rem;color:var(--term-link);cursor:pointer;
+  background:transparent;border:1px solid var(--term-chrome-edge);
+  border-radius:999px;padding:.28rem .7rem;transition:border-color .18s,background .18s;
+}
+.cn-sug:hover{border-color:var(--term-link);background:var(--well)}
+.cn-answer{
+  border-left:2px solid var(--term-link);padding:.15rem 0 .15rem .85rem;
+  margin:0 0 .85rem;color:var(--term-fg);
+}
+.cn-answer .who{color:var(--term-link);font-weight:600;display:block;margin-bottom:.35rem}
+.cn-answer .who::before{content:"● ";}
+.cn-answer .body{white-space:pre-wrap}
+.cn-answer code{
+  color:var(--term-accent);background:none;border:0;padding:0;
+  border-bottom:1px solid currentColor;font:inherit;
+}
 @media (max-width:34rem){
   .cn-form{flex-wrap:wrap;gap:.15rem}
   .cn-ps1{flex:1 0 100%;font-size:.6875rem}
@@ -730,7 +741,7 @@ html[data-mode="console"] .burger{display:none}
   border-top:1px solid var(--term-chrome-edge);background:var(--well);flex:none;
 }
 .cn-chip{
-  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   font-size:.6875rem;color:var(--term-dim);
   background:transparent;border:1px solid var(--term-chrome-edge);border-radius:5px;
   padding:.28rem .55rem;cursor:pointer;transition:color .18s,border-color .18s;
@@ -744,12 +755,12 @@ html[data-mode="console"] .burger{display:none}
   border-top:1px solid var(--term-chrome-edge);flex:none;background:var(--term-bg);
 }
 .cn-ps1{
-  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   font-size:.8125rem;color:var(--term-accent);flex:none;
 }
 .cn-input{
   flex:1;background:transparent;border:0;outline:0;color:var(--term-fg);
-  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   font-size:.8125rem;padding:.15rem 0;min-width:0;caret-color:var(--term-accent);
 }
 .cn-input::placeholder{color:var(--term-dim);opacity:.75}
@@ -881,8 +892,9 @@ footer .serial{color:var(--faint)}
         <button class="cn-chip" data-q="projects">projects</button>
         <button class="cn-chip" data-q="skills">skills</button>
         <button class="cn-chip" data-q="contact">contact</button>
+        <button class="cn-chip" data-q="ask">ask</button>
         <button class="cn-chip" data-q="neofetch">neofetch</button>
-        <button class="cn-chip" data-q="snake">snake</button>
+        <button class="cn-chip" data-q="pong">pong</button>
         <button class="cn-chip" data-q="psql">psql</button>
         <button class="cn-chip" data-q="help">help</button>
       </div>
@@ -927,14 +939,6 @@ footer .serial{color:var(--faint)}
           <a class="btn" href="https://github.com/valerianpereira" rel="me noopener">GitHub</a>
           <a class="btn" href="https://www.linkedin.com/in/valerianpereira/" rel="me noopener">LinkedIn</a>
         </div>
-
-        <div class="tear">
-          <span class="barcode" aria-hidden="true"></span>
-          <p class="fine">
-            <span>admit one</span><span>non-transferable</span>
-            <span>issued mumbai · 2011</span><span>valid indefinitely</span>
-          </p>
-        </div>
       </div>
 
       <aside class="foil">
@@ -949,6 +953,7 @@ footer .serial{color:var(--faint)}
         <div class="qr-box">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57 57" class="qr" role="img" aria-label="QR code: scan to save Valerian Pereira as a contact" shape-rendering="crispEdges"><rect width="57" height="57" fill="var(--qr-bg)"/><path d="M4 4h7v1h-7zM12 4h1v1h-1zM15 4h3v1h-3zM20 4h2v1h-2zM24 4h3v1h-3zM28 4h1v1h-1zM30 4h7v1h-7zM38 4h2v1h-2zM44 4h1v1h-1zM46 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM17 5h2v1h-2zM22 5h1v1h-1zM24 5h1v1h-1zM28 5h1v1h-1zM31 5h1v1h-1zM38 5h1v1h-1zM40 5h5v1h-5zM46 5h1v1h-1zM52 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM18 6h1v1h-1zM23 6h1v1h-1zM30 6h2v1h-2zM33 6h1v1h-1zM35 6h1v1h-1zM37 6h1v1h-1zM41 6h1v1h-1zM43 6h2v1h-2zM46 6h1v1h-1zM48 6h3v1h-3zM52 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM15 7h1v1h-1zM17 7h2v1h-2zM20 7h4v1h-4zM26 7h3v1h-3zM31 7h4v1h-4zM36 7h5v1h-5zM43 7h1v1h-1zM46 7h1v1h-1zM48 7h3v1h-3zM52 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM18 8h1v1h-1zM21 8h1v1h-1zM23 8h8v1h-8zM33 8h2v1h-2zM40 8h2v1h-2zM46 8h1v1h-1zM48 8h3v1h-3zM52 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM22 9h2v1h-2zM25 9h2v1h-2zM30 9h1v1h-1zM32 9h6v1h-6zM40 9h3v1h-3zM46 9h1v1h-1zM52 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h1v1h-1zM32 10h1v1h-1zM34 10h1v1h-1zM36 10h1v1h-1zM38 10h1v1h-1zM40 10h1v1h-1zM42 10h1v1h-1zM44 10h1v1h-1zM46 10h7v1h-7zM12 11h3v1h-3zM18 11h2v1h-2zM22 11h2v1h-2zM25 11h2v1h-2zM30 11h4v1h-4zM35 11h1v1h-1zM37 11h1v1h-1zM39 11h1v1h-1zM41 11h1v1h-1zM44 11h1v1h-1zM4 12h2v1h-2zM7 12h2v1h-2zM10 12h1v1h-1zM13 12h1v1h-1zM19 12h1v1h-1zM22 12h9v1h-9zM32 12h1v1h-1zM38 12h5v1h-5zM46 12h1v1h-1zM52 12h1v1h-1zM5 13h1v1h-1zM9 13h1v1h-1zM13 13h5v1h-5zM19 13h2v1h-2zM23 13h3v1h-3zM27 13h2v1h-2zM30 13h1v1h-1zM32 13h11v1h-11zM44 13h4v1h-4zM52 13h1v1h-1zM5 14h6v1h-6zM12 14h3v1h-3zM16 14h1v1h-1zM18 14h2v1h-2zM21 14h4v1h-4zM27 14h2v1h-2zM31 14h3v1h-3zM37 14h2v1h-2zM40 14h2v1h-2zM43 14h1v1h-1zM47 14h1v1h-1zM52 14h1v1h-1zM4 15h4v1h-4zM13 15h2v1h-2zM17 15h1v1h-1zM20 15h1v1h-1zM22 15h2v1h-2zM26 15h2v1h-2zM29 15h1v1h-1zM33 15h1v1h-1zM36 15h1v1h-1zM38 15h2v1h-2zM43 15h1v1h-1zM45 15h1v1h-1zM49 15h3v1h-3zM6 16h2v1h-2zM9 16h3v1h-3zM14 16h3v1h-3zM18 16h1v1h-1zM20 16h4v1h-4zM25 16h2v1h-2zM28 16h3v1h-3zM32 16h2v1h-2zM36 16h2v1h-2zM40 16h1v1h-1zM45 16h1v1h-1zM47 16h5v1h-5zM7 17h3v1h-3zM13 17h1v1h-1zM15 17h2v1h-2zM18 17h2v1h-2zM24 17h2v1h-2zM30 17h2v1h-2zM33 17h2v1h-2zM36 17h2v1h-2zM41 17h2v1h-2zM45 17h2v1h-2zM48 17h1v1h-1zM52 17h1v1h-1zM4 18h1v1h-1zM8 18h1v1h-1zM10 18h2v1h-2zM13 18h2v1h-2zM19 18h1v1h-1zM22 18h1v1h-1zM26 18h1v1h-1zM28 18h1v1h-1zM30 18h2v1h-2zM34 18h2v1h-2zM37 18h1v1h-1zM40 18h4v1h-4zM45 18h2v1h-2zM48 18h2v1h-2zM51 18h2v1h-2zM4 19h1v1h-1zM7 19h2v1h-2zM11 19h1v1h-1zM13 19h3v1h-3zM18 19h1v1h-1zM22 19h5v1h-5zM30 19h1v1h-1zM34 19h1v1h-1zM41 19h3v1h-3zM45 19h2v1h-2zM49 19h3v1h-3zM6 20h1v1h-1zM10 20h3v1h-3zM15 20h4v1h-4zM22 20h1v1h-1zM26 20h1v1h-1zM28 20h1v1h-1zM30 20h1v1h-1zM35 20h2v1h-2zM40 20h1v1h-1zM43 20h1v1h-1zM47 20h4v1h-4zM52 20h1v1h-1zM4 21h2v1h-2zM11 21h1v1h-1zM16 21h1v1h-1zM18 21h4v1h-4zM23 21h1v1h-1zM27 21h1v1h-1zM29 21h1v1h-1zM34 21h2v1h-2zM37 21h5v1h-5zM43 21h4v1h-4zM49 21h1v1h-1zM4 22h3v1h-3zM8 22h1v1h-1zM10 22h5v1h-5zM16 22h5v1h-5zM23 22h3v1h-3zM28 22h1v1h-1zM30 22h2v1h-2zM33 22h1v1h-1zM35 22h2v1h-2zM39 22h3v1h-3zM44 22h4v1h-4zM49 22h1v1h-1zM51 22h2v1h-2zM4 23h5v1h-5zM12 23h2v1h-2zM15 23h1v1h-1zM17 23h1v1h-1zM23 23h1v1h-1zM25 23h1v1h-1zM27 23h1v1h-1zM29 23h2v1h-2zM32 23h4v1h-4zM39 23h1v1h-1zM44 23h5v1h-5zM51 23h1v1h-1zM5 24h1v1h-1zM7 24h2v1h-2zM10 24h1v1h-1zM13 24h2v1h-2zM16 24h1v1h-1zM21 24h4v1h-4zM26 24h4v1h-4zM32 24h1v1h-1zM38 24h7v1h-7zM47 24h1v1h-1zM51 24h2v1h-2zM4 25h1v1h-1zM6 25h1v1h-1zM8 25h1v1h-1zM11 25h3v1h-3zM16 25h1v1h-1zM18 25h1v1h-1zM20 25h1v1h-1zM23 25h2v1h-2zM26 25h5v1h-5zM33 25h4v1h-4zM38 25h3v1h-3zM42 25h5v1h-5zM48 25h2v1h-2zM52 25h1v1h-1zM4 26h2v1h-2zM7 26h6v1h-6zM14 26h2v1h-2zM17 26h3v1h-3zM26 26h6v1h-6zM33 26h2v1h-2zM38 26h1v1h-1zM40 26h2v1h-2zM44 26h5v1h-5zM50 26h1v1h-1zM52 26h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM12 27h2v1h-2zM16 27h1v1h-1zM18 27h3v1h-3zM26 27h1v1h-1zM30 27h2v1h-2zM36 27h1v1h-1zM38 27h1v1h-1zM43 27h2v1h-2zM48 27h3v1h-3zM52 27h1v1h-1zM6 28h3v1h-3zM10 28h1v1h-1zM12 28h1v1h-1zM15 28h2v1h-2zM18 28h2v1h-2zM22 28h5v1h-5zM28 28h1v1h-1zM30 28h3v1h-3zM36 28h2v1h-2zM40 28h1v1h-1zM42 28h1v1h-1zM44 28h1v1h-1zM46 28h1v1h-1zM48 28h2v1h-2zM52 28h1v1h-1zM4 29h2v1h-2zM8 29h1v1h-1zM12 29h4v1h-4zM17 29h1v1h-1zM24 29h3v1h-3zM30 29h1v1h-1zM33 29h2v1h-2zM36 29h2v1h-2zM42 29h3v1h-3zM48 29h1v1h-1zM50 29h1v1h-1zM52 29h1v1h-1zM4 30h1v1h-1zM6 30h9v1h-9zM16 30h1v1h-1zM20 30h1v1h-1zM23 30h2v1h-2zM26 30h5v1h-5zM36 30h2v1h-2zM39 30h1v1h-1zM41 30h9v1h-9zM51 30h2v1h-2zM4 31h3v1h-3zM9 31h1v1h-1zM12 31h2v1h-2zM16 31h1v1h-1zM18 31h1v1h-1zM20 31h3v1h-3zM26 31h1v1h-1zM29 31h1v1h-1zM31 31h1v1h-1zM33 31h1v1h-1zM42 31h1v1h-1zM46 31h5v1h-5zM5 32h2v1h-2zM10 32h3v1h-3zM14 32h1v1h-1zM16 32h1v1h-1zM18 32h2v1h-2zM22 32h2v1h-2zM25 32h2v1h-2zM30 32h1v1h-1zM33 32h1v1h-1zM35 32h2v1h-2zM38 32h1v1h-1zM40 32h1v1h-1zM42 32h3v1h-3zM51 32h2v1h-2zM4 33h1v1h-1zM7 33h1v1h-1zM11 33h3v1h-3zM15 33h2v1h-2zM19 33h3v1h-3zM23 33h1v1h-1zM26 33h1v1h-1zM28 33h1v1h-1zM31 33h4v1h-4zM36 33h5v1h-5zM44 33h1v1h-1zM46 33h2v1h-2zM49 33h1v1h-1zM51 33h2v1h-2zM5 34h1v1h-1zM7 34h1v1h-1zM9 34h3v1h-3zM14 34h1v1h-1zM19 34h1v1h-1zM22 34h1v1h-1zM24 34h2v1h-2zM30 34h1v1h-1zM32 34h1v1h-1zM35 34h2v1h-2zM38 34h9v1h-9zM52 34h1v1h-1zM5 35h1v1h-1zM9 35h1v1h-1zM11 35h2v1h-2zM14 35h1v1h-1zM19 35h2v1h-2zM24 35h2v1h-2zM27 35h1v1h-1zM29 35h1v1h-1zM33 35h1v1h-1zM35 35h1v1h-1zM44 35h1v1h-1zM46 35h4v1h-4zM4 36h1v1h-1zM7 36h2v1h-2zM10 36h3v1h-3zM19 36h1v1h-1zM22 36h1v1h-1zM24 36h3v1h-3zM29 36h1v1h-1zM32 36h3v1h-3zM38 36h4v1h-4zM43 36h1v1h-1zM45 36h3v1h-3zM49 36h1v1h-1zM52 36h1v1h-1zM4 37h1v1h-1zM7 37h1v1h-1zM11 37h3v1h-3zM17 37h1v1h-1zM19 37h2v1h-2zM24 37h1v1h-1zM27 37h3v1h-3zM34 37h2v1h-2zM38 37h5v1h-5zM44 37h9v1h-9zM6 38h2v1h-2zM10 38h1v1h-1zM12 38h3v1h-3zM16 38h2v1h-2zM19 38h1v1h-1zM23 38h2v1h-2zM26 38h1v1h-1zM28 38h1v1h-1zM30 38h2v1h-2zM33 38h4v1h-4zM38 38h3v1h-3zM46 38h1v1h-1zM49 38h2v1h-2zM52 38h1v1h-1zM7 39h1v1h-1zM9 39h1v1h-1zM12 39h1v1h-1zM14 39h2v1h-2zM17 39h1v1h-1zM19 39h3v1h-3zM23 39h1v1h-1zM25 39h2v1h-2zM28 39h3v1h-3zM33 39h1v1h-1zM35 39h4v1h-4zM40 39h3v1h-3zM46 39h1v1h-1zM49 39h2v1h-2zM4 40h3v1h-3zM8 40h1v1h-1zM10 40h2v1h-2zM13 40h11v1h-11zM25 40h3v1h-3zM30 40h1v1h-1zM32 40h2v1h-2zM36 40h2v1h-2zM40 40h1v1h-1zM42 40h2v1h-2zM45 40h1v1h-1zM48 40h3v1h-3zM5 41h1v1h-1zM7 41h3v1h-3zM11 41h3v1h-3zM15 41h1v1h-1zM17 41h3v1h-3zM22 41h1v1h-1zM24 41h1v1h-1zM26 41h1v1h-1zM28 41h1v1h-1zM30 41h1v1h-1zM33 41h2v1h-2zM36 41h2v1h-2zM41 41h2v1h-2zM44 41h1v1h-1zM48 41h1v1h-1zM50 41h1v1h-1zM52 41h1v1h-1zM5 42h1v1h-1zM9 42h2v1h-2zM12 42h2v1h-2zM17 42h1v1h-1zM20 42h1v1h-1zM22 42h2v1h-2zM25 42h1v1h-1zM27 42h1v1h-1zM33 42h2v1h-2zM37 42h1v1h-1zM41 42h1v1h-1zM44 42h3v1h-3zM51 42h2v1h-2zM5 43h3v1h-3zM11 43h1v1h-1zM13 43h1v1h-1zM15 43h1v1h-1zM19 43h2v1h-2zM22 43h1v1h-1zM24 43h1v1h-1zM27 43h1v1h-1zM29 43h1v1h-1zM31 43h3v1h-3zM38 43h1v1h-1zM41 43h2v1h-2zM46 43h1v1h-1zM49 43h2v1h-2zM4 44h3v1h-3zM10 44h1v1h-1zM14 44h5v1h-5zM20 44h1v1h-1zM22 44h1v1h-1zM24 44h7v1h-7zM34 44h5v1h-5zM40 44h10v1h-10zM12 45h1v1h-1zM15 45h2v1h-2zM18 45h6v1h-6zM26 45h1v1h-1zM30 45h5v1h-5zM38 45h1v1h-1zM40 45h2v1h-2zM43 45h2v1h-2zM48 45h1v1h-1zM50 45h3v1h-3zM4 46h7v1h-7zM16 46h2v1h-2zM20 46h1v1h-1zM23 46h2v1h-2zM26 46h1v1h-1zM28 46h1v1h-1zM30 46h1v1h-1zM32 46h5v1h-5zM39 46h1v1h-1zM44 46h1v1h-1zM46 46h1v1h-1zM48 46h1v1h-1zM52 46h1v1h-1zM4 47h1v1h-1zM10 47h1v1h-1zM13 47h3v1h-3zM17 47h1v1h-1zM21 47h2v1h-2zM26 47h1v1h-1zM30 47h1v1h-1zM32 47h4v1h-4zM39 47h1v1h-1zM41 47h1v1h-1zM44 47h1v1h-1zM48 47h2v1h-2zM4 48h1v1h-1zM6 48h3v1h-3zM10 48h1v1h-1zM12 48h3v1h-3zM16 48h2v1h-2zM19 48h2v1h-2zM22 48h1v1h-1zM24 48h1v1h-1zM26 48h5v1h-5zM32 48h1v1h-1zM38 48h1v1h-1zM40 48h11v1h-11zM4 49h1v1h-1zM6 49h3v1h-3zM10 49h1v1h-1zM12 49h2v1h-2zM16 49h1v1h-1zM18 49h3v1h-3zM22 49h3v1h-3zM31 49h4v1h-4zM36 49h3v1h-3zM41 49h2v1h-2zM44 49h1v1h-1zM46 49h4v1h-4zM51 49h1v1h-1zM4 50h1v1h-1zM6 50h3v1h-3zM10 50h1v1h-1zM14 50h4v1h-4zM19 50h2v1h-2zM22 50h1v1h-1zM28 50h1v1h-1zM31 50h1v1h-1zM33 50h1v1h-1zM35 50h1v1h-1zM37 50h2v1h-2zM42 50h1v1h-1zM45 50h1v1h-1zM47 50h2v1h-2zM51 50h1v1h-1zM4 51h1v1h-1zM10 51h1v1h-1zM12 51h1v1h-1zM15 51h3v1h-3zM21 51h4v1h-4zM26 51h2v1h-2zM31 51h3v1h-3zM37 51h3v1h-3zM43 51h2v1h-2zM46 51h2v1h-2zM49 51h4v1h-4zM4 52h7v1h-7zM12 52h2v1h-2zM15 52h5v1h-5zM22 52h3v1h-3zM26 52h4v1h-4zM32 52h2v1h-2zM36 52h1v1h-1zM38 52h1v1h-1zM40 52h2v1h-2zM44 52h1v1h-1zM46 52h3v1h-3zM52 52h1v1h-1z" fill="var(--qr-fg)"/></svg>
           <p class="qr-cap">scan to save contact</p>
+          <p class="qr-terms">admit one · non-transferable<br>issued mumbai · 2011</p>
         </div>
         <p class="serial">no. 5975506</p>
       </aside>

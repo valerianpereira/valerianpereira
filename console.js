@@ -465,13 +465,77 @@
     '  skills         the stack, by category',
     '  contact        how to reach me',
     '  neofetch       the usual',
-    '  snake          take a break',
+    '  ask <question> put it in plain English',
+  '  pong           w/s to move, first to five',
     '',
     '  psql           open a SQL prompt against my career',
     '  clear          clear the screen',
     '',
     'SQL works from here too — type SELECT … and it just runs.'
   ].join('\n');
+
+  /* ── ask ────────────────────────────────────────────────────────
+     A scripted agent, not a model. Every answer below is written from the
+     record on this page; nothing is generated and nothing leaves the browser.
+     Questions about intent that only Valerian can answer (availability, rates)
+     deliberately point at his inbox rather than putting words in his mouth. */
+
+  var QA = [
+    { k: ['what do you do', 'what does he do', 'role', 'job', 'title', 'current', 'work on'],
+      a: 'He leads the Data Platform team at BookMyShow — India\'s largest entertainment ticketing\nplatform. That covers the Databricks and AWS infrastructure, ingestion and warehousing,\ndata operations, and the reporting and reconciliation systems the business runs on.\nRun `work` for the full run of roles.' },
+
+    { k: ['experience', 'how long', 'years', 'seniority', 'background'],
+      a: 'Fifteen years, all of it shipping. Four at Softaculous (2011–2015) building Webuzo, a\nhosting control panel that ran on other people\'s servers, then eleven at BookMyShow —\nstarting as a senior developer in 2015 and working up to Head of Data Platform in 2024.\nRun `work` to see the whole ladder.' },
+
+    { k: ['stack', 'technolog', 'tools', 'languages', 'tech'],
+      a: 'Data: Databricks, Spark, Delta Lake, MySQL, MariaDB, Postgres, MongoDB, MSSQL, Redis.\nPlatform: AWS, Docker, Kubernetes, GitHub Actions, Jenkins, Linux.\nLanguages: TypeScript, JavaScript, Node, Python, PHP, Bash, SQL.\nRun `skills` for the categorised list.' },
+
+    { k: ['project', 'open source', 'built', 'github', 'repo', 'backup-action'],
+      a: 'backup-action is the one people actually use — a GitHub Action that backs up MySQL,\nMongoDB and Postgres over SSH, 54 stars and on the Marketplace. Alongside it: fifa-wc26\n(the World Cup in your terminal), an npx business card, and a shelf of Alexa skills.\nRun `projects`, or query it: SELECT * FROM projects ORDER BY stars DESC;' },
+
+    { k: ['hire', 'why should', 'good at', 'strength', 'bring'],
+      a: 'He has run the same platform from both ends — writing it, then owning it. That is rarer\nthan it sounds: the reporting and reconciliation systems he is responsible for are the\nones finance closes the books on, so correctness is not negotiable. He also still ships\nsmall tools himself, which tends to keep a manager honest about what the work costs.' },
+
+    { k: ['available', 'open to work', 'hiring', 'looking', 'freelance', 'fractional', 'consult', 'rate'],
+      a: 'That one is his to answer, not mine — I am a scripted agent and I would only be guessing.\nEmail valerianpereira25@gmail.com and ask him directly; he reads it.' },
+
+    { k: ['contact', 'reach', 'email', 'get in touch', 'linkedin'],
+      a: 'valerianpereira25@gmail.com is the fastest route. Also on GitHub (@valerianpereira),\nLinkedIn (in/valerianpereira) and X (@valerianper_era). Run `contact` for the table,\nor scan the QR on the CV to save the card.' },
+
+    { k: ['where', 'location', 'based', 'mumbai', 'city', 'remote'],
+      a: 'Mumbai, India. Has worked there his whole career — Softaculous in Andheri, then\nBookMyShow.' },
+
+    { k: ['education', 'degree', 'study', 'college', 'university', 'certif'],
+      a: 'MCA from Indira Gandhi National Open University (2013–2017) and a B.Sc. in Information\nTechnology from L. S. Raheja College, Mumbai University (2008–2011). Professional Scrum\nMaster I, and Google Cloud Architecture training. Run `psql` then SELECT * FROM education;' },
+
+    { k: ['databricks', 'warehouse', 'pipeline', 'data platform', 'scale', 'etl'],
+      a: 'The platform runs on Databricks over AWS: ingestion from the transactional estate into\nthe warehouse, the data operations around it, and the reporting layer the business and\nfinance teams query. Day to day that is as much about reconciliation and correctness as\nit is about throughput.' },
+
+    { k: ['site', 'this website', 'how did you build', 'made this', 'built this'],
+      a: 'Two files and no framework: one HTML document and one script. The CV you can switch to\nis the real document; this shell reads its data-* attributes, which is why the two can\nnever disagree. The SQL is a small hand-written tokeniser and evaluator — no library.' }
+  ];
+
+  var ASK_SUGS = [
+    'what do you do?',
+    'what is your stack?',
+    'why should we hire you?',
+    'are you open to work?',
+    'tell me about your projects'
+  ];
+
+  function askAnswer(q) {
+    var t = (q || '').toLowerCase();
+    var best = null, bestScore = 0;
+    QA.forEach(function (item) {
+      var score = 0;
+      item.k.forEach(function (k) { if (t.indexOf(k) > -1) score += k.length; });
+      if (score > bestScore) { bestScore = score; best = item; }
+    });
+    if (best) return best.a;
+    return 'I do not have a scripted answer for that one — I am a small keyword-matched agent,\n' +
+           'not a language model. Try `help` for what the shell knows, `about` for the summary,\n' +
+           'or email valerianpereira25@gmail.com and ask the man himself.';
+  }
 
   function boot() {
     var shell = document.getElementById('console');
@@ -503,82 +567,196 @@
       return el;
     }
 
-    /* ── snake ──────────────────────────────────────────────────── */
+    /* Renders `code` spans as real elements — no markup ever goes through
+       innerHTML, so answer text stays text. */
+    function richInto(node, text) {
+      text.split(/(`[^`]+`)/).forEach(function (part) {
+        if (part.charAt(0) === '`' && part.length > 2) {
+          var c = document.createElement('code');
+          c.textContent = part.slice(1, -1);
+          node.appendChild(c);
+        } else if (part) {
+          node.appendChild(document.createTextNode(part));
+        }
+      });
+    }
 
-    var W = 24, H = 13;   // cells; each drawn 2 chars wide so they read square
+    /* The working line, in the shape Claude Code shows in a terminal:
+       `. Crunching... (1.2s . 7 rows)`. Cosmetic, so reduced-motion skips it. */
+    var VERBS = ['Mulling', 'Crunching', 'Percolating', 'Warehousing', 'Rummaging', 'Pondering'];
 
-    function startSnake() {
+    function working(unitFn, done) {
+      if (reduced) { done(); return; }
+      var el = write('cn-status', ''), t0 = Date.now(),
+          verb = VERBS[Math.floor(Math.random() * VERBS.length)], frame = 0;
+      var tick = setInterval(function () {
+        var secs = ((Date.now() - t0) / 1000).toFixed(1);
+        el.textContent = '\u00b7 ' + verb + '\u2026' + Array((frame++ % 4) + 1).join(' ') +
+                         '  (' + secs + 's)';
+        out.scrollTop = out.scrollHeight;
+      }, 90);
+      setTimeout(function () {
+        clearInterval(tick);
+        var secs = ((Date.now() - t0) / 1000).toFixed(1);
+        el.textContent = '\u00b7 ' + verb + '\u2026 (' + secs + 's \u00b7 \u2193 ' + unitFn() + ')';
+        done();
+      }, 420 + Math.floor(Math.random() * 300));
+    }
+
+    /* ── pong ───────────────────────────────────────────────────────
+       Rendered as a character grid in the output pane. Keys are captured
+       while it runs and released on quit, so the prompt is never left in a
+       state where typing does nothing. */
+
+    var PW = 64, PH = 17, PADDLE = 4, TARGET = 5;
+
+    function startPong() {
       if (game) return;
-      var body = [[14, 6], [13, 6], [12, 6]], dir = [1, 0], next = [1, 0],
-          food = [21, 6], score = 0, dead = false,
+
+      var you = (PH - PADDLE) / 2,
+          cpu = (PH - PADDLE) / 2,
+          ball, sy = 0, sc = 0, over = false,
+          up = false, down = false,
           pre = write('cn-game', ''), tick,
           seed = (Date.now() % 2147483646) + 1;
 
       function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
 
-      function place() {
-        do { food = [Math.floor(rnd() * W), Math.floor(rnd() * H)]; }
-        while (body.some(function (s) { return s[0] === food[0] && s[1] === food[1]; }));
+      function serve(dir) {
+        ball = { x: PW / 2, y: PH / 2, vx: dir * 0.9, vy: (rnd() * 1.2 - 0.6) || 0.4 };
       }
 
-      function draw() {
-        var grid = [], y, x;
-        for (y = 0; y < H; y++) { grid.push(new Array(W)); for (x = 0; x < W; x++) grid[y][x] = '  '; }
-        grid[food[1]][food[0]] = '◆ ';
-        body.forEach(function (s, i) {
-          if (s[1] >= 0 && s[1] < H && s[0] >= 0 && s[0] < W) grid[s[1]][s[0]] = i ? '██' : '▓▓';
-        });
-        var rule = Array(W * 2 + 1).join('─');
+      function draw(note) {
+        var g = [], y, x;
+        for (y = 0; y < PH; y++) { g.push(new Array(PW)); for (x = 0; x < PW; x++) g[y][x] = ' '; }
+        for (y = 0; y < PH; y++) if (y % 2 === 0) g[y][Math.floor(PW / 2)] = '┊';
+        for (y = 0; y < PADDLE; y++) {
+          var a = Math.round(you) + y, b = Math.round(cpu) + y;
+          if (a >= 0 && a < PH) g[a][1] = '█';
+          if (b >= 0 && b < PH) g[b][PW - 2] = '█';
+        }
+        var bx = Math.round(ball.x), by = Math.round(ball.y);
+        if (by >= 0 && by < PH && bx >= 0 && bx < PW) g[by][bx] = '●';
+
+        var rule = Array(PW + 1).join('─');
         pre.textContent = [
-          'snake  ·  arrows or wasd to steer  ·  q to quit' + pad('', 4) + 'score ' + score,
+          'pong  ·  w/s or ↑/↓ to move  ·  q to quit' +
+            Array(Math.max(1, PW - 44)).join(' ') + '   you ' + sy + '  —  ' + sc + ' cpu',
           '┌' + rule + '┐'
-        ].concat(grid.map(function (r) { return '│' + r.join('') + '│'; }))
-         .concat([
-           '└' + rule + '┘',
-           dead ? 'game over — score ' + score + '. type snake to play again.' : ''
-         ]).join('\n');
+        ].concat(g.map(function (r) { return '│' + r.join('') + '│'; }))
+         .concat(['└' + rule + '┘', note || '']).join('\n');
         out.scrollTop = out.scrollHeight;
       }
 
       function step() {
-        dir = next;
-        var head = [body[0][0] + dir[0], body[0][1] + dir[1]];
-        if (head[0] < 0 || head[0] >= W || head[1] < 0 || head[1] >= H ||
-            body.some(function (s) { return s[0] === head[0] && s[1] === head[1]; })) {
-          dead = true; stop(); draw(); return;
+        if (up) you -= 1.1;
+        if (down) you += 1.1;
+        you = Math.max(0, Math.min(PH - PADDLE, you));
+
+        // the machine tracks the ball, but slowly enough to be beatable
+        var target = ball.y - PADDLE / 2;
+        cpu += Math.max(-0.78, Math.min(0.78, target - cpu));
+        cpu = Math.max(0, Math.min(PH - PADDLE, cpu));
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        if (ball.y <= 0) { ball.y = 0; ball.vy = Math.abs(ball.vy); }
+        if (ball.y >= PH - 1) { ball.y = PH - 1; ball.vy = -Math.abs(ball.vy); }
+
+        // paddles
+        if (ball.x <= 2 && ball.vx < 0) {
+          if (ball.y >= you - 0.5 && ball.y <= you + PADDLE) {
+            ball.vx = Math.abs(ball.vx) * 1.03;
+            ball.vy += (ball.y - (you + PADDLE / 2)) * 0.28;
+            ball.x = 2;
+          }
         }
-        body.unshift(head);
-        if (head[0] === food[0] && head[1] === food[1]) { score += 10; place(); }
-        else body.pop();
+        if (ball.x >= PW - 3 && ball.vx > 0) {
+          if (ball.y >= cpu - 0.5 && ball.y <= cpu + PADDLE) {
+            ball.vx = -Math.abs(ball.vx) * 1.03;
+            ball.vy += (ball.y - (cpu + PADDLE / 2)) * 0.28;
+            ball.x = PW - 3;
+          }
+        }
+
+        if (ball.x < 0) { sc++; done('cpu scores.'); return; }
+        if (ball.x > PW - 1) { sy++; done('you score.'); return; }
         draw();
       }
 
+      function done(msg) {
+        if (sy >= TARGET || sc >= TARGET) {
+          over = true; stop();
+          draw(sy > sc ? 'you win, ' + sy + '–' + sc + '. type pong to play again.'
+                       : 'cpu wins, ' + sc + '–' + sy + '. type pong to play again.');
+          return;
+        }
+        serve(ball.x < 0 ? 1 : -1);
+        draw(msg);
+      }
+
       function key(e) {
-        var k = (e.key || '').toLowerCase(), d = null;
-        if (k === 'arrowup' || k === 'w') d = [0, -1];
-        else if (k === 'arrowdown' || k === 's') d = [0, 1];
-        else if (k === 'arrowleft' || k === 'a') d = [-1, 0];
-        else if (k === 'arrowright' || k === 'd') d = [1, 0];
-        else if (k === 'q' || k === 'escape') { e.preventDefault(); stop(); pre.textContent += '\nquit.'; return; }
-        else return;
-        e.preventDefault();
-        if (d[0] !== -dir[0] || d[1] !== -dir[1]) next = d;
+        var k = (e.key || '').toLowerCase();
+        if (k === 'arrowup' || k === 'w') { up = true; down = false; e.preventDefault(); }
+        else if (k === 'arrowdown' || k === 's') { down = true; up = false; e.preventDefault(); }
+        else if (k === 'q' || k === 'escape') { e.preventDefault(); stop(); pre.textContent += '\nquit.'; }
+      }
+      function release(e) {
+        var k = (e.key || '').toLowerCase();
+        if (k === 'arrowup' || k === 'w') up = false;
+        if (k === 'arrowdown' || k === 's') down = false;
       }
 
       function stop() {
         clearInterval(tick);
         document.removeEventListener('keydown', key, true);
+        document.removeEventListener('keyup', release, true);
         game = null;
         input.focus();
       }
 
       game = { stop: stop };
       document.addEventListener('keydown', key, true);
-      place(); draw();
-      tick = setInterval(step, 130);
+      document.addEventListener('keyup', release, true);
+      serve(rnd() > 0.5 ? 1 : -1);
+      draw('first to ' + TARGET + '.');
+      tick = setInterval(step, 55);
     }
 
     /* ── command dispatch ───────────────────────────────────────── */
+
+    function renderAskIntro() {
+      write('cn-ask-head', '\u2726 Ask valerian-ai');
+      write('cn-ask-note',
+        'A tiny scripted agent \u2014 no live model, no network, just curated answers written\n' +
+        'from the record on this page. Ask in plain English, or tap one:');
+      var wrap = document.createElement('div');
+      wrap.className = 'cn-sugs';
+      ASK_SUGS.forEach(function (q) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cn-sug';
+        btn.textContent = '\u201c' + q + '\u201d';
+        btn.addEventListener('click', function () { submit('ask ' + q); input.focus(); });
+        wrap.appendChild(btn);
+      });
+      out.appendChild(wrap);
+      out.scrollTop = out.scrollHeight;
+    }
+
+    function renderAnswer(q) {
+      var box = document.createElement('div');
+      box.className = 'cn-answer';
+      var who = document.createElement('span');
+      who.className = 'who';
+      who.textContent = 'valerian-ai';
+      var body = document.createElement('span');
+      body.className = 'body';
+      richInto(body, askAnswer(q));
+      box.appendChild(who); box.appendChild(body);
+      out.appendChild(box);
+      out.scrollTop = out.scrollHeight;
+    }
 
     function table(name, cols, map) {
       return renderTable({ cols: cols, rows: tables[name].map(map) });
@@ -587,12 +765,18 @@
     function runShell(src) {
       var cmd = src.trim(), head = cmd.split(/\s+/)[0].toLowerCase();
 
+      if (head === 'ask') {
+        var q = cmd.replace(/^ask\s*/i, '').trim();
+        if (!q) { renderAskIntro(); return null; }
+        working(function () { return '1 answer'; }, function () { renderAnswer(q); });
+        return null;
+      }
       if (head === 'about') return ABOUT;
       if (head === 'help' || head === '?') return HELP_SH;
       if (head === 'whoami') return 'valerian — Head of Data Platform at BookMyShow';
       if (head === 'neofetch') return neofetch(tables);
       if (head === 'clear') { out.textContent = ''; return null; }
-      if (head === 'snake') { startSnake(); return null; }
+      if (head === 'pong' || head === 'game') { startPong(); return null; }
       if (head === 'date') return new Date().toString();
       if (head === 'pwd') return '/Users/guest';
       if (head === 'ls') return 'about        contact      projects     skills\ncareer.db    neofetch     work';
@@ -649,7 +833,10 @@
             ? renderError(new SqlError('unrecognised command "' + trimmed + '"', -1, 'Try \\? for help.'), null)
             : m);
         } else {
-          write('cn-res', execute(trimmed, tables).text);
+          var res = execute(trimmed, tables);
+          var n = res.res ? res.res.rows.length : 0;
+          working(function () { return n + ' row' + (n === 1 ? '' : 's'); },
+                  function () { write('cn-res', res.text); });
         }
       } catch (e) {
         if (e instanceof SqlError) write('cn-err', renderError(e, trimmed.replace(/;+$/, '')));
@@ -666,7 +853,7 @@
         e.preventDefault();
         var words = input.value.split(/\s+/), last = words[words.length - 1].toLowerCase();
         if (!last) return;
-        var pool = ['about', 'work', 'projects', 'skills', 'contact', 'neofetch', 'snake', 'psql', 'help', 'clear']
+        var pool = ['about', 'work', 'projects', 'skills', 'contact', 'ask', 'neofetch', 'pong', 'psql', 'help', 'clear']
           .concat(Object.keys(tables));
         Object.keys(tables).forEach(function (t) { pool = pool.concat(Object.keys(tables[t][0] || {})); });
         var hit = pool.filter(function (w) { return w.toLowerCase().indexOf(last) === 0; });
