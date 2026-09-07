@@ -35,7 +35,7 @@
       };
     });
 
-    t.projects = [].map.call(document.querySelectorAll('.build'), function (el) {
+    t.projects = [].map.call(document.querySelectorAll('.builds:not(.ships) .build'), function (el) {
       return {
         name: el.dataset.name,
         lang: el.dataset.lang,
@@ -43,6 +43,10 @@
         url: el.dataset.url,
         blurb: el.dataset.blurb
       };
+    });
+
+    t.shipped = [].map.call(document.querySelectorAll('.ships .build'), function (el) {
+      return { name: el.dataset.name, team: el.dataset.team, blurb: el.dataset.blurb };
     });
 
     t.skills = [].map.call(document.querySelectorAll('.rack li'), function (el) {
@@ -66,7 +70,7 @@
     var years = new Date().getFullYear() - 2011;
     t.career = [{
       name: 'Valerian Pereira',
-      role: 'Head of Data Platform',
+      role: 'Head of Data Team',
       company: 'BookMyShow',
       city: 'Mumbai',
       years_shipping: years,
@@ -416,8 +420,8 @@
       ['', 'guest@valerianpereira.in'],
       ['', '------------------------'],
       ['host', 'BookMyShow · Mumbai, India'],
-      ['os', 'Data Platform ' + yrs + '.0'],
-      ['kernel', 'Head of Data Platform'],
+      ['os', 'Data Team ' + yrs + '.0'],
+      ['kernel', 'Head of Data Team'],
       ['uptime', yrs + ' years, still shipping'],
       ['shell', 'zsh · psql'],
       ['packages', tables.projects.length + ' public (46 repos)'],
@@ -438,12 +442,14 @@
   }
 
   var ABOUT = [
-    'Valerian Pereira — Head of Data Platform at BookMyShow, in Mumbai.',
+    'Valerian Pereira — Head of Data Team at BookMyShow, in Mumbai.',
     '',
     'Fifteen years building the things other people’s traffic runs on: data',
-    'platforms, APIs, and the infrastructure underneath them. Today that means',
-    'Databricks and AWS, ingestion and warehousing, and the reporting and',
-    'reconciliation systems a ticketing business actually runs on.',
+    'platforms, APIs, and the infrastructure underneath them. Today that runs three',
+    'ways — the platform on Databricks and AWS, the analytics and reconciliation a',
+    'ticketing business actually runs on, and data science.',
+    '',
+    'Nine of the things those teams shipped are in here: `select * from shipped;`.',
     '',
     'Before that, seven years at BookMyShow working up from writing the platform',
     'to running it, and four at Softaculous building hosting-control-panel software',
@@ -453,7 +459,8 @@
     'databases, a World Cup tracker for the terminal, a shelf of Alexa skills —',
     'usually because some chore should have automated itself.',
     '',
-    'This résumé is also a database. Type `psql` to query it, or `help` to look around.'
+    'This résumé is a database, and you are already in psql. Try `\\dt` for the tables,',
+    '`select * from roles;` for the long version, or `\\?` for the rest.'
   ].join('\n');
 
   var HELP_SH = [
@@ -482,10 +489,10 @@
 
   var QA = [
     { k: ['what do you do', 'what does he do', 'role', 'job', 'title', 'current', 'work on'],
-      a: 'He leads the Data Platform team at BookMyShow — India\'s largest entertainment ticketing\nplatform. That covers the Databricks and AWS infrastructure, ingestion and warehousing,\ndata operations, and the reporting and reconciliation systems the business runs on.\nRun `work` for the full run of roles.' },
+      a: 'He leads the Data team at BookMyShow — India\'s largest entertainment ticketing platform.\nThree groups report in: the data platform (Databricks and AWS, ingestion and warehousing),\nanalytics and the reporting the business runs on, and data science.\nRun `work` for the full run of roles.' },
 
     { k: ['experience', 'how long', 'years', 'seniority', 'background'],
-      a: 'Fifteen years, all of it shipping. Four at Softaculous (2011–2015) building Webuzo, a\nhosting control panel that ran on other people\'s servers, then eleven at BookMyShow —\nstarting as a senior developer in 2015 and working up to Head of Data Platform in 2024.\nRun `work` to see the whole ladder.' },
+      a: 'Fifteen years, all of it shipping. Four at Softaculous (2011–2015) building Webuzo, a\nhosting control panel that ran on other people\'s servers, then eleven at BookMyShow —\nstarting as a senior developer in 2015 and working up to Head of Data Team in 2024.\nRun `work` to see the whole ladder.' },
 
     { k: ['stack', 'technolog', 'tools', 'languages', 'tech'],
       a: 'Data: Databricks, Spark, Delta Lake, MySQL, MariaDB, Postgres, MongoDB, MSSQL, Redis.\nPlatform: AWS, Docker, Kubernetes, GitHub Actions, Jenkins, Linux.\nLanguages: TypeScript, JavaScript, Node, Python, PHP, Bash, SQL.\nRun `skills` for the categorised list.' },
@@ -544,10 +551,11 @@
     var out = shell.querySelector('.cn-out'),
         input = shell.querySelector('.cn-input'),
         ps1 = shell.querySelector('.cn-ps1'),
+        who = shell.querySelector('.who'),
         chips = shell.querySelectorAll('.cn-chip'),
         tables = buildTables(),
         history = [], hi = -1,
-        sqlMode = false,
+        sqlMode = true,
         game = null,
         reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
@@ -556,7 +564,11 @@
 
     var api = { toCv: function () { setMode('cv'); } };
 
-    function setPrompt() { ps1.textContent = sqlMode ? PSQL : ZSH; }
+    function setPrompt() {
+      ps1.textContent = sqlMode ? PSQL : ZSH;
+      if (who) who.textContent = 'guest@valerianpereira.in \u2014 ' +
+        (sqlMode ? 'psql' : 'zsh') + ' \u2014 80\u00d724';
+    }
 
     function write(cls, text) {
       var el = document.createElement('pre');
@@ -773,7 +785,7 @@
       }
       if (head === 'about') return ABOUT;
       if (head === 'help' || head === '?') return HELP_SH;
-      if (head === 'whoami') return 'valerian — Head of Data Platform at BookMyShow';
+      if (head === 'whoami') return 'valerian — Head of Data Team at BookMyShow';
       if (head === 'neofetch') return neofetch(tables);
       if (head === 'clear') { out.textContent = ''; return null; }
       if (head === 'pong' || head === 'game') { startPong(); return null; }
@@ -810,6 +822,8 @@
       return 'zsh: command not found: ' + cmd.split(/\s+/)[0] + '\nType help for what this shell knows.';
     }
 
+    var SHELL_WORDS = /^(about|ask|neofetch|pong|game|whoami|clear|date|pwd|ls|sudo|logout)\b/i;
+
     function submit(src) {
       if (!src.trim()) return;
       history.push(src); hi = history.length;
@@ -822,7 +836,7 @@
           write('cn-res', 'Back in the shell.');
           return;
         }
-        if (!sqlMode) {
+        if (!sqlMode || SHELL_WORDS.test(trimmed)) {
           var r = runShell(src);
           if (r !== null) { write('cn-res', r); return; }
           if (!/^(select|explain)\b/i.test(trimmed) && trimmed.charAt(0) !== '\\') return;
@@ -853,7 +867,8 @@
         e.preventDefault();
         var words = input.value.split(/\s+/), last = words[words.length - 1].toLowerCase();
         if (!last) return;
-        var pool = ['about', 'work', 'projects', 'skills', 'contact', 'ask', 'neofetch', 'pong', 'psql', 'help', 'clear']
+        var pool = ['about', 'ask', 'neofetch', 'pong', 'clear', 'select', 'from', 'where',
+                    'order by', 'limit', 'count', '\\dt', '\\d', '\\?', '\\q']
           .concat(Object.keys(tables));
         Object.keys(tables).forEach(function (t) { pool = pool.concat(Object.keys(tables[t][0] || {})); });
         var hit = pool.filter(function (w) { return w.toLowerCase().indexOf(last) === 0; });
@@ -895,7 +910,7 @@
       ['warming up the warehouse', 'databricks'],
       ['restoring 46 repositories', 'ok'],
       ['connecting to bookmyshow', 'ok'],
-      ['spawning shell', 'zsh']
+      ['opening career.db', 'psql']
     ];
 
     function warmUp(done) {
@@ -959,7 +974,12 @@
 
     ok('roles table populated', tables.roles.length === 7);
     ok('one current role', q('SELECT title FROM roles WHERE current').rows.length === 1);
-    ok('current role is data platform', /Head of Data Platform/.test(q('SELECT title FROM roles WHERE current').rows[0].title));
+    ok('current role is the data team', /Head of Data Team/.test(q('SELECT title FROM roles WHERE current').rows[0].title));
+    ok('shipped table populated', tables.shipped.length > 0 && tables.shipped.every(function (r) {
+      return r.name && r.team && r.blurb;
+    }));
+    // guards the .builds:not(.ships) scoping — only repos carry a url
+    ok('shipped rows stay out of projects', tables.projects.every(function (r) { return !!r.url; }));
     ok('order+limit picks top project', q('SELECT name, stars FROM projects ORDER BY stars DESC LIMIT 1').rows[0].name === 'backup-action');
     ok('count(*) counts', q('SELECT COUNT(*) FROM projects').rows[0].count === tables.projects.length);
     ok('where = filters', q("SELECT name FROM skills WHERE category = 'data'").rows.length > 0);

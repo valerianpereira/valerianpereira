@@ -1,8 +1,9 @@
 # Valerian Pereira
 
-> Head of Data Platform at BookMyShow, based in Mumbai, India. Fifteen years
-> building data platforms, APIs and the infrastructure underneath them. Builds
-> developer tooling and command-line utilities in the open.
+> Head of Data Team at BookMyShow, based in Mumbai, India — the data platform,
+> analytics and data science. Fifteen years building data
+> platforms, APIs and the infrastructure underneath them. Builds developer
+> tooling and command-line utilities in the open.
 
 The site at https://valerianpereira.in/ is a single page with two views of the
 same content: a SQL console you can query, and a conventional CV below it.
@@ -11,14 +12,35 @@ schema.org JSON-LD.
 
 ## Current role
 
-- **Head of Data Platform (Engineering Manager III)**, BookMyShow, Apr 2024 –
-  present. Owns the data platform end to end: Databricks and AWS
-  infrastructure, ingestion and warehousing, data operations, and the reporting
-  and reconciliation systems the business runs on.
+- **Head of Data Team (Engineering Manager III)**, BookMyShow, Apr 2024 –
+  present. Owns the data function end to end across three groups: the data
+  platform (Databricks and AWS infrastructure, ingestion and warehousing, data
+  operations), analytics and the reporting and reconciliation systems the
+  business runs on, and data science.
+
+## What the team has shipped
+
+Nine initiatives, queryable on the page as `SELECT * FROM shipped;`.
+
+Data platform:
+- 65 legacy back-office reports migrated onto a Databricks app reading the lake.
+- Daily pipelines across 18 payment gateways into one reconciliation report.
+- Drop-off widget moved from a third-party SDK onto in-house event data.
+
+Analytics:
+- Experiment reporting moved onto analytics data; the experimentation vendor
+  scoped down to assignment only.
+- AWS QuickSight sunset onto Databricks, saving $650 a month.
+- Agentic workflow replacing a manual customer-data handoff to marketing tools.
+- Delta Sharing so partners read data directly instead of waiting on extracts.
+
+Data science:
+- Recommendation app moved to Go and Redis; Aerospike dropped from the stack.
+- Abusive-review detection and summarisation on LLM APIs, running daily.
 
 ## Experience
 
-- Engineering Manager III — Head of Data Platform, BookMyShow (Apr 2024 – present)
+- Engineering Manager III — Head of Data Team, BookMyShow (Apr 2024 – present)
 - Engineering Manager II, BookMyShow (Feb 2022 – Apr 2024)
 - Engineering Manager I, BookMyShow (Apr 2020 – Feb 2022)
 - Assistant Manager, BookMyShow (Oct 2016 – Apr 2020)

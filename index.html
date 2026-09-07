@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Valerian Pereira — Head of Data Platform, BookMyShow</title>
-<meta name="description" content="Valerian Pereira leads the Data Platform team at BookMyShow in Mumbai. Fifteen years building data infrastructure, APIs and developer tooling.">
+<title>Valerian Pereira — Head of Data Team, BookMyShow</title>
+<meta name="description" content="Valerian Pereira leads the Data team at BookMyShow in Mumbai — platform, analytics and data science. Fifteen years building data infrastructure, APIs and developer tooling.">
 <link rel="canonical" href="https://valerianpereira.in/">
 <meta property="og:type" content="profile">
-<meta property="og:title" content="Valerian Pereira — Head of Data Platform, BookMyShow">
+<meta property="og:title" content="Valerian Pereira — Head of Data Team, BookMyShow">
 <meta property="og:description" content="Data platform at scale by day, small command-line tools by night. Mumbai, India.">
 <meta property="og:url" content="https://valerianpereira.in/">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/5975506?v=4">
@@ -31,8 +31,8 @@
       "name": "Valerian Pereira",
       "givenName": "Valerian",
       "familyName": "Pereira",
-      "jobTitle": "Head of Data Platform",
-      "description": "Engineering leader with 15 years building data platforms, APIs and the infrastructure underneath them. Leads the Data Platform team at BookMyShow in Mumbai; builds developer tooling and command-line utilities in the open.",
+      "jobTitle": "Head of Data Team",
+      "description": "Engineering leader with 15 years building data platforms, APIs and the infrastructure underneath them. Leads the Data team at BookMyShow in Mumbai — the data platform, analytics and data science. Builds developer tooling and command-line utilities in the open.",
       "url": "https://valerianpereira.in/",
       "image": "https://avatars.githubusercontent.com/u/5975506?v=4",
       "email": "mailto:valerianpereira25@gmail.com",
@@ -103,6 +103,10 @@
         "Python",
         "PHP",
         "Data engineering",
+        "Analytics",
+        "Recommender systems",
+        "Data science",
+        "Machine learning",
         "Engineering leadership"
       ],
       "sameAs": [
@@ -113,7 +117,7 @@
       "hasOccupation": [
         {
           "@type": "EmployeeRole",
-          "roleName": "Engineering Manager III — Head of Data Platform",
+          "roleName": "Engineering Manager III — Head of Data Team",
           "startDate": "2024-04",
           "worksFor": {
             "@type": "Organization",
@@ -186,7 +190,7 @@
       "@type": "ProfilePage",
       "@id": "https://valerianpereira.in/#page",
       "url": "https://valerianpereira.in/",
-      "name": "Valerian Pereira — Head of Data Platform, BookMyShow",
+      "name": "Valerian Pereira — Head of Data Team, BookMyShow",
       "mainEntity": {
         "@id": "https://valerianpereira.in/#person"
       },
@@ -303,11 +307,23 @@
   --well:rgba(0,0,0,.025);
   --navbg:rgba(246,246,244,.85);
   --faint:#8B8B93;
-  --grid:rgba(0,0,0,.045);
+  --motif:rgba(0,0,0,.10);
   --dots:rgba(0,0,0,.24);
   --code:rgba(0,0,0,.05);
   --bulb-glow:rgba(138,82,0,.35);
   --bulb-hover:#6E4200;
+
+  /* the ticket is printed stock, so it keeps one palette in both themes.
+     Cream and gold are both >=4.5:1 on --tkt-body; the maroons are on cream. */
+  --tkt-body:#B81F26;
+  --tkt-edge:#8E1319;
+  --tkt-stub:#EDE3D1;
+  --tkt-ink:#F4EBDA;
+  --tkt-dim:#E5D5C6;
+  --tkt-gold:#EFD79B;
+  --tkt-rule:rgba(239,215,155,.5);
+  --tkt-fine:#8A4A46;
+  --tkt-live:#15682D;
 
   /* macOS Terminal.app — "Basic" in light, "Pro" in dark */
   --term-bg:#FFFFFF;
@@ -338,7 +354,7 @@
     --well:rgba(0,0,0,.25);
     --navbg:rgba(12,12,13,.82);
     --faint:#6A6A72;
-    --grid:rgba(255,255,255,.035);
+    --motif:rgba(255,255,255,.09);
     --dots:rgba(255,255,255,.22);
     --code:rgba(255,255,255,.05);
     --bulb-glow:rgba(255,182,39,.7);
@@ -365,8 +381,10 @@ body{
 /* auditorium wash — two dim marquee lamps, no motion */
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:44px 44px,44px 44px;
+  /* masked, not tinted, so one file covers both themes */
+  background:var(--motif);
+  -webkit-mask:url(/pattern.svg) 0 0/560px 560px repeat;
+  mask:url(/pattern.svg) 0 0/560px 560px repeat;
 }
 .shell{position:relative;z-index:1}
 .col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
@@ -424,49 +442,62 @@ p{margin:0}
 .hero{padding:clamp(2rem,5vw,3.5rem) 0 clamp(2rem,4vw,3rem)}
 .ticket{
   display:grid;grid-template-columns:1fr 15.5rem;
-  background:var(--stage);
-  border:1px solid var(--edge);border-radius:14px;position:relative;
+  background:var(--tkt-body);
+  border:1px solid var(--tkt-edge);border-radius:14px;position:relative;
   box-shadow:0 30px 80px -40px #000;
 }
-.ticket::after{ /* sheen */
-  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
-  background:linear-gradient(115deg,transparent 42%,var(--sheen) 50%,transparent 58%);
+/* punched edge — page-coloured circles laid over the border, the same trick
+   .notch already uses, so it costs no mask and leaves the drop shadow alone.
+   Wide and shallow: the radius nearly meets the pitch, so the leftover edge
+   reads as a scallop rather than a row of beads. Depth stays under
+   .stub::before's inset so a bite never eats the printed frame.
+   Left edge only — over the cream counterfoil the bites vanish and all you
+   see is the leftover border, which reads as a fringe, not a punch. */
+.ticket::before{
+  content:"";position:absolute;left:-20px;top:9px;bottom:9px;width:28px;z-index:2;
+  pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,var(--house) 0 14px,#0000 14.5px) 0 0/28px 30px repeat-y;
 }
-.stub{padding:clamp(1.5rem,4vw,2.75rem)}
+.stub{padding:clamp(1.5rem,4vw,2.75rem);position:relative}
+.stub::before{ /* printed frame; sits inside the padding, never crosses text */
+  content:"";position:absolute;inset:clamp(.7rem,1.6vw,1.1rem);
+  border:1px solid var(--tkt-rule);pointer-events:none;
+}
 .eyebrow{
   font-family:"IBM Plex Mono",monospace;font-size:.6875rem;letter-spacing:.18em;
-  color:var(--dim);display:flex;justify-content:space-between;gap:1rem;
+  color:var(--tkt-dim);display:flex;justify-content:space-between;gap:1rem;
 }
 .stamp{
-  display:inline-block;color:var(--bulb);border:1.5px solid var(--bulb);
+  display:inline-block;color:var(--tkt-gold);border:1.5px solid var(--tkt-gold);
   padding:.1rem .45rem;border-radius:3px;transform:rotate(-4deg);
 }
 h1{
   font-size:clamp(2.9rem,10.5vw,5.75rem);font-weight:800;letter-spacing:-.015em;
-  margin:1.5rem 0 0;
+  margin:1.5rem 0 0;color:var(--tkt-gold);
 }
 h1 .line{display:block;overflow:hidden}
 h1 .line em{display:block;font-style:normal}
 .title{
   margin-top:1.25rem;font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:500;line-height:1.35;
+  color:var(--tkt-ink);
 }
-.title s{text-decoration:none;color:var(--bulb)}
-.lede{margin-top:1.25rem;color:var(--dim);max-width:44ch}
+.title s{text-decoration:none;color:var(--tkt-gold)}
+.lede{margin-top:1.25rem;color:var(--tkt-dim);max-width:44ch}
 .cta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
 .btn{
   text-decoration:none;font-size:.875rem;font-weight:500;padding:.55rem 1.05rem;
-  border-radius:8px;border:1px solid var(--edge);color:var(--type);
+  border-radius:8px;border:1px solid var(--tkt-rule);color:var(--tkt-ink);
   transition:border-color .2s ease,color .2s ease,background .2s ease;
 }
-.btn:hover{border-color:var(--bulb);color:var(--bulb)}
-.btn.solid{background:var(--bulb);border-color:var(--bulb);color:var(--house);font-weight:600}
-.btn.solid:hover{background:var(--bulb-hover);color:var(--house)}
+.btn:hover{border-color:var(--tkt-gold);color:var(--tkt-gold)}
+.btn.solid{background:var(--tkt-gold);border-color:var(--tkt-gold);color:var(--tkt-edge);font-weight:600}
+.btn.solid:hover{background:var(--tkt-ink);color:var(--tkt-edge)}
 
 /* counterfoil */
 .foil{
-  border-left:2px dashed var(--edge);padding:clamp(1.5rem,4vw,2.75rem) 1.5rem;
+  border-left:2px dashed var(--tkt-edge);padding:clamp(1.5rem,4vw,2.75rem) 1.5rem;
   display:flex;flex-direction:column;gap:1rem;
-  background:var(--well);
+  background:var(--tkt-stub);border-radius:0 13px 13px 0;
 }
 .foil .serial{margin-top:auto;padding-top:1rem;text-align:center}
 .ticket > .notch{position:absolute;left:calc(100% - 15.5rem);width:18px;height:18px;border-radius:50%;background:var(--house);border:1px solid var(--edge);transform:translateX(-9px);z-index:2}
@@ -489,16 +520,16 @@ h1 .line em{display:block;font-style:normal}
 }
 .qr-cap{
   margin-top:.5rem;font-family:"IBM Plex Mono",monospace;font-size:.625rem;
-  letter-spacing:.08em;color:var(--dim);
+  letter-spacing:.08em;color:var(--tkt-fine);
 }
 .qr-terms{
   margin-top:.45rem;font-family:"IBM Plex Mono",monospace;font-size:.5625rem;
-  letter-spacing:.09em;line-height:1.6;color:var(--faint);text-transform:uppercase;
+  letter-spacing:.09em;line-height:1.6;color:var(--tkt-fine);text-transform:uppercase;
 }
 
-.rec dt{color:var(--dim);white-space:nowrap}
-.rec dd{margin:0;color:var(--type);text-align:right;white-space:nowrap}
-.rec dd.live{color:var(--live)}
+.rec dt{color:var(--tkt-fine);white-space:nowrap}
+.rec dd{margin:0;color:var(--tkt-edge);text-align:right;white-space:nowrap}
+.rec dd.live{color:var(--tkt-live)}
 .rec dd.live::before{
   content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
   background:var(--live);margin-right:.4rem;vertical-align:middle;
@@ -510,6 +541,7 @@ h1 .line em{display:block;font-style:normal}
   100%{box-shadow:0 0 0 0 rgba(40,200,64,0)}
 }
 .serial{font-family:"IBM Plex Mono",monospace;font-size:.625rem;letter-spacing:.14em;color:var(--faint)}
+.foil .serial{color:var(--tkt-fine)}
 
 /* ─────────── sections ─────────── */
 section{padding:clamp(2.5rem,5.5vw,4rem) 0;position:relative}
@@ -800,7 +832,7 @@ footer .serial{color:var(--faint)}
 @media (max-width:52rem){
   .ticket{grid-template-columns:1fr}
   .foil{
-    border-left:0;border-top:2px dashed var(--edge);
+    border-left:0;border-top:2px dashed var(--tkt-edge);border-radius:0 0 13px 13px;
     display:grid;grid-template-columns:1fr auto;gap:1.25rem;align-items:start;
   }
   .qr-box{margin:0}
@@ -811,6 +843,8 @@ footer .serial{color:var(--faint)}
   .close{grid-template-columns:1fr}
 }
 @media (max-width:44rem){
+  .foil{grid-template-columns:1fr}
+  .qr-box{margin-top:.5rem}
   .burger{display:grid}
   .menu{
     position:fixed;inset:var(--nav-h) 0 auto;flex-direction:column;align-items:stretch;gap:0;
@@ -852,6 +886,10 @@ footer .serial{color:var(--faint)}
   body{background:#fff;color:#000}
   .ticket,.build{border-color:#bbb;background:#fff;box-shadow:none}
   .foil{background:#fff;border-color:#bbb}
+  .ticket::before,.stub::before{display:none}
+  .title,.title s,.lede,.eyebrow,.stamp,.rec dt,.rec dd,.rec dd.live,
+  .qr-cap,.qr-terms,.foil .serial{color:#000}
+  .stamp{border-color:#666}
   h1,h2,h3,.fact dd,.build a{color:#000}
   .row .dots::before{transform:scaleX(1)}
   section{break-inside:avoid;border-color:#ddd}
@@ -867,6 +905,7 @@ footer .serial{color:var(--faint)}
     <button class="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><i></i></button>
     <div class="menu" id="menu">
       <a href="#work">Work</a>
+      <a href="#shipped">Shipped</a>
       <a href="#builds">Builds</a>
       <a href="#stack">Stack</a>
       <a href="#credits">Credits</a>
@@ -888,24 +927,25 @@ footer .serial{color:var(--faint)}
       <div class="cn-out" role="log" aria-live="polite" aria-atomic="false"></div>
       <div class="cn-chips">
         <button class="cn-chip" data-q="about">about</button>
-        <button class="cn-chip" data-q="work">work</button>
-        <button class="cn-chip" data-q="projects">projects</button>
-        <button class="cn-chip" data-q="skills">skills</button>
-        <button class="cn-chip" data-q="contact">contact</button>
+        <button class="cn-chip" data-q="\dt">\dt</button>
+        <button class="cn-chip" data-q="select * from roles;">select roles</button>
+        <button class="cn-chip" data-q="select * from projects order by stars desc;">select projects</button>
+        <button class="cn-chip" data-q="select * from skills;">select skills</button>
+        <button class="cn-chip" data-q="select * from education;">select education</button>
+        <button class="cn-chip" data-q="select name, team from shipped;">select shipped</button>
+        <button class="cn-chip" data-q="select * from contact;">select contact</button>
         <button class="cn-chip" data-q="ask">ask</button>
-        <button class="cn-chip" data-q="neofetch">neofetch</button>
         <button class="cn-chip" data-q="pong">pong</button>
-        <button class="cn-chip" data-q="psql">psql</button>
-        <button class="cn-chip" data-q="help">help</button>
+        <button class="cn-chip" data-q="\?">\?</button>
       </div>
       <div class="cn-form">
         <span class="cn-ps1">guest@valerianpereira.in ~ %</span>
         <input class="cn-input" type="text" autocomplete="off" autocapitalize="off"
                autocorrect="off" spellcheck="false" aria-label="Terminal command"
-               placeholder="type a command — or tap one below">
+               placeholder="type a query — or tap one above">
       </div>
     </div>
-    <p class="cn-hint"><kbd>↑</kbd> history · <kbd>Tab</kbd> completes · <kbd>help</kbd> lists commands</p>
+    <p class="cn-hint"><kbd>↑</kbd> history · <kbd>Tab</kbd> completes · <kbd>\?</kbd> lists commands</p>
   </div>
 </section>
 
@@ -926,11 +966,11 @@ footer .serial{color:var(--faint)}
           <span class="line"><em>Pereira</em></span>
         </h1>
 
-        <p class="title">Head of Data Platform at <s>BookMyShow</s></p>
+        <p class="title">Head of Data Team at <s>BookMyShow</s></p>
 
         <p class="lede">
           Fifteen years building the things other people's traffic runs on — data platforms,
-          APIs and the infrastructure underneath. After hours I build small command-line tools,
+          analytics and the infrastructure underneath. After hours I build small command-line tools,
           usually because some chore should have automated itself.
         </p>
 
@@ -971,14 +1011,15 @@ footer .serial{color:var(--faint)}
       <h3>BookMyShow <span class="run">JUN 2015 — PRESENT</span></h3>
       <p>India's largest entertainment ticketing platform.</p>
       <ul class="board">
-        <li class="now" data-title="Engineering Manager III — Head of Data Platform" data-company="BookMyShow" data-start="Apr 2024" data-end="" data-current="true" data-note="Owns the data platform end to end: Databricks and AWS infrastructure, ingestion and warehousing, data operations, reporting and reconciliation.">
+        <li class="now" data-title="Engineering Manager III — Head of Data Team" data-company="BookMyShow" data-start="Apr 2024" data-end="" data-current="true" data-note="Owns the data function end to end across three groups: the data platform on Databricks and AWS, analytics and the reporting the business runs on, and data science.">
           <div class="row">
-            <span class="what">Engineering Manager III — Head of Data Platform</span>
+            <span class="what">Engineering Manager III — Head of Data Team</span>
             <span class="dots" aria-hidden="true"></span>
             <span class="when">Apr 2024 →</span>
           </div>
-          <p class="note">Own the data platform end to end: Databricks and AWS infrastructure, ingestion
-            and warehousing, data operations, and the reporting and reconciliation systems the business runs on.</p>
+          <p class="note">Own the data function end to end across three groups: the data platform — Databricks
+            and AWS infrastructure, ingestion, warehousing and data operations; analytics and the reporting and
+            reconciliation systems the business runs on; and data science.</p>
         </li>
         <li data-title="Engineering Manager II" data-company="BookMyShow" data-start="Feb 2022" data-end="Apr 2024" data-current="false">
           <div class="row">
@@ -1036,6 +1077,50 @@ footer .serial{color:var(--faint)}
         </li>
       </ul>
     </article>
+  </div>
+</section>
+
+<section id="shipped">
+  <div class="col">
+    <h2>Shipped<span class="cnt">9 initiatives</span></h2>
+    <ul class="builds ships">
+      <li class="build" data-name="Back-office migration" data-team="platform" data-blurb="65 legacy back-office reports migrated onto a Databricks app reading the lake">
+        <b>Back-office migration</b><div class="meta"><span class="tech">PLATFORM</span></div>
+        <p>65 reports off the legacy back office and onto a Databricks app reading the lake, with internal teams consuming it directly.</p>
+      </li>
+      <li class="build" data-name="Payment reconciliation" data-team="platform" data-blurb="Daily pipelines across 18 payment gateways into one reconciliation report">
+        <b>Payment reconciliation</b><div class="meta"><span class="tech">PLATFORM</span></div>
+        <p>Daily pipelines across 18 payment gateways into one reconciliation report, in place of hours of manual finance work.</p>
+      </li>
+      <li class="build" data-name="Event pipeline" data-team="platform" data-blurb="Drop-off widget moved from a third-party SDK onto in-house event data">
+        <b>Event pipeline</b><div class="meta"><span class="tech">PLATFORM</span></div>
+        <p>The drop-off widget re-pointed from a third-party SDK onto in-house event data, with the spare hops taken out.</p>
+      </li>
+      <li class="build" data-name="Experiment analysis" data-team="analytics" data-blurb="Experiment reporting moved onto analytics data; vendor scoped to assignment only">
+        <b>Experiment analysis</b><div class="meta"><span class="tech">ANALYTICS</span></div>
+        <p>Experiment reporting moved onto analytics data, with the experimentation vendor scoped down to assignment only.</p>
+      </li>
+      <li class="build" data-name="Dashboard consolidation" data-team="analytics" data-blurb="AWS QuickSight sunset onto Databricks, saving $650 a month">
+        <b>Dashboard consolidation</b><div class="meta"><span class="tech">ANALYTICS</span></div>
+        <p>QuickSight sunset onto Databricks, which already held the data — $650 a month saved.</p>
+      </li>
+      <li class="build" data-name="Campaign automation" data-team="analytics" data-blurb="Agentic workflow replacing a manual customer-data handoff to marketing tools">
+        <b>Campaign automation</b><div class="meta"><span class="tech">ANALYTICS</span></div>
+        <p>An agentic workflow in place of a manual handoff of customer data to marketing tools: faster turnaround, less exposure.</p>
+      </li>
+      <li class="build" data-name="Partner data sharing" data-team="analytics" data-blurb="Delta Sharing so partners read data directly instead of waiting on extracts">
+        <b>Partner data sharing</b><div class="meta"><span class="tech">ANALYTICS</span></div>
+        <p>Delta Sharing stood up so partners read the data directly instead of waiting on extracts.</p>
+      </li>
+      <li class="build" data-name="Recommendation service" data-team="data science" data-blurb="Recommendation app moved to Go and Redis; Aerospike dropped from the stack">
+        <b>Recommendation service</b><div class="meta"><span class="tech">DATA SCIENCE</span></div>
+        <p>The recommendation app moved to Go and Redis, and Aerospike dropped from both the recommendation and discovery paths.</p>
+      </li>
+      <li class="build" data-name="Review moderation" data-team="data science" data-blurb="Abusive-review detection and summarisation on LLM APIs, running daily">
+        <b>Review moderation</b><div class="meta"><span class="tech">DATA SCIENCE</span></div>
+        <p>Abusive-review detection and review summarisation on LLM APIs, productionised as a daily job.</p>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -1124,7 +1209,7 @@ footer .serial{color:var(--faint)}
     <div class="close">
       <div>
         <p class="big">Doors are open.</p>
-        <p>Happy to talk data platforms, engineering teams, or anything that should have been a script.
+        <p>Happy to talk data platforms, analytics, engineering teams, or anything that should have been a script.
            Write to <a class="mailto" href="mailto:valerianpereira25@gmail.com">valerianpereira25@gmail.com</a>.</p>
       </div>
       <ul class="elsewhere">
@@ -1162,6 +1247,21 @@ burger.addEventListener('click', function () {
 });
 menu.addEventListener('click', function (e) {
   if (e.target.tagName === 'A') { menu.dataset.open = 'false'; burger.setAttribute('aria-expanded', 'false'); }
+});
+
+// In-page jumps scroll but leave the URL alone. The anchors stay in the markup
+// so the page is still crawlable and deep links still work on load; html already
+// carries scroll-behavior:smooth and scroll-padding-top, so scrollIntoView lands
+// exactly where the anchor would have.
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="#"]');
+  if (!a) return;
+  var id = a.getAttribute('href');
+  if (id === '#') return;
+  var el = document.querySelector(id);
+  if (!el) return;
+  e.preventDefault();
+  el.scrollIntoView();
 });
 
 // scroll spy + sliding indicator
