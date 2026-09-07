@@ -23,14 +23,14 @@ schema.org JSON-LD.
 Nine initiatives, queryable on the page as `SELECT * FROM shipped;`.
 
 Data platform:
-- 65 legacy back-office reports migrated onto a Databricks app reading the lake.
-- Daily pipelines across 18 payment gateways into one reconciliation report.
+- Legacy back-office reports migrated onto a Databricks app reading the lake.
+- Daily pipelines across every payment gateway into one reconciliation report.
 - Drop-off widget moved from a third-party SDK onto in-house event data.
 
 Analytics:
 - Experiment reporting moved onto analytics data; the experimentation vendor
   scoped down to assignment only.
-- AWS QuickSight sunset onto Databricks, saving $650 a month.
+- AWS QuickSight sunset onto Databricks, which already held the data.
 - Agentic workflow replacing a manual customer-data handoff to marketing tools.
 - Delta Sharing so partners read data directly instead of waiting on extracts.
 
