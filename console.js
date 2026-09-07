@@ -469,6 +469,7 @@
     });
 
     // greeting
+    write('cn-boot', 'guest@valerianpereira.in ~ % psql career');
     write('cn-note', 'psql (valerian ' + new Date().getFullYear() + '.1) — type \\? for help');
     write('cn-note', 'A résumé you can query. Tap a query below, or write your own.');
 
@@ -487,8 +488,8 @@
     try { localStorage.setItem('vp-mode', mode); } catch (e) {}
     var btn = document.getElementById('mode-toggle');
     if (btn) {
-      btn.textContent = mode === 'cv' ? 'Open console' : 'Read the CV';
-      btn.setAttribute('aria-expanded', String(mode === 'console'));
+      btn.checked = (mode === 'cv');
+      btn.setAttribute('aria-expanded', String(mode === 'cv'));
     }
     if (!opts.silent) {
       window.scrollTo(0, 0);
@@ -539,8 +540,8 @@
     try { saved = localStorage.getItem('vp-mode'); } catch (e) {}
     setMode(saved === 'cv' ? 'cv' : 'console', { silent: true });
     var btn = document.getElementById('mode-toggle');
-    if (btn) btn.addEventListener('click', function () {
-      setMode(document.documentElement.dataset.mode === 'cv' ? 'console' : 'cv');
+    if (btn) btn.addEventListener('change', function () {
+      setMode(btn.checked ? 'cv' : 'console');
     });
     boot();
   });

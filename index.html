@@ -287,17 +287,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --house:#15121C;
-  --stage:#1F1A2B;
-  --riser:#282137;
-  --edge:#372E4B;
-  --type:#EFEAF6;
-  --dim:#9E94B4;
-  --bulb:#FFB627;
-  --rose:#FF5C8A;
+  /* Light is the default; dark is redefined below. Every colour is a token so
+     both themes stay in step. */
+  --house:#F7F6F2;
+  --stage:#FFFFFF;
+  --riser:#F1EFE9;
+  --edge:#E1DED4;
+  --type:#191520;
+  --dim:#655E73;
+  --bulb:#9A5B00;          /* amber, darkened to clear 4.5:1 on paper */
+  --rose:#C2185B;
+  --sheen:rgba(0,0,0,.03);
+  --well:rgba(0,0,0,.03);
+  --navbg:rgba(247,246,242,.82);
+  --faint:#8C8599;
+  --lamp-a:rgba(154,91,0,.07);
+  --lamp-b:rgba(194,24,91,.05);
+  --dots:rgba(0,0,0,.24);
+  --code:rgba(0,0,0,.05);
+  --bulb-glow:rgba(154,91,0,.35);
+  --bulb-hover:#7C4900;
+
+  /* macOS Terminal.app — "Basic" in light, "Pro" in dark */
+  --term-bg:#FFFFFF;
+  --term-fg:#1A1A1A;
+  --term-dim:#6E6E6E;
+  --term-chrome:linear-gradient(#EDEBE7,#DCD9D3);
+  --term-chrome-edge:#C6C2BA;
+  --term-title:#4A4650;
+  --term-accent:#8A4B00;
+  --term-live:#C2185B;
+
   --gut:clamp(1.25rem,5vw,2.5rem);
   --col:64rem;
   --nav-h:60px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --house:#15121C;
+    --stage:#1F1A2B;
+    --riser:#282137;
+    --edge:#372E4B;
+    --type:#EFEAF6;
+    --dim:#9E94B4;
+    --bulb:#FFB627;
+    --rose:#FF5C8A;
+    --sheen:rgba(255,255,255,.045);
+    --well:rgba(0,0,0,.18);
+    --navbg:rgba(21,18,28,.78);
+    --faint:#6C6386;
+    --lamp-a:rgba(255,182,39,.10);
+    --lamp-b:rgba(255,92,138,.09);
+    --dots:rgba(255,255,255,.22);
+    --code:rgba(255,255,255,.05);
+    --bulb-glow:rgba(255,182,39,.7);
+    --bulb-hover:#FFC64A;
+
+    --term-bg:#000000;
+    --term-fg:#D9D9D9;
+    --term-dim:#8A8A8A;
+    --term-chrome:linear-gradient(#3A3A3C,#2C2C2E);
+    --term-chrome-edge:#1A1A1C;
+    --term-title:#C9C6CF;
+    --term-accent:#FFB627;
+    --term-live:#FF5C8A;
+  }
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 1.5rem);-webkit-text-size-adjust:100%}
@@ -310,8 +364,8 @@ body{
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(48rem 30rem at 12% -8%, rgba(255,182,39,.10), transparent 68%),
-    radial-gradient(40rem 28rem at 92% 4%, rgba(255,92,138,.09), transparent 66%);
+    radial-gradient(48rem 30rem at 12% -8%, var(--lamp-a), transparent 68%),
+    radial-gradient(40rem 28rem at 92% 4%, var(--lamp-b), transparent 66%);
 }
 .shell{position:relative;z-index:1}
 .col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
@@ -324,7 +378,7 @@ p{margin:0}
 /* ─────────── nav ─────────── */
 .nav{
   position:sticky;top:0;z-index:40;height:var(--nav-h);
-  background:rgba(21,18,28,.78);backdrop-filter:blur(14px) saturate(140%);
+  background:var(--navbg);backdrop-filter:blur(14px) saturate(140%);
   border-bottom:1px solid var(--edge);
 }
 .nav .col{height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
@@ -348,7 +402,7 @@ p{margin:0}
 .ink{
   position:absolute;bottom:-2px;height:2px;background:var(--bulb);border-radius:2px;
   transition:transform .34s cubic-bezier(.6,.05,.2,1),width .34s cubic-bezier(.6,.05,.2,1),opacity .2s;
-  opacity:0;left:0;width:0;box-shadow:0 0 12px rgba(255,182,39,.7);
+  opacity:0;left:0;width:0;box-shadow:0 0 12px var(--bulb-glow);
 }
 .burger{
   display:none;width:40px;height:36px;border:1px solid var(--edge);border-radius:8px;
@@ -369,13 +423,13 @@ p{margin:0}
 .hero{padding:clamp(2rem,5vw,3.5rem) 0 clamp(2rem,4vw,3rem)}
 .ticket{
   display:grid;grid-template-columns:1fr 15.5rem;
-  background:linear-gradient(158deg,var(--stage),#1A1626);
+  background:var(--stage);
   border:1px solid var(--edge);border-radius:14px;position:relative;
   box-shadow:0 30px 80px -40px #000;
 }
 .ticket::after{ /* sheen */
   content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
-  background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.045) 50%,transparent 58%);
+  background:linear-gradient(115deg,transparent 42%,var(--sheen) 50%,transparent 58%);
 }
 .stub{padding:clamp(1.5rem,4vw,2.75rem)}
 .eyebrow{
@@ -406,13 +460,13 @@ h1 .rose{color:var(--rose)}
 }
 .btn:hover{border-color:var(--bulb);color:var(--bulb)}
 .btn.solid{background:var(--bulb);border-color:var(--bulb);color:var(--house);font-weight:600}
-.btn.solid:hover{background:#FFC64A;color:var(--house)}
+.btn.solid:hover{background:var(--bulb-hover);color:var(--house)}
 
 /* counterfoil */
 .foil{
   border-left:2px dashed var(--edge);padding:clamp(1.5rem,4vw,2.75rem) 1.5rem;
   display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem;
-  background:rgba(0,0,0,.16);
+  background:var(--well);
 }
 .ticket > .notch{position:absolute;left:calc(100% - 15.5rem);width:18px;height:18px;border-radius:50%;background:var(--house);border:1px solid var(--edge);transform:translateX(-9px);z-index:2}
 .ticket > .notch.t{top:-9px;clip-path:inset(0 0 45% 0)}
@@ -470,7 +524,7 @@ h2 .cnt{
 }
 .row .dots::before{
   content:"";position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(255,255,255,.22) 1px,transparent 1.2px);
+  background-image:radial-gradient(circle,var(--dots) 1px,transparent 1.2px);
   background-size:6px 6px;background-position:0 50%;
   transform:scaleX(0);transform-origin:left;
 }
@@ -512,7 +566,7 @@ h2 .cnt{
 .build .tech{font-family:"IBM Plex Mono",monospace;font-size:.6875rem;color:var(--dim);letter-spacing:.06em}
 .build .stars{font-family:"IBM Plex Mono",monospace;font-size:.6875rem;color:var(--bulb)}
 .build p{margin-top:.25rem;color:var(--dim);font-size:.9375rem;line-height:1.55;max-width:64ch}
-.build code{font-family:"IBM Plex Mono",monospace;font-size:.85em;color:var(--type);background:rgba(255,255,255,.05);padding:.05em .35em;border-radius:4px}
+.build code{font-family:"IBM Plex Mono",monospace;font-size:.85em;color:var(--type);background:var(--code);padding:.05em .35em;border-radius:4px}
 .more{display:inline-block;margin-top:1.5rem;font-size:.9375rem;color:var(--bulb);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
 .more:hover{border-color:var(--bulb)}
 
@@ -540,7 +594,7 @@ h2 .cnt{
   font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-weight:800;
   font-size:clamp(1.5rem,4vw,2.25rem);color:var(--type);line-height:1.05;margin-bottom:1rem;
 }
-.close a.mailto{color:var(--bulb);text-decoration:none;border-bottom:1px solid rgba(255,182,39,.4)}
+.close a.mailto{color:var(--bulb);text-decoration:none;border-bottom:1px solid var(--bulb-glow)}
 .close a.mailto:hover{border-bottom-color:var(--bulb)}
 .elsewhere{list-style:none;margin:0;padding:0}
 .elsewhere li{border-top:1px solid var(--edge)}
@@ -560,71 +614,95 @@ h2 .cnt{
 html.has-console #console{display:block}
 /* The CV is never hidden — only the console (a widget) is. Keeps every word
    of the résumé in the rendered DOM for crawlers in both modes. */
-html[data-mode="cv"] #console{display:none}
-#mode-toggle{
-  border:1px solid var(--edge);background:transparent;color:var(--dim);cursor:pointer;
-  font:500 .8125rem/1 "IBM Plex Sans",sans-serif;padding:.45rem .8rem;border-radius:7px;
-  transition:color .2s ease,border-color .2s ease;
+html[data-mode="console"] .hero,
+html[data-mode="console"] #cv,
+html[data-mode="console"] footer{display:none}
+.sw{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;user-select:none;flex:none}
+.sw-label{font:500 .8125rem/1 "IBM Plex Sans",sans-serif;color:var(--dim);white-space:nowrap;transition:color .2s ease}
+.sw:hover .sw-label{color:var(--type)}
+.sw input{position:absolute;opacity:0;width:0;height:0}
+.sw-track{
+  width:38px;height:22px;border-radius:999px;background:var(--riser);
+  border:1px solid var(--edge);position:relative;flex:none;transition:background .22s ease,border-color .22s ease;
 }
-#mode-toggle:hover{color:var(--bulb);border-color:var(--bulb)}
-html:not(.has-console) #mode-toggle{display:none}
+.sw-knob{
+  position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+  background:var(--dim);transition:transform .24s cubic-bezier(.4,0,.2,1),background .22s ease;
+}
+.sw input:checked + .sw-track{background:var(--bulb);border-color:var(--bulb)}
+.sw input:checked + .sw-track .sw-knob{transform:translateX(16px);background:var(--house)}
+.sw input:focus-visible + .sw-track{outline:2px solid var(--bulb);outline-offset:3px}
+html:not(.has-console) .sw{display:none}
+/* With the CV closed there is nothing for the section tabs to point at. */
+html[data-mode="console"] .menu{display:none}
+html[data-mode="console"] .burger{display:none}
 
 .cn-wrap{padding:clamp(1.25rem,4vw,2.25rem) 0 clamp(2rem,5vw,3.5rem)}
 .cn-win{
-  background:linear-gradient(158deg,var(--stage),#1A1626);
-  border:1px solid var(--edge);border-radius:12px;overflow:hidden;
-  box-shadow:0 30px 80px -40px #000;display:flex;flex-direction:column;
+  background:var(--term-bg);
+  border:1px solid var(--term-chrome-edge);border-radius:10px;overflow:hidden;
+  box-shadow:0 22px 60px -28px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.06) inset;
+  display:flex;flex-direction:column;
   height:auto;min-height:19rem;
   max-height:min(calc(100dvh - var(--nav-h) - 7.5rem),44rem);
 }
 .cn-bar{
-  display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;
-  border-bottom:1px solid var(--edge);background:rgba(0,0,0,.2);flex:none;
+  position:relative;display:flex;align-items:center;gap:8px;
+  padding:0 .75rem;height:28px;flex:none;
+  background:var(--term-chrome);border-bottom:1px solid var(--term-chrome-edge);
 }
 .cn-bar i{
-  width:7px;height:7px;border-radius:50%;background:var(--rose);flex:none;
-  animation:pulse-rose 2.4s ease-out infinite;
+  width:12px;height:12px;border-radius:50%;flex:none;
+  box-shadow:0 0 0 .5px rgba(0,0,0,.18) inset;
 }
-.cn-bar i:nth-child(n+2){display:none}
+.cn-bar i:nth-child(1){background:#FF5F57}
+.cn-bar i:nth-child(2){background:#FEBC2E}
+.cn-bar i:nth-child(3){background:#28C840}
 .cn-bar .who{
-  flex:1;font-family:"IBM Plex Mono",monospace;
-  font-size:.75rem;color:var(--dim);letter-spacing:.04em;
+  position:absolute;left:0;right:0;text-align:center;pointer-events:none;
+  font:500 .75rem/1 -apple-system,"SF Pro Text","Helvetica Neue",sans-serif;
+  color:var(--term-title);
 }
-.cn-bar .who b{color:var(--type);font-weight:500}
 .cn-out{
-  flex:1 1 auto;overflow-y:auto;overflow-x:auto;padding:1.1rem;
-  font-family:"IBM Plex Mono",monospace;font-size:.8125rem;line-height:1.6;
+  flex:1 1 auto;overflow-y:auto;overflow-x:auto;padding:.9rem 1rem;
+  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-size:.8125rem;line-height:1.55;color:var(--term-fg);
 }
 .cn-out pre{margin:0 0 .85rem;white-space:pre;font:inherit}
 .cn-out pre:last-child{margin-bottom:0}
-.cn-note{color:var(--dim)}
-.cn-echo{color:var(--bulb)}
-.cn-res{color:var(--type)}
-.cn-err{color:var(--rose)}
+.cn-note{color:var(--term-dim)}
+.cn-boot{color:var(--term-fg)}
+.cn-echo{color:var(--term-accent)}
+.cn-res{color:var(--term-fg)}
+.cn-err{color:var(--term-live)}
 .cn-chips{
-  display:flex;flex-wrap:wrap;gap:.4rem;padding:.85rem 1.1rem;
-  border-top:1px solid var(--edge);background:rgba(0,0,0,.14);flex:none;
+  display:flex;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem;
+  border-top:1px solid var(--term-chrome-edge);background:var(--well);flex:none;
 }
 .cn-chip{
-  font-family:"IBM Plex Mono",monospace;font-size:.6875rem;color:var(--dim);
-  background:transparent;border:1px solid var(--edge);border-radius:6px;
-  padding:.3rem .6rem;cursor:pointer;transition:color .18s,border-color .18s;
+  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-size:.6875rem;color:var(--term-dim);
+  background:transparent;border:1px solid var(--term-chrome-edge);border-radius:5px;
+  padding:.28rem .55rem;cursor:pointer;transition:color .18s,border-color .18s;
   max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.cn-chip:hover{color:var(--bulb);border-color:var(--bulb)}
-.cn-chip.done{color:var(--bulb);border-color:rgba(255,182,39,.35)}
+.cn-chip:hover{color:var(--term-accent);border-color:var(--term-accent)}
+.cn-chip.done{color:var(--term-accent);border-color:var(--term-accent)}
 .cn-chip.done::before{content:"\2713\00a0"}
 .cn-form{
-  display:flex;align-items:center;gap:.6rem;padding:.85rem 1.1rem;
-  border-top:1px solid var(--edge);flex:none;
+  display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;
+  border-top:1px solid var(--term-chrome-edge);flex:none;background:var(--term-bg);
 }
-.cn-ps1{font-family:"IBM Plex Mono",monospace;font-size:.8125rem;color:var(--bulb);flex:none}
+.cn-ps1{
+  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-size:.8125rem;color:var(--term-accent);flex:none;
+}
 .cn-input{
-  flex:1;background:transparent;border:0;outline:0;color:var(--type);
-  font-family:"IBM Plex Mono",monospace;font-size:.8125rem;padding:.15rem 0;min-width:0;
+  flex:1;background:transparent;border:0;outline:0;color:var(--term-fg);
+  font-family:"SF Mono",ui-monospace,"IBM Plex Mono",Menlo,monospace;
+  font-size:.8125rem;padding:.15rem 0;min-width:0;caret-color:var(--term-accent);
 }
-.cn-input::placeholder{color:#6C6386}
-.cn-form:focus-within .cn-ps1{text-shadow:0 0 12px rgba(255,182,39,.5)}
+.cn-input::placeholder{color:var(--term-dim);opacity:.75}
 .cn-hint{
   margin-top:.9rem;color:var(--dim);font-size:.8125rem;text-align:center;
 }
@@ -640,7 +718,7 @@ html:not(.has-console) #mode-toggle{display:none}
 
 footer{border-top:1px solid var(--edge);padding:1.75rem 0 3rem;color:var(--dim);font-size:.8125rem}
 footer .col{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-footer .serial{color:#6C6386}
+footer .serial{color:var(--faint)}
 
 /* ─────────── load sequence ─────────── */
 .js h1 .line em{transform:translateY(105%);animation:rise .78s cubic-bezier(.16,.84,.28,1) forwards}
@@ -701,6 +779,9 @@ footer .serial{color:#6C6386}
   body::before,.nav,.cta,.build::before,.more{display:none}
   /* must out-specify html.has-console #console{display:block} */
   #console,html.has-console #console{display:none}
+  /* the switch hides the CV on screen; printing must still yield the CV */
+  html[data-mode="console"] .hero,html[data-mode="console"] #cv,
+  html[data-mode="console"] footer{display:block}
   body{background:#fff;color:#000}
   .ticket,.build{border-color:#bbb;background:#fff;box-shadow:none}
   .foil{background:#fff;border-color:#bbb}
@@ -725,14 +806,18 @@ footer .serial{color:#6C6386}
       <a href="#contact">Contact</a>
       <span class="ink" aria-hidden="true"></span>
     </div>
-    <button id="mode-toggle" type="button">View as CV</button>
+    <label class="sw" for="mode-toggle">
+      <span class="sw-label">Read the CV</span>
+      <input type="checkbox" id="mode-toggle" role="switch" aria-controls="cv" aria-expanded="false">
+      <span class="sw-track" aria-hidden="true"><span class="sw-knob"></span></span>
+    </label>
   </div>
 </nav>
 
 <section id="console" aria-label="Query my résumé">
   <div class="col cn-wrap">
     <div class="cn-win">
-      <div class="cn-bar"><i></i><span class="who"><b>career@mumbai</b> · connected</span></div>
+      <div class="cn-bar"><i></i><i></i><i></i><span class="who">guest@valerianpereira.in — psql — 80×24</span></div>
       <div class="cn-out" role="log" aria-live="polite" aria-atomic="false"></div>
       <div class="cn-chips">
         <button class="cn-chip" data-q="\dt">\dt</button>
@@ -801,7 +886,7 @@ footer .serial{color:#6C6386}
   </div>
 </header>
 
-<main>
+<main id="cv">
 
 <section id="work">
   <div class="col">
