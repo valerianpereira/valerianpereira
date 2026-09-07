@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560">
+<!-- Backdrop motifs for the page: the kit a show actually runs on.
+     Used as a CSS mask, so only the alpha matters. The colour comes from the
+     motif token in index.html, which is why every stroke here is opaque black. -->
+<g fill="none" stroke="#000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- clapperboard -->
+  <g transform="translate(40 44) rotate(-8)">
+    <rect x="0" y="20" width="112" height="70" rx="4"/>
+    <rect x="0" y="2" width="112" height="18" rx="2"/>
+    <path d="M12 2l9 18M32 2l9 18M52 2l9 18M72 2l9 18M92 2l9 18"/>
+    <path d="M0 44h112M0 67h112"/>
+  </g>
+
+  <!-- film reel -->
+  <g transform="translate(430 92)">
+    <circle r="44"/><circle r="13"/>
+    <circle cy="-28" r="9"/><circle cx="27" cy="-9" r="9"/>
+    <circle cx="17" cy="23" r="9"/><circle cx="-17" cy="23" r="9"/><circle cx="-27" cy="-9" r="9"/>
+  </g>
+
+  <!-- projector -->
+  <g transform="translate(248 208)">
+    <rect x="18" y="34" width="96" height="46" rx="6"/>
+    <circle cx="42" cy="20" r="18"/><circle cx="42" cy="20" r="5"/>
+    <circle cx="88" cy="25" r="12"/><circle cx="88" cy="25" r="4"/>
+    <path d="M114 46l24-12v38l-24-12z"/>
+    <path d="M30 80v10M104 80v10"/>
+  </g>
+
+  <!-- stage mic -->
+  <g transform="translate(64 248) rotate(12)">
+    <rect x="10" y="0" width="22" height="42" rx="11"/>
+    <path d="M2 32a19 19 0 0 0 38 0"/>
+    <path d="M21 51v24M9 78h24"/>
+  </g>
+
+  <!-- dj set: two platters and the mixer between them -->
+  <g transform="translate(358 398)">
+    <rect x="0" y="14" width="150" height="76" rx="6"/>
+    <circle cx="34" cy="52" r="21"/><circle cx="34" cy="52" r="5"/>
+    <circle cx="116" cy="52" r="21"/><circle cx="116" cy="52" r="5"/>
+    <path d="M67 32v40M83 32v40M63 44h8M79 60h8"/>
+  </g>
+
+  <!-- cinema seats, front on -->
+  <g transform="translate(58 432)">
+    <path d="M6 66V34a10 10 0 0 1 10-10h20a10 10 0 0 1 10 10v32"/>
+    <path d="M0 66V44a8 8 0 0 1 6-8M46 36a8 8 0 0 1 6 8v22"/>
+    <path d="M0 66h52"/>
+    <g transform="translate(64 0)">
+      <path d="M6 66V34a10 10 0 0 1 10-10h20a10 10 0 0 1 10 10v32"/>
+      <path d="M0 66V44a8 8 0 0 1 6-8M46 36a8 8 0 0 1 6 8v22"/>
+      <path d="M0 66h52"/>
+    </g>
+  </g>
+
+</g>
+</svg>
