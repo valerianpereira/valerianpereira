@@ -392,7 +392,86 @@
     return null;
   }
 
-  /* ── REPL ─────────────────────────────────────────────────────── */
+  /* ── the shell ─────────────────────────────────────────────────── */
+
+  function pad(s, n) { s = String(s); return s + Array(Math.max(0, n - s.length) + 1).join(' '); }
+  function dotfill(label, n) {
+    var d = n - label.length - 1;
+    return label + ' ' + (d > 0 ? Array(d + 1).join('.') : '');
+  }
+
+  var ART = [
+    '        ▁▁▁▁▁▁▁▁▁▁',
+    '       ▕ ██  ██  ▏',
+    '       ▕ ██  ██  ▏',
+    '       ▕  ▀██▀   ▏',
+    '       ▕▁▁▁▁▁▁▁▁▁▏',
+    '        ▔▔▔▔▔▔▔▔▔▔'
+  ];
+
+  function neofetch(tables) {
+    var cur = tables.roles.filter(function (r) { return r.current; })[0] || tables.roles[0];
+    var yrs = new Date().getFullYear() - 2011;
+    var rows = [
+      ['', 'guest@valerianpereira.in'],
+      ['', '------------------------'],
+      ['host', 'BookMyShow · Mumbai, India'],
+      ['os', 'Data Platform ' + yrs + '.0'],
+      ['kernel', 'Head of Data Platform'],
+      ['uptime', yrs + ' years, still shipping'],
+      ['shell', 'zsh · psql'],
+      ['packages', tables.projects.length + ' public (46 repos)'],
+      ['cpu', 'Databricks · Spark · AWS'],
+      ['memory', 'MySQL · Postgres · Mongo · Redis'],
+      ['top repo', 'backup-action ★ 54'],
+      ['contact', 'valerianpereira25@gmail.com']
+    ];
+    var out = [], w = 24;
+    var n = Math.max(ART.length, rows.length);
+    for (var i = 0; i < n; i++) {
+      var art = pad(ART[i] || '', w);
+      var r = rows[i];
+      if (!r) { out.push(art); continue; }
+      out.push(art + (r[0] ? pad(r[0], 11) + r[1] : r[1]));
+    }
+    return out.join('\n');
+  }
+
+  var ABOUT = [
+    'Valerian Pereira — Head of Data Platform at BookMyShow, in Mumbai.',
+    '',
+    'Fifteen years building the things other people’s traffic runs on: data',
+    'platforms, APIs, and the infrastructure underneath them. Today that means',
+    'Databricks and AWS, ingestion and warehousing, and the reporting and',
+    'reconciliation systems a ticketing business actually runs on.',
+    '',
+    'Before that, seven years at BookMyShow working up from writing the platform',
+    'to running it, and four at Softaculous building hosting-control-panel software',
+    'that shipped to other people’s servers.',
+    '',
+    'After hours I build small command-line tools — a GitHub Action that backs up',
+    'databases, a World Cup tracker for the terminal, a shelf of Alexa skills —',
+    'usually because some chore should have automated itself.',
+    '',
+    'This résumé is also a database. Type `psql` to query it, or `help` to look around.'
+  ].join('\n');
+
+  var HELP_SH = [
+    'Commands',
+    '',
+    '  about          who I am, in a paragraph',
+    '  work           roles, most recent first',
+    '  projects       things I have built in the open',
+    '  skills         the stack, by category',
+    '  contact        how to reach me',
+    '  neofetch       the usual',
+    '  snake          take a break',
+    '',
+    '  psql           open a SQL prompt against my career',
+    '  clear          clear the screen',
+    '',
+    'SQL works from here too — type SELECT … and it just runs.'
+  ].join('\n');
 
   function boot() {
     var shell = document.getElementById('console');
@@ -400,14 +479,20 @@
 
     var out = shell.querySelector('.cn-out'),
         input = shell.querySelector('.cn-input'),
+        ps1 = shell.querySelector('.cn-ps1'),
         chips = shell.querySelectorAll('.cn-chip'),
         tables = buildTables(),
-        history = [], hi = -1;
+        history = [], hi = -1,
+        sqlMode = false,
+        game = null,
+        reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-    var api = {
-      toCv: function () { setMode('cv'); },
-      toConsole: function () { setMode('console'); }
-    };
+    var ZSH = 'guest@valerianpereira.in ~ %';
+    var PSQL = 'career=#';
+
+    var api = { toCv: function () { setMode('cv'); } };
+
+    function setPrompt() { ps1.textContent = sqlMode ? PSQL : ZSH; }
 
     function write(cls, text) {
       var el = document.createElement('pre');
@@ -418,25 +503,162 @@
       return el;
     }
 
+    /* ── snake ──────────────────────────────────────────────────── */
+
+    var W = 24, H = 13;   // cells; each drawn 2 chars wide so they read square
+
+    function startSnake() {
+      if (game) return;
+      var body = [[14, 6], [13, 6], [12, 6]], dir = [1, 0], next = [1, 0],
+          food = [21, 6], score = 0, dead = false,
+          pre = write('cn-game', ''), tick,
+          seed = (Date.now() % 2147483646) + 1;
+
+      function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+      function place() {
+        do { food = [Math.floor(rnd() * W), Math.floor(rnd() * H)]; }
+        while (body.some(function (s) { return s[0] === food[0] && s[1] === food[1]; }));
+      }
+
+      function draw() {
+        var grid = [], y, x;
+        for (y = 0; y < H; y++) { grid.push(new Array(W)); for (x = 0; x < W; x++) grid[y][x] = '  '; }
+        grid[food[1]][food[0]] = '◆ ';
+        body.forEach(function (s, i) {
+          if (s[1] >= 0 && s[1] < H && s[0] >= 0 && s[0] < W) grid[s[1]][s[0]] = i ? '██' : '▓▓';
+        });
+        var rule = Array(W * 2 + 1).join('─');
+        pre.textContent = [
+          'snake  ·  arrows or wasd to steer  ·  q to quit' + pad('', 4) + 'score ' + score,
+          '┌' + rule + '┐'
+        ].concat(grid.map(function (r) { return '│' + r.join('') + '│'; }))
+         .concat([
+           '└' + rule + '┘',
+           dead ? 'game over — score ' + score + '. type snake to play again.' : ''
+         ]).join('\n');
+        out.scrollTop = out.scrollHeight;
+      }
+
+      function step() {
+        dir = next;
+        var head = [body[0][0] + dir[0], body[0][1] + dir[1]];
+        if (head[0] < 0 || head[0] >= W || head[1] < 0 || head[1] >= H ||
+            body.some(function (s) { return s[0] === head[0] && s[1] === head[1]; })) {
+          dead = true; stop(); draw(); return;
+        }
+        body.unshift(head);
+        if (head[0] === food[0] && head[1] === food[1]) { score += 10; place(); }
+        else body.pop();
+        draw();
+      }
+
+      function key(e) {
+        var k = (e.key || '').toLowerCase(), d = null;
+        if (k === 'arrowup' || k === 'w') d = [0, -1];
+        else if (k === 'arrowdown' || k === 's') d = [0, 1];
+        else if (k === 'arrowleft' || k === 'a') d = [-1, 0];
+        else if (k === 'arrowright' || k === 'd') d = [1, 0];
+        else if (k === 'q' || k === 'escape') { e.preventDefault(); stop(); pre.textContent += '\nquit.'; return; }
+        else return;
+        e.preventDefault();
+        if (d[0] !== -dir[0] || d[1] !== -dir[1]) next = d;
+      }
+
+      function stop() {
+        clearInterval(tick);
+        document.removeEventListener('keydown', key, true);
+        game = null;
+        input.focus();
+      }
+
+      game = { stop: stop };
+      document.addEventListener('keydown', key, true);
+      place(); draw();
+      tick = setInterval(step, 130);
+    }
+
+    /* ── command dispatch ───────────────────────────────────────── */
+
+    function table(name, cols, map) {
+      return renderTable({ cols: cols, rows: tables[name].map(map) });
+    }
+
+    function runShell(src) {
+      var cmd = src.trim(), head = cmd.split(/\s+/)[0].toLowerCase();
+
+      if (head === 'about') return ABOUT;
+      if (head === 'help' || head === '?') return HELP_SH;
+      if (head === 'whoami') return 'valerian — Head of Data Platform at BookMyShow';
+      if (head === 'neofetch') return neofetch(tables);
+      if (head === 'clear') { out.textContent = ''; return null; }
+      if (head === 'snake') { startSnake(); return null; }
+      if (head === 'date') return new Date().toString();
+      if (head === 'pwd') return '/Users/guest';
+      if (head === 'ls') return 'about        contact      projects     skills\ncareer.db    neofetch     work';
+      if (head === 'sudo') return 'guest is not in the sudoers file.  This incident has been reported.';
+      if (head === 'exit' || head === 'logout') { api.toCv(); return 'Switching to the CV…'; }
+
+      if (head === 'psql' || head === 'sql') {
+        sqlMode = true; setPrompt();
+        return 'psql (valerian ' + new Date().getFullYear() + '.1)\n' +
+               'Type \\? for help, \\q to return to the shell.';
+      }
+
+      if (head === 'work' || head === 'roles') {
+        return table('roles', ['title', 'company', 'start', 'end'], function (r) {
+          return { title: r.title, company: r.company, start: r.start, end: r.end || 'present' };
+        });
+      }
+      if (head === 'projects' || head === 'builds') {
+        return table('projects', ['name', 'lang', 'stars'], function (r) {
+          return { name: r.name, lang: r.lang, stars: r.stars };
+        });
+      }
+      if (head === 'skills') return table('skills', ['name', 'category'], function (r) { return r; });
+      if (head === 'contact') return table('contact', ['channel', 'handle'], function (r) {
+        return { channel: r.channel, handle: r.handle };
+      });
+
+      // SQL and psql meta commands run straight from the shell
+      if (/^(select|explain)\b/i.test(cmd) || cmd.charAt(0) === '\\') return null;
+
+      return 'zsh: command not found: ' + cmd.split(/\s+/)[0] + '\nType help for what this shell knows.';
+    }
+
     function submit(src) {
       if (!src.trim()) return;
       history.push(src); hi = history.length;
-      write('cn-echo', 'career=# ' + src);
-      var m = null;
+      write('cn-echo', (sqlMode ? PSQL : ZSH) + ' ' + src);
+      var trimmed = src.trim();
+
       try {
-        if (src.trim()[0] === '\\' || src.trim().toLowerCase() === 'help') {
-          m = meta(src, tables, api);
-          write('cn-res', m == null ? renderError(new SqlError('unrecognised command "' + src.trim() + '"', -1, 'Try \\? for help.'), null) : m);
+        if (sqlMode && (trimmed === '\\q' || trimmed.toLowerCase() === 'exit')) {
+          sqlMode = false; setPrompt();
+          write('cn-res', 'Back in the shell.');
+          return;
+        }
+        if (!sqlMode) {
+          var r = runShell(src);
+          if (r !== null) { write('cn-res', r); return; }
+          if (!/^(select|explain)\b/i.test(trimmed) && trimmed.charAt(0) !== '\\') return;
+        }
+        if (trimmed.charAt(0) === '\\' || trimmed.toLowerCase() === 'help') {
+          var m = meta(trimmed, tables, api);
+          write('cn-res', m == null
+            ? renderError(new SqlError('unrecognised command "' + trimmed + '"', -1, 'Try \\? for help.'), null)
+            : m);
         } else {
-          write('cn-res', execute(src, tables).text);
+          write('cn-res', execute(trimmed, tables).text);
         }
       } catch (e) {
-        if (e instanceof SqlError) write('cn-err', renderError(e, src.trim().replace(/;+$/, '')));
+        if (e instanceof SqlError) write('cn-err', renderError(e, trimmed.replace(/;+$/, '')));
         else write('cn-err', 'ERROR:  ' + (e && e.message ? e.message : 'unknown error'));
       }
     }
 
     input.addEventListener('keydown', function (e) {
+      if (game) { e.preventDefault(); return; }
       if (e.key === 'Enter') { submit(input.value); input.value = ''; }
       else if (e.key === 'ArrowUp') { if (hi > 0) { hi--; input.value = history[hi]; } e.preventDefault(); }
       else if (e.key === 'ArrowDown') { if (hi < history.length - 1) { hi++; input.value = history[hi]; } else { hi = history.length; input.value = ''; } e.preventDefault(); }
@@ -444,7 +666,8 @@
         e.preventDefault();
         var words = input.value.split(/\s+/), last = words[words.length - 1].toLowerCase();
         if (!last) return;
-        var pool = Object.keys(tables);
+        var pool = ['about', 'work', 'projects', 'skills', 'contact', 'neofetch', 'snake', 'psql', 'help', 'clear']
+          .concat(Object.keys(tables));
         Object.keys(tables).forEach(function (t) { pool = pool.concat(Object.keys(tables[t][0] || {})); });
         var hit = pool.filter(function (w) { return w.toLowerCase().indexOf(last) === 0; });
         if (hit.length === 1) { words[words.length - 1] = hit[0]; input.value = words.join(' '); }
@@ -454,9 +677,7 @@
 
     [].forEach.call(chips, function (chip) {
       chip.addEventListener('click', function () {
-        var q = chip.dataset.q;
-        input.value = q;
-        submit(q);
+        submit(chip.dataset.q);
         input.value = '';
         chip.classList.add('done');
         input.focus();
@@ -468,14 +689,47 @@
       input.focus();
     });
 
-    // greeting
-    write('cn-boot', 'guest@valerianpereira.in ~ % psql career');
-    write('cn-note', 'psql (valerian ' + new Date().getFullYear() + '.1) — type \\? for help');
-    write('cn-note', 'A résumé you can query. Tap a query below, or write your own.');
+    /* ── login banner, warm-up, then hand over ──────────────────── */
 
-    var shared = new URLSearchParams(location.search).get('q');
-    if (shared) submit(shared);
-    else submit('SELECT title, company, start FROM roles WHERE current;');
+    setPrompt();
+
+    function lastLogin() {
+      var d = new Date(Date.now() - 864e5 * 2),
+          days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          mons = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          two = function (n) { return (n < 10 ? '0' : '') + n; };
+      return 'Last login: ' + days[d.getDay()] + ' ' + mons[d.getMonth()] + ' ' +
+             (d.getDate() < 10 ? ' ' : '') + d.getDate() + ' ' +
+             two(d.getHours()) + ':' + two(d.getMinutes()) + ':' + two(d.getSeconds()) + ' on console';
+    }
+
+    var WARM = [
+      ['mounting /career', '15 years'],
+      ['warming up the warehouse', 'databricks'],
+      ['restoring 46 repositories', 'ok'],
+      ['connecting to bookmyshow', 'ok'],
+      ['spawning shell', 'zsh']
+    ];
+
+    function warmUp(done) {
+      write('cn-note', lastLogin());
+      var line = write('cn-boot', ''), i = 0, buf = [];
+      (function next() {
+        if (i >= WARM.length) { setTimeout(done, reduced ? 0 : 180); return; }
+        var w = WARM[i++];
+        buf.push('[  ok  ] ' + dotfill(w[0], 32) + ' ' + w[1]);
+        line.textContent = buf.join('\n');
+        out.scrollTop = out.scrollHeight;
+        setTimeout(next, reduced ? 0 : 130 + i * 35);
+      })();
+    }
+
+    function ready() {
+      var shared = new URLSearchParams(location.search).get('q');
+      submit(shared || 'about');
+    }
+
+    warmUp(ready);
 
     window.__selftest = function () { return selftest(tables); };
   }
