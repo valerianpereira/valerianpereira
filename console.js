@@ -474,22 +474,29 @@
 
     var shared = new URLSearchParams(location.search).get('q');
     if (shared) submit(shared);
+    else submit('SELECT title, company, start FROM roles WHERE current;');
 
     window.__selftest = function () { return selftest(tables); };
   }
 
   /* ── mode switching ───────────────────────────────────────────── */
 
-  function setMode(mode) {
+  function setMode(mode, opts) {
+    opts = opts || {};
     document.documentElement.dataset.mode = mode;
     try { localStorage.setItem('vp-mode', mode); } catch (e) {}
     var btn = document.getElementById('mode-toggle');
-    if (btn) btn.textContent = mode === 'cv' ? 'Open console' : 'View as CV';
-    if (mode === 'console') {
-      var i = document.querySelector('.cn-input');
-      if (i) i.focus();
+    if (btn) {
+      btn.textContent = mode === 'cv' ? 'Open console' : 'Read the CV';
+      btn.setAttribute('aria-expanded', String(mode === 'console'));
     }
-    window.scrollTo(0, 0);
+    if (!opts.silent) {
+      window.scrollTo(0, 0);
+      if (mode === 'console') {
+        var i = document.querySelector('.cn-input');
+        if (i) i.focus({ preventScroll: true });
+      }
+    }
   }
 
   /* ── self-check: the smallest thing that fails if the engine breaks ── */
@@ -530,7 +537,7 @@
     document.documentElement.classList.add('has-console');
     var saved;
     try { saved = localStorage.getItem('vp-mode'); } catch (e) {}
-    setMode(saved === 'cv' ? 'cv' : 'console');
+    setMode(saved === 'cv' ? 'cv' : 'console', { silent: true });
     var btn = document.getElementById('mode-toggle');
     if (btn) btn.addEventListener('click', function () {
       setMode(document.documentElement.dataset.mode === 'cv' ? 'console' : 'cv');
