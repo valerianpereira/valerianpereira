@@ -12,12 +12,15 @@
 <meta property="og:url" content="https://valerianpereira.in/">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/5975506?v=4">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#15121C">
+<meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)">
 <meta name="author" content="Valerian Pereira">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:site_name" content="Valerian Pereira">
 <meta property="og:locale" content="en_IN">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%2315121C'/><path d='M22 28h16l12 34 12-34h16L58 76H42z' fill='%23FFB627'/></svg>">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -287,57 +290,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Light is the default; dark is redefined below. Every colour is a token so
-     both themes stay in step. */
-  --house:#F7F6F2;
+  /* Neutral greys throughout — no violet. Light is the default; dark below. */
+  --house:#F6F6F4;
   --stage:#FFFFFF;
-  --riser:#F1EFE9;
-  --edge:#E1DED4;
-  --type:#191520;
-  --dim:#655E73;
-  --bulb:#9A5B00;          /* amber, darkened to clear 4.5:1 on paper */
-  --rose:#C2185B;
-  --sheen:rgba(0,0,0,.03);
-  --well:rgba(0,0,0,.03);
-  --navbg:rgba(247,246,242,.82);
-  --faint:#8C8599;
-  --lamp-a:rgba(154,91,0,.07);
-  --lamp-b:rgba(194,24,91,.05);
+  --riser:#EFEFEC;
+  --edge:#DFDFDA;
+  --type:#16161A;
+  --dim:#5F5F66;
+  --bulb:#8A5200;          /* amber, darkened to clear AA on paper */
+  --live:#1A7F37;          /* green = running, matching the terminal light */
+  --sheen:rgba(0,0,0,.025);
+  --well:rgba(0,0,0,.025);
+  --navbg:rgba(246,246,244,.85);
+  --faint:#8B8B93;
+  --grid:rgba(0,0,0,.045);
   --dots:rgba(0,0,0,.24);
   --code:rgba(0,0,0,.05);
-  --bulb-glow:rgba(154,91,0,.35);
-  --bulb-hover:#7C4900;
+  --bulb-glow:rgba(138,82,0,.35);
+  --bulb-hover:#6E4200;
 
   /* macOS Terminal.app — "Basic" in light, "Pro" in dark */
   --term-bg:#FFFFFF;
   --term-fg:#1A1A1A;
   --term-dim:#6E6E6E;
-  --term-chrome:linear-gradient(#EDEBE7,#DCD9D3);
-  --term-chrome-edge:#C6C2BA;
-  --term-title:#4A4650;
-  --term-accent:#8A4B00;
-  --term-live:#C2185B;
+  --term-chrome:linear-gradient(#EDEDEA,#DCDCD8);
+  --term-chrome-edge:#C4C4BE;
+  --term-title:#45454A;
+  --term-accent:#8A5200;
+  --term-live:#1A7F37;
 
-  --gut:clamp(1.25rem,5vw,2.5rem);
-  --col:64rem;
-  --nav-h:60px;
+  --gut:clamp(1rem,3.5vw,2rem);
+  --col:72rem;
+  --nav-h:56px;
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --house:#15121C;
-    --stage:#1F1A2B;
-    --riser:#282137;
-    --edge:#372E4B;
-    --type:#EFEAF6;
-    --dim:#9E94B4;
+    --house:#0C0C0D;
+    --stage:#151517;
+    --riser:#1D1D20;
+    --edge:#2B2B2F;
+    --type:#EDEDEF;
+    --dim:#9A9AA2;
     --bulb:#FFB627;
-    --rose:#FF5C8A;
-    --sheen:rgba(255,255,255,.045);
-    --well:rgba(0,0,0,.18);
-    --navbg:rgba(21,18,28,.78);
-    --faint:#6C6386;
-    --lamp-a:rgba(255,182,39,.10);
-    --lamp-b:rgba(255,92,138,.09);
+    --live:#28C840;
+    --sheen:rgba(255,255,255,.035);
+    --well:rgba(0,0,0,.25);
+    --navbg:rgba(12,12,13,.82);
+    --faint:#6A6A72;
+    --grid:rgba(255,255,255,.035);
     --dots:rgba(255,255,255,.22);
     --code:rgba(255,255,255,.05);
     --bulb-glow:rgba(255,182,39,.7);
@@ -347,10 +347,10 @@
     --term-fg:#D9D9D9;
     --term-dim:#8A8A8A;
     --term-chrome:linear-gradient(#3A3A3C,#2C2C2E);
-    --term-chrome-edge:#1A1A1C;
-    --term-title:#C9C6CF;
+    --term-chrome-edge:#161618;
+    --term-title:#C9C9CF;
     --term-accent:#FFB627;
-    --term-live:#FF5C8A;
+    --term-live:#28C840;
   }
 }
 *{box-sizing:border-box}
@@ -363,9 +363,8 @@ body{
 /* auditorium wash — two dim marquee lamps, no motion */
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(48rem 30rem at 12% -8%, var(--lamp-a), transparent 68%),
-    radial-gradient(40rem 28rem at 92% 4%, var(--lamp-b), transparent 66%);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:44px 44px,44px 44px;
 }
 .shell{position:relative;z-index:1}
 .col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
@@ -446,7 +445,6 @@ h1{
 }
 h1 .line{display:block;overflow:hidden}
 h1 .line em{display:block;font-style:normal}
-h1 .rose{color:var(--rose)}
 .title{
   margin-top:1.25rem;font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:500;line-height:1.35;
 }
@@ -477,16 +475,16 @@ h1 .rose{color:var(--rose)}
 }
 .rec dt{color:var(--dim);white-space:nowrap}
 .rec dd{margin:0;color:var(--type);text-align:right;white-space:nowrap}
-.rec dd.live{color:var(--rose)}
+.rec dd.live{color:var(--live)}
 .rec dd.live::before{
   content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
-  background:var(--rose);margin-right:.4rem;vertical-align:middle;
-  animation:pulse-rose 2.4s ease-out infinite;
+  background:var(--live);margin-right:.4rem;vertical-align:middle;
+  animation:pulse-live 2.4s ease-out infinite;
 }
-@keyframes pulse-rose{
-  0%{box-shadow:0 0 0 0 rgba(255,92,138,.55)}
-  70%{box-shadow:0 0 0 8px rgba(255,92,138,0)}
-  100%{box-shadow:0 0 0 0 rgba(255,92,138,0)}
+@keyframes pulse-live{
+  0%{box-shadow:0 0 0 0 rgba(40,200,64,.5)}
+  70%{box-shadow:0 0 0 8px rgba(40,200,64,0)}
+  100%{box-shadow:0 0 0 0 rgba(40,200,64,0)}
 }
 .serial{font-family:"IBM Plex Mono",monospace;font-size:.625rem;letter-spacing:.14em;color:var(--dim)}
 
@@ -540,10 +538,10 @@ h2 .cnt{
 }
 .board .now .what::after{
   content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
-  background:var(--rose);margin-left:.55rem;vertical-align:middle;
-  animation:pulse-rose 2.4s ease-out infinite;
+  background:var(--live);margin-left:.55rem;vertical-align:middle;
+  animation:pulse-live 2.4s ease-out infinite;
 }
-.board .now .when{color:var(--rose)}
+.board .now .when{color:var(--live)}
 .board .note{margin-top:.5rem;color:var(--dim);font-size:.9375rem;max-width:62ch}
 
 /* builds — small stubs */
@@ -611,40 +609,50 @@ h2 .cnt{
 /* ─────────── console ─────────── */
 /* Default (no JS): console hidden, CV is the document. */
 #console{display:none;padding:0;border-top:0}
+#console .col{max-width:min(96rem,100%)}
 html.has-console #console{display:block}
 /* The CV is never hidden — only the console (a widget) is. Keeps every word
    of the résumé in the rendered DOM for crawlers in both modes. */
 html[data-mode="console"] .hero,
 html[data-mode="console"] #cv,
 html[data-mode="console"] footer{display:none}
-.sw{display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;user-select:none;flex:none}
-.sw-label{font:500 .8125rem/1 "IBM Plex Sans",sans-serif;color:var(--dim);white-space:nowrap;transition:color .2s ease}
-.sw:hover .sw-label{color:var(--type)}
-.sw input{position:absolute;opacity:0;width:0;height:0}
-.sw-track{
-  width:38px;height:22px;border-radius:999px;background:var(--riser);
-  border:1px solid var(--edge);position:relative;flex:none;transition:background .22s ease,border-color .22s ease;
+/* two exclusive modes: each hides the other */
+html[data-mode="cv"] #console{display:none}
+.seg{
+  position:relative;display:inline-flex;flex:none;padding:2px;border-radius:8px;
+  background:var(--riser);border:1px solid var(--edge);
 }
-.sw-knob{
-  position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
-  background:var(--dim);transition:transform .24s cubic-bezier(.4,0,.2,1),background .22s ease;
+.seg button{
+  position:relative;z-index:1;appearance:none;background:none;border:0;cursor:pointer;
+  font:500 .8125rem/1 "IBM Plex Sans",sans-serif;color:var(--dim);
+  padding:.4rem .75rem;border-radius:6px;transition:color .2s ease;white-space:nowrap;
 }
-.sw input:checked + .sw-track{background:var(--bulb);border-color:var(--bulb)}
-.sw input:checked + .sw-track .sw-knob{transform:translateX(16px);background:var(--house)}
-.sw input:focus-visible + .sw-track{outline:2px solid var(--bulb);outline-offset:3px}
-html:not(.has-console) .sw{display:none}
+.seg button:hover{color:var(--type)}
+.seg button[aria-selected="true"]{color:var(--type)}
+.seg-ind{
+  position:absolute;top:2px;bottom:2px;left:2px;border-radius:6px;
+  background:var(--stage);box-shadow:0 1px 2px rgba(0,0,0,.16);
+  transition:transform .26s cubic-bezier(.4,0,.2,1),width .26s cubic-bezier(.4,0,.2,1);
+}
+.seg button:focus-visible{outline:2px solid var(--bulb);outline-offset:2px}
+html:not(.has-console) .seg{display:none}
 /* With the CV closed there is nothing for the section tabs to point at. */
 html[data-mode="console"] .menu{display:none}
 html[data-mode="console"] .burger{display:none}
 
-.cn-wrap{padding:clamp(1.25rem,4vw,2.25rem) 0 clamp(2rem,5vw,3.5rem)}
+.cn-wrap{
+  /* .cn-wrap shares the element with .col and comes later, so it must restate
+     the horizontal gutter or the window goes edge-to-edge. */
+  padding:var(--gut);
+  height:calc(100dvh - var(--nav-h));
+  display:flex;flex-direction:column;
+}
 .cn-win{
   background:var(--term-bg);
   border:1px solid var(--term-chrome-edge);border-radius:10px;overflow:hidden;
   box-shadow:0 22px 60px -28px rgba(0,0,0,.55),0 1px 0 rgba(255,255,255,.06) inset;
   display:flex;flex-direction:column;
-  height:auto;min-height:19rem;
-  max-height:min(calc(100dvh - var(--nav-h) - 7.5rem),44rem);
+  flex:1 1 auto;min-height:0;
 }
 .cn-bar{
   position:relative;display:flex;align-items:center;gap:8px;
@@ -704,14 +712,14 @@ html[data-mode="console"] .burger{display:none}
 }
 .cn-input::placeholder{color:var(--term-dim);opacity:.75}
 .cn-hint{
-  margin-top:.9rem;color:var(--dim);font-size:.8125rem;text-align:center;
+  margin:.7rem 0 0;color:var(--faint);font-size:.75rem;text-align:center;flex:none;
 }
 .cn-hint kbd{
   font-family:"IBM Plex Mono",monospace;font-size:.75rem;border:1px solid var(--edge);
   border-radius:4px;padding:.05rem .3rem;color:var(--type);
 }
 @media (max-width:44rem){
-  .cn-win{min-height:16rem;max-height:min(calc(100dvh - var(--nav-h) - 8.5rem),34rem)}
+  .cn-win{min-height:0}
   .cn-out{font-size:.75rem}
   .cn-chip{font-size:.65rem}
 }
@@ -806,11 +814,11 @@ footer .serial{color:var(--faint)}
       <a href="#contact">Contact</a>
       <span class="ink" aria-hidden="true"></span>
     </div>
-    <label class="sw" for="mode-toggle">
-      <span class="sw-label">Read the CV</span>
-      <input type="checkbox" id="mode-toggle" role="switch" aria-controls="cv" aria-expanded="false">
-      <span class="sw-track" aria-hidden="true"><span class="sw-knob"></span></span>
-    </label>
+    <div class="seg" id="mode-toggle" role="tablist" aria-label="View">
+      <span class="seg-ind" aria-hidden="true"></span>
+      <button type="button" role="tab" data-mode="console" aria-selected="true" aria-controls="console">Console</button>
+      <button type="button" role="tab" data-mode="cv" aria-selected="false" aria-controls="cv">CV</button>
+    </div>
   </div>
 </nav>
 
@@ -853,7 +861,7 @@ footer .serial{color:var(--faint)}
 
         <h1>
           <span class="line"><em>Valerian</em></span>
-          <span class="line"><em class="rose">Pereira</em></span>
+          <span class="line"><em>Pereira</em></span>
         </h1>
 
         <p class="title">Head of Data Platform at <s>BookMyShow</s></p>

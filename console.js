@@ -486,10 +486,18 @@
     opts = opts || {};
     document.documentElement.dataset.mode = mode;
     try { localStorage.setItem('vp-mode', mode); } catch (e) {}
-    var btn = document.getElementById('mode-toggle');
-    if (btn) {
-      btn.checked = (mode === 'cv');
-      btn.setAttribute('aria-expanded', String(mode === 'cv'));
+    var seg = document.getElementById('mode-toggle');
+    if (seg) {
+      var tabs = seg.querySelectorAll('button'), ind = seg.querySelector('.seg-ind'), active = null;
+      [].forEach.call(tabs, function (t) {
+        var on = t.dataset.mode === mode;
+        t.setAttribute('aria-selected', String(on));
+        if (on) active = t;
+      });
+      if (active && ind) {
+        ind.style.width = active.offsetWidth + 'px';
+        ind.style.transform = 'translateX(' + (active.offsetLeft - 2) + 'px)';
+      }
     }
     if (!opts.silent) {
       window.scrollTo(0, 0);
@@ -539,10 +547,17 @@
     var saved;
     try { saved = localStorage.getItem('vp-mode'); } catch (e) {}
     setMode(saved === 'cv' ? 'cv' : 'console', { silent: true });
-    var btn = document.getElementById('mode-toggle');
-    if (btn) btn.addEventListener('change', function () {
-      setMode(btn.checked ? 'cv' : 'console');
-    });
+    var seg = document.getElementById('mode-toggle');
+    if (seg) {
+      seg.addEventListener('click', function (e) {
+        var t = e.target.closest('button[data-mode]');
+        if (t) setMode(t.dataset.mode);
+      });
+      // the indicator is measured, so re-measure when the layout changes
+      window.addEventListener('resize', function () {
+        setMode(document.documentElement.dataset.mode || 'console', { silent: true });
+      });
+    }
     boot();
   });
 })();
