@@ -975,6 +975,13 @@
     ok('roles table populated', tables.roles.length === 7);
     ok('one current role', q('SELECT title FROM roles WHERE current').rows.length === 1);
     ok('current role is the data team', /Head of Data Team/.test(q('SELECT title FROM roles WHERE current').rows[0].title));
+    // the education rows live on data-* attributes beside the text they describe;
+    // this catches them drifting onto the wrong element, which they once had
+    ok('education rows match their headings', tables.education.length > 0 &&
+      [].every.call(document.querySelectorAll('.credits > div'), function (el, i) {
+        var h3 = el.querySelector('h3'), row = tables.education[i];
+        return h3 && row && h3.textContent.trim() === row.qualification;
+      }));
     ok('shipped table populated', tables.shipped.length > 0 && tables.shipped.every(function (r) {
       return r.name && r.team && r.blurb;
     }));
