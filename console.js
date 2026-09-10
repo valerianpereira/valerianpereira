@@ -506,8 +506,8 @@
     { k: ['available', 'open to work', 'hiring', 'looking', 'freelance', 'fractional', 'consult', 'rate'],
       a: 'That one is his to answer, not mine — I am a scripted agent and I would only be guessing.\nEmail valerianpereira25@gmail.com and ask him directly; he reads it.' },
 
-    { k: ['contact', 'reach', 'email', 'get in touch', 'linkedin'],
-      a: 'valerianpereira25@gmail.com is the fastest route. Also on GitHub (@valerianpereira),\nLinkedIn (in/valerianpereira) and X (@valerianper_era). Run `contact` for the table,\nor scan the QR on the CV to save the card.' },
+    { k: ['contact', 'reach', 'email', 'get in touch', 'linkedin', 'instagram'],
+      a: 'valerianpereira25@gmail.com is the fastest route. Also on GitHub (@valerianpereira),\nLinkedIn (in/valerianpereira), X (@valerianper_era) and Instagram (@valerianpereira). Run `contact` for the table,\nor scan the QR on the CV to save the card.' },
 
     { k: ['where', 'location', 'based', 'mumbai', 'city', 'remote'],
       a: 'Mumbai, India. Has worked there his whole career — Softaculous in Andheri, then\nBookMyShow.' },
