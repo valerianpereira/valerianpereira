@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tambola: Housie Caller — Valerian Pereira</title>
+<meta name="description" content="Tambola (Housie) caller for Android — calls numbers 1–90 out loud with the traditional rhymes, tracks the board and the prizes. Offline, no ads, no accounts. React + Vite, packaged with Capacitor.">
+<link rel="canonical" href="https://valerianpereira.in/tambola/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tambola: Housie Caller">
+<meta property="og:description" content="A Housie caller that runs on one phone — voice calls, board tracking, prize log. Offline, no ads.">
+<meta property="og:url" content="https://valerianpereira.in/tambola/">
+<meta property="og:image" content="https://valerianpereira.in/tambola/shots/calling.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)">
+<meta name="author" content="Valerian Pereira">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Tambola: Housie Caller",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Android 6.0+",
+  "softwareVersion": "1.0",
+  "url": "https://valerianpereira.in/tambola/",
+  "image": "https://valerianpereira.in/tambola/shots/calling.jpg",
+  "description": "Tambola (Housie) number caller. Calls 1–90 out loud with traditional rhymes, tracks the board and prize claims. Works fully offline, no ads, no accounts, no data collection.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "author": { "@type": "Person", "name": "Valerian Pereira", "url": "https://valerianpereira.in/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --house:#F6F6F4;--stage:#FFFFFF;--riser:#EFEFEC;--edge:#DFDFDA;
+  --type:#16161A;--dim:#5F5F66;--bulb:#8A5200;--live:#1A7F37;
+  --navbg:rgba(246,246,244,.85);--faint:#8B8B93;--motif:rgba(0,0,0,.10);--code:rgba(0,0,0,.05);
+  --gut:clamp(1rem,3.5vw,2rem);--col:72rem;--nav-h:56px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --house:#0C0C0D;--stage:#151517;--riser:#1D1D20;--edge:#2B2B2F;
+    --type:#EDEDEF;--dim:#9A9AA2;--bulb:#FFB627;--live:#28C840;
+    --navbg:rgba(12,12,13,.82);--faint:#6A6A72;--motif:rgba(255,255,255,.09);--code:rgba(255,255,255,.05);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 1.5rem);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--house);color:var(--type);
+  font:400 1rem/1.7 "IBM Plex Sans",ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--motif);
+  -webkit-mask:url(/pattern.svg) 0 0/560px 560px repeat;mask:url(/pattern.svg) 0 0/560px 560px repeat;
+}
+.shell{position:relative;z-index:1}
+.col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
+a{color:var(--type)}
+h1,h2,h3{margin:0;font-family:Archivo,"Arial Black",system-ui,sans-serif;font-variation-settings:"wdth" 125;line-height:.92}
+p{margin:0}
+::selection{background:var(--bulb);color:var(--house)}
+:focus-visible{outline:2px solid var(--bulb);outline-offset:3px;border-radius:2px}
+
+.nav{
+  position:sticky;top:0;z-index:40;height:var(--nav-h);background:var(--navbg);
+  backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--edge);
+}
+.nav .col{height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.mark{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:600;font-size:.9375rem}
+.mark b{
+  font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-weight:800;
+  background:var(--bulb);color:var(--house);width:26px;height:26px;border-radius:5px;
+  display:grid;place-items:center;font-size:.9rem;flex:none;
+}
+.mark span{color:var(--dim);font-weight:400}
+.nav .back{font-size:.875rem;color:var(--dim);text-decoration:none}
+.nav .back:hover{color:var(--type)}
+
+section{padding:clamp(2.5rem,5.5vw,4rem) 0;position:relative}
+section + section{border-top:1px solid var(--edge)}
+h2{
+  font-size:clamp(1.5rem,3.6vw,2rem);font-weight:800;letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:.9rem;margin:0 0 1.75rem;
+  border-bottom:1px solid var(--edge);padding-bottom:.6rem;
+}
+h2 .cnt{
+  margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.6875rem;font-weight:400;
+  color:var(--dim);letter-spacing:.08em;font-variation-settings:normal;
+}
+
+/* hero */
+.hero{padding:clamp(2.5rem,6vw,4.5rem) 0 clamp(2rem,4vw,3rem)}
+.hero .col{display:flex;gap:clamp(1.25rem,3vw,2rem);align-items:flex-start;flex-wrap:wrap}
+.hero img.icon{width:88px;height:88px;border-radius:20px;border:1px solid var(--edge);flex:none}
+.hero .lede{flex:1;min-width:17rem}
+.hero h1{font-size:clamp(2.25rem,7vw,3.5rem);font-weight:900;letter-spacing:-.02em}
+.hero .kicker{
+  font-family:"IBM Plex Mono",monospace;font-size:.6875rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bulb);margin-bottom:.7rem;
+}
+.hero p{margin-top:.9rem;color:var(--dim);font-size:1.0625rem;max-width:56ch}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem;list-style:none;padding:0}
+.chips li{
+  font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--dim);
+  border:1px solid var(--edge);border-radius:5px;padding:.2rem .5rem;
+}
+.cta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.cta a{
+  display:inline-block;padding:.55rem 1rem;border-radius:7px;text-decoration:none;
+  font-size:.9375rem;font-weight:500;border:1px solid var(--edge);background:var(--stage);
+  transition:border-color .18s,color .18s;
+}
+.cta a:hover{border-color:var(--bulb);color:var(--bulb)}
+.cta a.primary{background:var(--bulb);border-color:var(--bulb);color:var(--house)}
+.cta a.primary:hover{color:var(--house);filter:brightness(1.08)}
+.status{
+  margin-top:1rem;font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--dim);
+  display:flex;align-items:center;gap:.5rem;
+}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--live);flex:none}
+
+/* feature list */
+.feats{list-style:none;margin:0;padding:0;display:grid;gap:0 2.5rem;grid-template-columns:1fr}
+@media(min-width:56rem){.feats{grid-template-columns:1fr 1fr}}
+.feats li{padding:.95rem 0;border-top:1px solid var(--edge)}
+.feats li:first-child{border-top:0}
+@media(min-width:56rem){.feats li:nth-child(2){border-top:0}}
+.feats b{display:block;font-weight:600;font-size:1rem}
+.feats span{color:var(--dim);font-size:.9375rem;line-height:1.55;display:block;max-width:50ch}
+
+/* screenshots */
+.shots{list-style:none;margin:0;padding:0;display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))}
+.shots img{
+  width:100%;height:auto;display:block;border:1px solid var(--edge);border-radius:12px;background:var(--stage);
+}
+.shots figcaption{margin-top:.7rem;color:var(--dim);font-size:.875rem;line-height:1.5}
+.shots figcaption b{display:block;color:var(--type);font-weight:600;font-size:.9375rem}
+.shots figure{margin:0}
+
+/* build grid */
+.rack{display:grid;gap:1.75rem 2.5rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.rack h3{
+  font-family:"IBM Plex Mono",monospace;font-variation-settings:normal;font-size:.6875rem;
+  font-weight:500;letter-spacing:.1em;color:var(--bulb);margin-bottom:.75rem;text-transform:lowercase;
+}
+.rack ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.rack li{
+  font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--dim);
+  border:1px solid var(--edge);border-radius:5px;padding:.2rem .5rem;
+}
+.rack p{color:var(--dim);font-size:.9375rem;max-width:56ch}
+code{font-family:"IBM Plex Mono",monospace;font-size:.85em;background:var(--code);padding:.05em .35em;border-radius:4px}
+
+/* privacy */
+.plain{list-style:none;margin:0;padding:0;color:var(--dim);font-size:.9375rem;max-width:62ch}
+.plain li{padding:.4rem 0 .4rem 1.4rem;position:relative}
+.plain li::before{content:"—";position:absolute;left:0;color:var(--bulb)}
+
+footer{border-top:1px solid var(--edge);padding:1.75rem 0 3rem;color:var(--dim);font-size:.8125rem}
+footer .col{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:var(--dim)}
+footer .serial{color:var(--faint);font-family:"IBM Plex Mono",monospace}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="nav" aria-label="Site">
+  <div class="col">
+    <a class="mark" href="/"><b>V</b>Valerian Pereira <span>· Mumbai</span></a>
+    <a class="back" href="/#builds">← All builds</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="col">
+    <img class="icon" src="shots/icon.png" width="192" height="192" alt="Tambola app icon — a three-by-three grid of dots">
+    <div class="lede">
+      <div class="kicker">Android · Free · Offline</div>
+      <h1>Tambola</h1>
+      <p>A Housie caller that runs on one phone. Put it in the middle of the room, press start,
+         and it draws 1–90 at random and reads each number out loud — rhymes and all. The board
+         on screen settles a disputed claim in one glance.</p>
+      <ul class="chips">
+        <li>React 19</li><li>Vite</li><li>Capacitor</li><li>Text-to-speech</li><li>No network calls</li>
+      </ul>
+      <div class="cta">
+        <a class="primary" href="https://github.com/valerianpereira/tambola-app">Source on GitHub</a>
+        <a href="https://valerianpereira.github.io/tambola-app/privacy-policy.html">Privacy policy</a>
+      </div>
+      <p class="status">Play Store — closed testing (alpha), v1.0</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="what">
+  <div class="col">
+    <h2>What it does<span class="cnt">8 things</span></h2>
+    <ul class="feats">
+      <li><b>Calls 1–90 out loud</b><span>Uses the phone's own voice — the Capacitor TTS engine on Android, the Web Speech API in a browser.</span></li>
+      <li><b>Traditional housie rhymes</b><span>“Legs eleven”, “Two little ducks” — a rhyme for every number, toggled off for plain calling.</span></li>
+      <li><b>Full board, colour-coded</b><span>All ninety numbers in a 9×10 grid, banded by decade, with the last call ringed.</span></li>
+      <li><b>Auto-call at 5, 7 or 10 seconds</b><span>Or step through manually at whatever pace the room is keeping up with.</span></li>
+      <li><b>Undo the last call</b><span>For when someone talks over the caller and the number has to go back in the pool.</span></li>
+      <li><b>Prize tracker</b><span>Early Five, Top, Middle and Bottom Row, Full House — tap to mark a prize claimed.</span></li>
+      <li><b>Counters and a game timer</b><span>Called, remaining, elapsed time, and the previous five balls always on screen.</span></li>
+      <li><b>Light and dark themes</b><span>Both hand-tuned, plus an automatic mode that follows the phone.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="col">
+    <h2>Screens<span class="cnt">4 shots</span></h2>
+    <ul class="shots">
+      <li><figure>
+        <img src="shots/ready.jpg" width="540" height="960" alt="Tambola ready to start — empty 1–90 board, counters at zero, start button" loading="lazy">
+        <figcaption><b>Ready</b>Board empty, ninety left, timer at zero.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="shots/calling.jpg" width="540" height="960" alt="Tambola mid-game — number 62 called with its rhyme, 31 of 90 marked on the board" loading="lazy">
+        <figcaption><b>Calling</b>62 — “Turn on the screw”, with the previous five balls alongside.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="shots/prizes.jpg" width="540" height="960" alt="Tambola prize row with Early Five, Top Row and Middle Row marked claimed" loading="lazy">
+        <figcaption><b>Prizes</b>Early Five, Top Row and Middle Row gone; Full House still open.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="shots/darktheme.jpg" width="540" height="960" alt="The same game in dark theme" loading="lazy">
+        <figcaption><b>Dark</b>The same game after sundown.</figcaption>
+      </figure></li>
+    </ul>
+  </div>
+</section>
+
+<section id="build">
+  <div class="col">
+    <h2>How it's built<span class="cnt">~1.2k lines</span></h2>
+    <div class="rack">
+      <div>
+        <h3>web</h3>
+        <ul><li>React 19</li><li>Vite</li><li>Plain CSS</li><li>No state library</li></ul>
+        <p>One screen, one hook. <code>useGameState.js</code> holds the pool, the draw, the
+           undo stack and the speech queue; <code>TambolaApp.jsx</code> renders it.</p>
+      </div>
+      <div>
+        <h3>android</h3>
+        <ul><li>Capacitor 8</li><li>TTS plugin</li><li>Splash + status bar</li><li>Signed AAB</li></ul>
+        <p>The web build is wrapped rather than rewritten — <code>npm run release</code> goes from
+           source to a signed bundle in one step.</p>
+      </div>
+      <div>
+        <h3>runtime</h3>
+        <ul><li>Offline</li><li>No accounts</li><li>No ads</li><li>No SDKs</li></ul>
+        <p>Zero network requests. The draw is a uniform pick from the remaining pool, so aeroplane
+           mode at a family function changes nothing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="col">
+    <h2>Privacy<span class="cnt">no data</span></h2>
+    <ul class="plain">
+      <li>No analytics, no crash reporting, no advertising ID.</li>
+      <li>No permissions beyond what Android needs to run an app.</li>
+      <li>Nothing leaves the phone — there is nowhere for it to go.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="col">
+    <p>© 2026 Valerian Pereira · <a href="/">valerianpereira.in</a></p>
+    <p class="serial">TAMBOLA · 1–90</p>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
