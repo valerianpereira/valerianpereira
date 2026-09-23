@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is this? — Valerian Pereira</title>
+<meta name="description" content="Picture-naming game for 2–4 year olds on Android. Show a real photo, the child says the word out loud, five seconds later the app says it back. 22 groups, 325 words. No ads, no accounts, no tracking. One HTML file in a Capacitor WebView.">
+<link rel="canonical" href="https://valerianpereira.in/what-is-this/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="What is this?">
+<meta property="og:description" content="Picture words for 2–4 year olds. Look, say it out loud, hear it back. No ads, no tracking.">
+<meta property="og:url" content="https://valerianpereira.in/what-is-this/">
+<meta property="og:image" content="https://valerianpereira.in/what-is-this/shots/asking.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)">
+<meta name="author" content="Valerian Pereira">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "What is this?",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Android",
+  "softwareVersion": "1.0.0",
+  "url": "https://valerianpereira.in/what-is-this/",
+  "image": "https://valerianpereira.in/what-is-this/shots/asking.jpg",
+  "description": "Picture-naming game for 2–4 year olds. A real photo appears, the child names it out loud, and five seconds later the app says the word. 22 groups, 325 words. No ads, no accounts, no data collection.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "author": { "@type": "Person", "name": "Valerian Pereira", "url": "https://valerianpereira.in/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --house:#F6F6F4;--stage:#FFFFFF;--riser:#EFEFEC;--edge:#DFDFDA;
+  --type:#16161A;--dim:#5F5F66;--bulb:#8A5200;--live:#1A7F37;
+  --navbg:rgba(246,246,244,.85);--faint:#8B8B93;--motif:rgba(0,0,0,.10);--code:rgba(0,0,0,.05);
+  --gut:clamp(1rem,3.5vw,2rem);--col:72rem;--nav-h:56px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --house:#0C0C0D;--stage:#151517;--riser:#1D1D20;--edge:#2B2B2F;
+    --type:#EDEDEF;--dim:#9A9AA2;--bulb:#FFB627;--live:#28C840;
+    --navbg:rgba(12,12,13,.82);--faint:#6A6A72;--motif:rgba(255,255,255,.09);--code:rgba(255,255,255,.05);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 1.5rem);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--house);color:var(--type);
+  font:400 1rem/1.7 "IBM Plex Sans",ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--motif);
+  -webkit-mask:url(/pattern.svg) 0 0/560px 560px repeat;mask:url(/pattern.svg) 0 0/560px 560px repeat;
+}
+.shell{position:relative;z-index:1}
+.col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
+a{color:var(--type)}
+h1,h2,h3{margin:0;font-family:Archivo,"Arial Black",system-ui,sans-serif;font-variation-settings:"wdth" 125;line-height:.92}
+p{margin:0}
+::selection{background:var(--bulb);color:var(--house)}
+:focus-visible{outline:2px solid var(--bulb);outline-offset:3px;border-radius:2px}
+
+.nav{
+  position:sticky;top:0;z-index:40;height:var(--nav-h);background:var(--navbg);
+  backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--edge);
+}
+.nav .col{height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.mark{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:600;font-size:.9375rem}
+.mark b{
+  font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-weight:800;
+  background:var(--bulb);color:var(--house);width:26px;height:26px;border-radius:5px;
+  display:grid;place-items:center;font-size:.9rem;flex:none;
+}
+.mark span{color:var(--dim);font-weight:400}
+.nav .back{font-size:.875rem;color:var(--dim);text-decoration:none}
+.nav .back:hover{color:var(--type)}
+
+section{padding:clamp(2.5rem,5.5vw,4rem) 0;position:relative}
+section + section{border-top:1px solid var(--edge)}
+h2{
+  font-size:clamp(1.5rem,3.6vw,2rem);font-weight:800;letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:.9rem;margin:0 0 1.75rem;
+  border-bottom:1px solid var(--edge);padding-bottom:.6rem;
+}
+h2 .cnt{
+  margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.6875rem;font-weight:400;
+  color:var(--dim);letter-spacing:.08em;font-variation-settings:normal;
+}
+
+/* hero */
+.hero{padding:clamp(2.5rem,6vw,4.5rem) 0 clamp(2rem,4vw,3rem)}
+.hero .col{display:flex;gap:clamp(1.25rem,3vw,2rem);align-items:flex-start;flex-wrap:wrap}
+.hero img.icon{width:88px;height:88px;border-radius:20px;border:1px solid var(--edge);flex:none}
+.hero .lede{flex:1;min-width:17rem}
+.hero h1{font-size:clamp(2.25rem,7vw,3.5rem);font-weight:900;letter-spacing:-.02em}
+.hero .kicker{
+  font-family:"IBM Plex Mono",monospace;font-size:.6875rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bulb);margin-bottom:.7rem;
+}
+.hero p{margin-top:.9rem;color:var(--dim);font-size:1.0625rem;max-width:56ch}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem;list-style:none;padding:0}
+.chips li{
+  font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--dim);
+  border:1px solid var(--edge);border-radius:5px;padding:.2rem .5rem;
+}
+.cta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.cta a{
+  display:inline-block;padding:.55rem 1rem;border-radius:7px;text-decoration:none;
+  font-size:.9375rem;font-weight:500;border:1px solid var(--edge);background:var(--stage);
+  transition:border-color .18s,color .18s;
+}
+.cta a:hover{border-color:var(--bulb);color:var(--bulb)}
+.cta a.primary{background:var(--bulb);border-color:var(--bulb);color:var(--house)}
+.cta a.primary:hover{color:var(--house);filter:brightness(1.08)}
+.status{
+  margin-top:1rem;font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--dim);
+  display:flex;align-items:center;gap:.5rem;
+}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--live);flex:none}
+
+/* feature list */
+.feats{list-style:none;margin:0;padding:0;display:grid;gap:0 2.5rem;grid-template-columns:1fr}
+@media(min-width:56rem){.feats{grid-template-columns:1fr 1fr}}
+.feats li{padding:.95rem 0;border-top:1px solid var(--edge)}
+.feats li:first-child{border-top:0}
+@media(min-width:56rem){.feats li:nth-child(2){border-top:0}}
+.feats b{display:block;font-weight:600;font-size:1rem}
+.feats span{color:var(--dim);font-size:.9375rem;line-height:1.55;display:block;max-width:50ch}
+
+/* screenshots */
+.shots{list-style:none;margin:0;padding:0;display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))}
+.shots img{
+  width:100%;height:auto;display:block;border:1px solid var(--edge);border-radius:12px;background:var(--stage);
+}
+.shots figcaption{margin-top:.7rem;color:var(--dim);font-size:.875rem;line-height:1.5}
+.shots figcaption b{display:block;color:var(--type);font-weight:600;font-size:.9375rem}
+.shots figure{margin:0}
+
+/* build grid */
+.rack{display:grid;gap:1.75rem 2.5rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.rack h3{
+  font-family:"IBM Plex Mono",monospace;font-variation-settings:normal;font-size:.6875rem;
+  font-weight:500;letter-spacing:.1em;color:var(--bulb);margin-bottom:.75rem;text-transform:lowercase;
+}
+.rack ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.rack li{
+  font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--dim);
+  border:1px solid var(--edge);border-radius:5px;padding:.2rem .5rem;
+}
+.rack p{color:var(--dim);font-size:.9375rem;max-width:56ch}
+code{font-family:"IBM Plex Mono",monospace;font-size:.85em;background:var(--code);padding:.05em .35em;border-radius:4px}
+
+/* privacy */
+.plain{list-style:none;margin:0;padding:0;color:var(--dim);font-size:.9375rem;max-width:62ch}
+.plain li{padding:.4rem 0 .4rem 1.4rem;position:relative}
+.plain li::before{content:"—";position:absolute;left:0;color:var(--bulb)}
+
+footer{border-top:1px solid var(--edge);padding:1.75rem 0 3rem;color:var(--dim);font-size:.8125rem}
+footer .col{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:var(--dim)}
+footer .serial{color:var(--faint);font-family:"IBM Plex Mono",monospace}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="nav" aria-label="Site">
+  <div class="col">
+    <a class="mark" href="/"><b>V</b>Valerian Pereira <span>· Mumbai</span></a>
+    <a class="back" href="/#builds">← All builds</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="col">
+    <img class="icon" src="shots/icon.png" width="192" height="192" alt="What is this? app icon — a fan of three picture cards, the top one with a question mark">
+    <div class="lede">
+      <div class="kicker">Android · Free · Ages 2–4</div>
+      <h1>What is this?</h1>
+      <p>A picture-naming game for toddlers. A big real photograph fills the screen, the child
+         says what it is out loud, and five seconds later the phone says the word back. Ten
+         pictures a round, then a little cheer. No tapping, no scoring, nothing to unlock.</p>
+      <ul class="chips">
+        <li>One HTML file</li><li>Capacitor 8</li><li>Text-to-speech</li><li>22 groups · 325 words</li><li>4 MB APK</li>
+      </ul>
+      <div class="cta">
+        <a class="primary" href="https://github.com/valerianpereira/what-is-this-app">Source on GitHub</a>
+        <a href="https://valerianpereira.github.io/what-is-this-app/">Privacy policy</a>
+      </div>
+      <p class="status">Google Play — closed testing, v1.0.0</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="what">
+  <div class="col">
+    <h2>What it does<span class="cnt">8 things</span></h2>
+    <ul class="feats">
+      <li><b>Look, say it, hear it back</b><span>A photo, a gentle countdown, then the phone's own voice says the word. That is the whole loop.</span></li>
+      <li><b>Real photographs</b><span>Wikimedia Commons photos, not cartoons — the child learns what a real pear or a real tractor looks like.</span></li>
+      <li><b>22 groups, 325 words</b><span>Animals, Fruits, Vehicles, Body Parts, Toys, School Things, Shapes, Colours and more.</span></li>
+      <li><b>Ten pictures a round</b><span>Then a summary of the words seen — tap any of them to hear it again, or go ten more.</span></li>
+      <li><b>Think time of 3, 5 or 8 seconds</b><span>Set by a grown-up. Tap the picture to peek early if the wait is too long.</span></li>
+      <li><b>Voice on or off</b><span>A speaker button in the round, and the same setting in the Parent zone — say the words yourself if you prefer.</span></li>
+      <li><b>Parent zone behind a 2-second hold</b><span>Progress per group, rounds played, photo credits, and a one-tap download of every picture before a flight.</span></li>
+      <li><b>Works offline once seen</b><span>Each photo is cached the first time it comes up. Download the lot and the game needs no network at all.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="col">
+    <h2>Screens<span class="cnt">4 shots</span></h2>
+    <ul class="shots">
+      <li><figure>
+        <img src="shots/groups.jpg" width="540" height="1080" alt="Pick a group — a grid of colourful cards: Vehicles, Fruits, Vegetables, Wild Animals, Birds, Insects, each showing 0 of 15 seen" loading="lazy">
+        <figcaption><b>Pick a group</b>Vehicles, Fruits, Wild Animals… each card counts what has been seen.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="shots/asking.jpg" width="540" height="1080" alt="Mid-round — a photo of a donkey grazing with the question What is this? and a countdown ring at 5" loading="lazy">
+        <figcaption><b>What is this?</b>A donkey, and five seconds to say so.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="shots/answer.jpg" width="540" height="1080" alt="The reveal — It is a… Wolf, with a photo of a wolf in snow and a Say it again button" loading="lazy">
+        <figcaption><b>It is a… Wolf</b>The phone says it, and “Say it again” repeats it.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="shots/summary.jpg" width="540" height="1080" alt="Round over — You saw 10 things! with the ten animal words as tappable pills, and buttons for Ten more and Pick another group" loading="lazy">
+        <figcaption><b>You saw 10 things!</b>Tap any word to hear it again, then ten more.</figcaption>
+      </figure></li>
+    </ul>
+  </div>
+</section>
+
+<section id="build">
+  <div class="col">
+    <h2>How it's built<span class="cnt">~650 lines</span></h2>
+    <div class="rack">
+      <div>
+        <h3>web</h3>
+        <ul><li>Vanilla HTML/CSS/JS</li><li>No framework</li><li>No build step</li><li>Fredoka</li></ul>
+        <p>The whole game is <code>app/index.html</code> — markup, styles and logic in one file, built
+           from a Claude Design handoff. <code>cards.json</code> is the only place the groups and
+           words live.</p>
+      </div>
+      <div>
+        <h3>android</h3>
+        <ul><li>Capacitor 8</li><li>WebView</li><li>Portrait only</li><li>Signed AAB</li></ul>
+        <p>Capacitor wraps the folder as-is; <code>npm run aab</code> goes from source to a signed
+           Play bundle. The device's built-in text-to-speech does the talking.</p>
+      </div>
+      <div>
+        <h3>photos</h3>
+        <ul><li>347 WebP cards</li><li>Wikimedia Commons</li><li>jsDelivr CDN</li><li>Service worker cache</li></ul>
+        <p>Photos are not in the APK — hence 4 MB. They are fetched at 720px from the repo via
+           jsDelivr and a service worker keeps them local from then on. Shapes and colours are
+           drawn by a script, since Wikipedia's lead images teach the wrong word.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="col">
+    <h2>Privacy<span class="cnt">no data</span></h2>
+    <ul class="plain">
+      <li>No accounts, no analytics, no ads, no third-party SDKs.</li>
+      <li>One permission, <code>INTERNET</code>, used only to fetch card photos — plain requests, no identifiers.</li>
+      <li>Progress and settings stay in the WebView's local storage. Nothing leaves the phone.</li>
+      <li>Every photo keeps its Wikimedia licence; the credits screen in the Parent zone lists author, licence and source for each one.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="col">
+    <p>© 2026 Valerian Pereira · <a href="/">valerianpereira.in</a></p>
+    <p class="serial">WHAT IS THIS? · 22 × 325</p>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
