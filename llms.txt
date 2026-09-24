@@ -5,10 +5,10 @@
 > platforms, APIs and the infrastructure underneath them. Builds developer
 > tooling and command-line utilities in the open.
 
-The site at https://valerianpereira.in/ is a single page with two views of the
-same content: a SQL console you can query, and a conventional CV below it.
-Every fact below is present in the page's rendered HTML and in its
-schema.org JSON-LD.
+The home page at https://valerianpereira.in/ has two views of the same
+content: a SQL console you can query, and a conventional CV below it. Each
+Android app also has its own page (listed under Apps). Every fact below is
+present in the pages' rendered HTML and in their schema.org JSON-LD.
 
 ## Current role
 
@@ -47,6 +47,32 @@ Data science:
 - Senior Software Developer, BookMyShow (Jun 2015 – Oct 2016)
 - Senior Software Developer, Softaculous (Mar 2013 – Jun 2015)
 - Software Developer, Softaculous (Jun 2011 – Mar 2013)
+
+## Apps
+
+Free Android apps, published as signed Play bundles. No ads, no accounts, no
+analytics, no third-party SDKs; nothing leaves the phone.
+
+- **What is this?** — https://valerianpereira.in/what-is-this/ (source:
+  https://github.com/valerianpereira/what-is-this-app). Picture-naming game for
+  2–4 year olds. A real Wikimedia Commons photo appears, the child says the word
+  out loud, and after a 3, 5 or 8 second countdown the phone's own text-to-speech
+  says it back. 22 groups, 325 words (Animals, Fruits, Vehicles, Body Parts,
+  Toys, School Things, Shapes, Colours and more); ten pictures a round with a
+  summary of the words seen. Parent zone behind a 2-second hold: progress per
+  group, voice on/off, photo credits, one-tap download of every picture for
+  offline use. Built as one vanilla HTML/CSS/JS file (~650 lines) wrapped in a
+  Capacitor 8 WebView; photos fetched via jsDelivr and cached by a service
+  worker, so the APK is about 4 MB. One permission: INTERNET, for card photos.
+- **Tambola: Housie Caller** — https://valerianpereira.in/tambola/ (source:
+  https://github.com/valerianpereira/tambola-app). Tambola (Housie) number
+  caller that runs on one phone. Calls 1–90 out loud with the traditional
+  rhymes ("Legs eleven", "Two little ducks"), shows the full colour-coded 9×10
+  board with the last call ringed, auto-calls every 5, 7 or 10 seconds or steps
+  manually, undoes the last call, tracks prizes (Early Five, Top/Middle/Bottom
+  Row, Full House), keeps counters and a game timer, light and dark themes.
+  Fully offline, zero network requests. React 19 + Vite (~1.2k lines), wrapped
+  with Capacitor 8 and its TTS plugin.
 
 ## Open source
 
