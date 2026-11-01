@@ -74,6 +74,20 @@ analytics, no third-party SDKs; nothing leaves the phone.
   Fully offline, zero network requests. React 19 + Vite (~1.2k lines), wrapped
   with Capacitor 8 and its TTS plugin.
 
+## Tools
+
+- **School Age Check** — https://valerianpereira.in/school-age/. Admission
+  age calculator for Nursery, Jr KG, Sr KG and Class 1 in India. Enter a date
+  of birth and it shows which class the child can join in each academic year.
+  It defaults to the Maharashtra School Education Department GR of 15 October
+  2026 (RTE-2024/Pr.Kr.139/SD-1), which counts age on 30 June instead of 31
+  December. The new rule is phased in: Nursery 3+ from 2027-28, Jr KG 4+ from
+  2028-29, Sr KG 5+ from 2029-30 and Class 1 6+ from 2030-31. School heads
+  can relax this by 15 days, and children already enrolled in 2026-27 are
+  exempt. The other options are the KVS/central norm, Delhi, Karnataka,
+  Gujarat, Uttar Pradesh, Tamil Nadu (RTE), West Bengal and Goa. Each one
+  links to its source. Runs entirely in the browser.
+
 ## Open source
 
 - [backup-action](https://github.com/valerianpereira/backup-action) — GitHub

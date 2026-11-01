@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>School Age Check — Valerian Pereira</title>
+<meta name="description" content="Enter your child's date of birth and see which class they can join — Nursery, Jr KG, Sr KG or Class 1 — year by year. Defaults to Maharashtra's 15 October 2026 GR (30 June cutoff, phased in from 2027-28), with other states selectable.">
+<link rel="canonical" href="https://valerianpereira.in/school-age/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="School Age Check — Nursery to Class 1">
+<meta property="og:description" content="Which class can your child join? Maharashtra's new 30 June cutoff and other states, year by year.">
+<meta property="og:url" content="https://valerianpereira.in/school-age/">
+<meta property="og:site_name" content="Valerian Pereira">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)">
+<meta name="author" content="Valerian Pereira">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "School Age Check",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (browser)",
+  "url": "https://valerianpereira.in/school-age/",
+  "description": "Admission age eligibility calculator for Nursery, Jr KG, Sr KG and Class 1 in India. Defaults to the Maharashtra School Education Department GR of 15 October 2026 (RTE-2024/Pr.Kr.139/SD-1): age counted on 30 June, Nursery 3+ from 2027-28, Jr KG 4+ from 2028-29, Sr KG 5+ from 2029-30, Class 1 6+ from 2030-31.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "author": { "@type": "Person", "@id": "https://valerianpereira.in/#person", "name": "Valerian Pereira", "url": "https://valerianpereira.in/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --house:#F6F6F4;--stage:#FFFFFF;--riser:#EFEFEC;--edge:#DFDFDA;
+  --type:#16161A;--dim:#5F5F66;--bulb:#8A5200;--live:#1A7F37;--warn:#9A6700;--no:#B42318;
+  --navbg:rgba(246,246,244,.85);--faint:#8B8B93;--motif:rgba(0,0,0,.10);--code:rgba(0,0,0,.05);
+  --gut:clamp(1rem,3.5vw,2rem);--col:72rem;--nav-h:56px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --house:#0C0C0D;--stage:#151517;--riser:#1D1D20;--edge:#2B2B2F;
+    --type:#EDEDEF;--dim:#9A9AA2;--bulb:#FFB627;--live:#28C840;--warn:#E3B341;--no:#F97066;
+    --navbg:rgba(12,12,13,.82);--faint:#6A6A72;--motif:rgba(255,255,255,.09);--code:rgba(255,255,255,.05);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 1.5rem);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--house);color:var(--type);
+  font:400 1rem/1.7 "IBM Plex Sans",ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--motif);
+  -webkit-mask:url(/pattern.svg) 0 0/560px 560px repeat;mask:url(/pattern.svg) 0 0/560px 560px repeat;
+}
+.shell{position:relative;z-index:1}
+.col{max-width:var(--col);margin:0 auto;padding:0 var(--gut)}
+a{color:var(--type)}
+h1,h2,h3{margin:0;font-family:Archivo,"Arial Black",system-ui,sans-serif;font-variation-settings:"wdth" 125;line-height:.92}
+p{margin:0}
+::selection{background:var(--bulb);color:var(--house)}
+:focus-visible{outline:2px solid var(--bulb);outline-offset:3px;border-radius:2px}
+
+.nav{
+  position:sticky;top:0;z-index:40;height:var(--nav-h);background:var(--navbg);
+  backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--edge);
+}
+.nav .col{height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.mark{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:600;font-size:.9375rem}
+.mark b{
+  font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-weight:800;
+  background:var(--bulb);color:var(--house);width:26px;height:26px;border-radius:5px;
+  display:grid;place-items:center;font-size:.9rem;flex:none;
+}
+.mark span{color:var(--dim);font-weight:400}
+.nav .back{font-size:.875rem;color:var(--dim);text-decoration:none}
+.nav .back:hover{color:var(--type)}
+
+section{padding:clamp(2.5rem,5.5vw,4rem) 0;position:relative}
+section + section{border-top:1px solid var(--edge)}
+h2{
+  font-size:clamp(1.5rem,3.6vw,2rem);font-weight:800;letter-spacing:-.01em;
+  display:flex;align-items:baseline;gap:.9rem;margin:0 0 1.75rem;
+  border-bottom:1px solid var(--edge);padding-bottom:.6rem;
+}
+h2 .cnt{
+  margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.6875rem;font-weight:400;
+  color:var(--dim);letter-spacing:.08em;font-variation-settings:normal;
+}
+
+.hero{padding:clamp(2.5rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2rem)}
+.hero h1{font-size:clamp(2.25rem,7vw,3.5rem);font-weight:900;letter-spacing:-.02em}
+.hero .kicker{
+  font-family:"IBM Plex Mono",monospace;font-size:.6875rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bulb);margin-bottom:.7rem;
+}
+.hero p{margin-top:.9rem;color:var(--dim);font-size:1.0625rem;max-width:62ch}
+
+/* form */
+.form{display:flex;flex-wrap:wrap;gap:1rem 1.25rem;align-items:flex-end}
+.form label{display:flex;flex-direction:column;gap:.35rem;font-size:.8125rem;color:var(--dim);flex:1 1 14rem;max-width:22rem}
+.form input,.form select{
+  font:inherit;font-size:1rem;color:var(--type);background:var(--stage);
+  border:1px solid var(--edge);border-radius:7px;padding:.55rem .7rem;min-height:2.75rem;width:100%;
+}
+.form input:focus,.form select:focus{outline:2px solid var(--bulb);outline-offset:1px}
+.age{font-family:"IBM Plex Mono",monospace;font-size:.8125rem;color:var(--dim);margin-top:1rem;min-height:1.4em}
+
+/* verdict */
+.verdict{
+  margin-top:1.5rem;padding:1.1rem 1.25rem;border:1px solid var(--edge);border-left:4px solid var(--bulb);
+  border-radius:8px;background:var(--stage);
+}
+.verdict b{display:block;font-size:1.125rem;font-weight:600}
+.verdict span{color:var(--dim);font-size:.9375rem}
+.verdict:empty{display:none}
+
+/* year table */
+.tbl{overflow-x:auto;margin-top:1.5rem;border:1px solid var(--edge);border-radius:8px;background:var(--stage)}
+table{border-collapse:collapse;width:100%;font-size:.875rem;min-width:36rem}
+th,td{padding:.6rem .75rem;text-align:left;border-bottom:1px solid var(--edge);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+td.yr{font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+.pill{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.75rem;border-radius:5px;padding:.1rem .45rem;border:1px solid currentColor}
+.ok{color:var(--live)}.near{color:var(--warn)}.no{color:var(--no)}.na{color:var(--faint)}
+td small{display:block;color:var(--dim);font-size:.75rem;line-height:1.45;margin-top:.2rem}
+.legend{margin-top:.8rem;font-size:.8125rem;color:var(--dim)}
+
+/* rules + sources */
+.rules{list-style:none;margin:0;padding:0;color:var(--dim);font-size:.9375rem;max-width:70ch}
+.rules li{padding:.4rem 0 .4rem 1.4rem;position:relative}
+.rules li::before{content:"—";position:absolute;left:0;color:var(--bulb)}
+.rules b{color:var(--type);font-weight:600}
+.src{list-style:none;margin:0;padding:0;font-size:.9375rem}
+.src li{padding:.5rem 0;border-top:1px solid var(--edge)}
+.src li:first-child{border-top:0}
+.src span{display:block;color:var(--dim);font-size:.8125rem}
+.note{color:var(--dim);font-size:.875rem;max-width:70ch;margin-top:1rem}
+code{font-family:"IBM Plex Mono",monospace;font-size:.85em;background:var(--code);padding:.05em .35em;border-radius:4px}
+
+footer{border-top:1px solid var(--edge);padding:1.75rem 0 3rem;color:var(--dim);font-size:.8125rem}
+footer .col{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:var(--dim)}
+footer .serial{color:var(--faint);font-family:"IBM Plex Mono",monospace}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="nav" aria-label="Site">
+  <div class="col">
+    <a class="mark" href="/"><b>V</b>Valerian Pereira <span>· Mumbai</span></a>
+    <a class="back" href="/#builds">← All builds</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="col">
+    <div class="kicker">Calculator · Nursery to Class 1</div>
+    <h1>School Age Check</h1>
+    <p>Enter your child's date of birth to see which class they can join, year by year. It uses
+       Maharashtra's GR of 15 October 2026 by default. Pick another state to use its rules.</p>
+  </div>
+</header>
+
+<main>
+
+<section id="check" style="padding-top:0;border-top:0">
+  <div class="col">
+    <form class="form" onsubmit="return false">
+      <label>Child's date of birth
+        <input type="date" id="dob" min="2015-01-01" required>
+      </label>
+      <label>State / board
+        <select id="state"></select>
+      </label>
+    </form>
+    <p class="note" id="stnote" hidden></p>
+    <p class="note">Other states with no reliable current order (Kerala, Telangana, Andhra Pradesh, Madhya Pradesh, Haryana, Rajasthan, Punjab, Bihar) aren't listed. Check with the school.</p>
+    <p class="age" id="age" aria-live="polite"></p>
+    <div class="verdict" id="verdict" aria-live="polite"></div>
+    <div class="tbl" id="tblwrap" hidden>
+      <table>
+        <thead><tr><th>Academic year</th><th>Can join</th><th>Age on cutoff date</th><th>Rule used</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="legend" id="legend" hidden>
+      <span class="pill ok">eligible</span> meets the minimum age ·
+      <span class="pill near">relaxation</span> short by 15 days or less, so the school head can allow it ·
+      <span class="pill no">too young</span> not old enough for Nursery yet
+    </p>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="col">
+    <h2>Maharashtra rules<span class="cnt">GR 15 Oct 2026</span></h2>
+    <ul class="rules">
+      <li><b>Age is counted on 30 June</b> of the admission year. This replaces 31 December, the date set by the GR of 18 September 2020.</li>
+      <li><b>Each class switches to the new rule in a different year:</b> Nursery / Balvatika-1 at 3+ from 2027-28, Jr KG / Balvatika-2 at 4+ from 2028-29, Sr KG / Balvatika-3 at 5+ from 2029-30, and Class 1 at 6+ from 2030-31. This way, a child who joins Nursery at 3+ in 2027-28 is 6+ by Class 1.</li>
+      <li><b>Until its switch-over year, a class uses the 2020 rule</b> (the same minimum ages, counted on 31 December). The new GR doesn't spell this out. It is this page's reading, and it matches how the GR is being reported.</li>
+      <li><b>Children already enrolled</b> in Nursery to Class 1 in 2026-27 are exempt. So is any regular student who passed the previous class at a recognised school and is moving up.</li>
+      <li><b>15-day relaxation:</b> the school head may relax the minimum or maximum age by up to 15 days. It is the head's call, not automatic.</li>
+      <li><b>Scope:</b> all boards in the state, including State Board, CBSE, ICSE and IB. The Directorate of Primary Education, Pune will issue detailed admission guidelines.</li>
+    </ul>
+    <p class="note">This is a calculator, not legal advice. Check with the school and the official GR before you apply.</p>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="col">
+    <h2>References<span class="cnt" id="srccnt"></span></h2>
+    <ul class="src" id="src"></ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="col">
+    <p>© 2026 Valerian Pereira · <a href="/">valerianpereira.in</a></p>
+    <p class="serial">SCHOOL AGE · 30 JUNE</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+// Stages, youngest first. A state's rule gives min age per stage (null = stage not in that state's system).
+const STAGES = ['Nursery', 'Jr KG', 'Sr KG', 'Class 1'];
+
+// rule(year, stage) -> { cutoff: [month, day] in the academic year's start year, min, max?, label }
+// year = start year of the academic year, e.g. 2027 for 2027-28.
+const MH_OLD = { cutoff: [12, 31], label: 'GR 18 Sep 2020 · 31 Dec' };
+const MH_NEW_FROM = [2027, 2028, 2029, 2030]; // per stage
+
+const STATES = {
+  MH: {
+    name: 'Maharashtra (all boards)',
+    rule: (y, s) => y >= MH_NEW_FROM[s]
+      ? { cutoff: [6, 30], min: 3 + s, label: 'GR 15 Oct 2026 · 30 Jun' }
+      : { ...MH_OLD, min: 3 + s },
+    relaxDays: 15,
+    sources: [
+      ['Government of Maharashtra, School Education Dept, GR no. RTE-2024/Pr.Kr.139 (E-1446124)/SD-1, 15 Oct 2026 — search code 202610151714471049', 'https://gr.maharashtra.gov.in/', 'Official GR portal. Search by the code to get the PDF.'],
+      ['GR text and summary (Marathi) — Dnyanyatri Tantrasnehi', 'https://www.dnyanyatritantrasnehi.com/2026/10/shala-pravesh-kiman-vay-nischit-gr.html', 'GR number, the 30 June cutoff, the phased age table, the 15-day relaxation'],
+      ['Maharashtra fixes minimum age for Nursery, KG and Class 1 — Education Post, 16 Oct 2026', 'https://educationpost.in/news/education/admission/maharashtra-school-admission-age-rules-2027', 'Covers State Board, CBSE, ICSE and IB. Lists the exemptions.'],
+      ['Maharashtra sets new minimum age limits — PuneNow, 16 Oct 2026', 'https://www.punenow.com/maharashtra-sets-new-minimum-age-limits-for-admission-from-nursery-till-first-grade/', ''],
+      ['Class 1 at six from 2030-31 — Careers360, 16 Oct 2026', 'https://news.careers360.com/maharashtra-minimum-age-nursery-kg-class-1-admissions-new-rules-from-2027', ''],
+      ['Earlier rule: 31 December cutoff under GR of 18 Sep 2020 — Careers360', 'https://news.careers360.com/maharashtra-relaxes-minimum-age-cut-off-for-kindergarten-class-1-admissions', 'Old rule, still used before each class switches over'],
+    ],
+  },
+  // Other states: latest published rule, held flat for future years until a newer order exists.
+  // ponytail: rules hand-copied from orders/news as of Nov 2026; re-check each admission season.
+  CBSE: {
+    name: 'Kendriya Vidyalaya / central norm',
+    names: ['Balvatika-1', 'Balvatika-2', 'Balvatika-3', 'Class 1'],
+    rule: fixed([4, 1], [3, 4, 5, 6], [4, 5, 6, 8], 'KVS 2026-27 · 31 Mar'),
+    note: 'Age counted on 31 March. A child born on 1 April also qualifies, so this page counts age on 1 April. Many CBSE schools in states without their own rule follow this. 2027-28 KVS notice due around March 2027.',
+    sources: [
+      ['KVS Admission Notice 2026-27 (PDF)', 'https://cdnbbsr.s3waas.gov.in/s3kv01d8eb074366fb9f7533038e198cc6/uploads/2026/03/2026032018.pdf', 'Balvatika 1–3 and Class 1 age bands'],
+      ['KVS admission 2026-27 — Careers360', 'https://news.careers360.com/kvs-admission-dates-2026-27-out-apply-online-kvsangathan-nic-in-balvatika-class-1-11-registration-tomorrow-age-lottery-list-online', ''],
+    ],
+  },
+  DL: {
+    name: 'Delhi (DoE schools)',
+    names: ['Nursery', 'Lower KG', 'Upper KG', 'Class 1'],
+    rule: (y, s) => {
+      const r = { cutoff: [3, 31], label: 'DoE circular 24 Oct 2025 · 31 Mar' };
+      if (y <= 2026) return [{ ...r, min: 3, max: 4 }, { ...r, min: 4, max: 5 }, null, { ...r, min: 5, max: 6 }][s];
+      if (s === 3 && y === 2027) return null; // 2027-28 Class 1 is listed only for children promoted from KG
+      return { ...r, min: 3 + s, max: 4 + s };
+    },
+    relaxDays: 30,
+    note: 'Age counted on 31 March. Upper KG starts in 2027-28 and Class 1 moves to 6+ in 2028-29. In 2027-28, Class 1 is listed only for children promoted from KG, so this page shows Upper KG for a new admission that year. The school head may relax the minimum or maximum age by up to one month.',
+    sources: [
+      ['Directorate of Education, Delhi — Circular DE.23(749)/Sch.Br./2025/976, 24 Oct 2025 (PDF)', 'https://www.edudel.nic.in/upload/upload_2025_26/976_dt_24102025.pdf', 'Phased three-year pre-primary, age bands per year'],
+      ['DoE Circular 556, 20 Jun 2025 (PDF)', 'https://edudel.nic.in/upload/upload_2025_26/556_dt_20062025.PDF', 'Earlier circular'],
+    ],
+  },
+  KA: {
+    name: 'Karnataka',
+    names: [null, 'LKG', 'UKG', 'Class 1'],
+    rule: (y, s) => s === 0 ? null
+      : y === 2026 ? { cutoff: [7, 31], min: 3 + s, label: '2026-27 · 1 Jun + 60-day relaxation' }
+      : { cutoff: [6, 1], min: 3 + s, label: '2026-27 rule · 1 Jun (2027-28 not announced)' },
+    note: 'Age counted on 1 June. For 2026-27 only, children born up to 31 July count. The minister said this covers LKG and UKG too. The state has promised a permanent regulation, so treat years after 2026-27 as provisional.',
+    sources: [
+      ['Karnataka eases Class 1 age rule by 60 days — Careers360', 'https://news.careers360.com/karnataka-class-1-admissions-2026-government-eases-age-norm-60-days-lkg-ukg-school-education-minister-madhu-bangarappa', ''],
+      ['Karnataka plans regulations for LKG, UKG — The News Minute', 'https://www.thenewsminute.com/karnataka/karnataka-eases-class-1-age-rule-by-60-days-plans-regulations-for-lkg-ukg', ''],
+    ],
+  },
+  GJ: {
+    name: 'Gujarat',
+    names: [null, null, 'Balvatika', 'Class 1'],
+    rule: fixed([6, 1], [null, null, 5, 6], [null, null, 6, null], 'Since 2023-24 · 1 Jun'),
+    note: 'Class 1 needs 6 completed years on 1 June. The Gujarat High Court upheld this. Government schools have one Balvatika year, at 5 to under 6.',
+    sources: [
+      ['Gujarat HC dismisses pleas against Class 1 age limit — Telangana Today', 'https://telanganatoday.com/gujarat-hc-dismisses-pleas-challenging-age-limit-for-class-1-admission', ''],
+      ['Gujarat schools to have Balvatikas — DeshGujarat', 'https://deshgujarat.com/2023/02/22/gujarat-schools-to-have-separate-balvatikas-for-3-different-age-groups-kids', ''],
+    ],
+  },
+  UP: {
+    name: 'Uttar Pradesh',
+    names: ['Nursery', 'LKG', 'UKG', 'Class 1'],
+    rule: fixed([4, 1], [3, 4, 5, 6], [4, 5, 6, 7], 'RTE 2026-27 · 1 Apr'),
+    note: 'Age counted on 1 April. Bands come from the 2026-27 RTE admission notice. Class 1 has been 6+ since April 2024.',
+    sources: [
+      ['UP RTE admission 2026-27 eligibility — Careers360', 'https://news.careers360.com/up-rte-admission-2026-27-private-schools-25-percent-quota-online-application-lottery-system-nursery-lkg-ukg-class1-eligibility', ''],
+    ],
+  },
+  TN: {
+    name: 'Tamil Nadu (RTE window)',
+    names: [null, 'LKG', null, 'Class 1'],
+    rule: fixed([7, 31], [null, 3, null, 5], [null, 4, null, 6], 'TN RTE 2026-27 · 31 Jul'),
+    note: 'Age counted on 31 July, based on the RTE 2026-27 birth windows. The state board still allows Class 1 at 5+, and the 6+ rule has not been adopted. The 2026-27 window doesn\'t list a UKG band.',
+    sources: [
+      ['TN RTE 2026 — LKG and Class 1 eligibility — Careers360', 'https://news.careers360.com/tn-rte-2026-registration-tamil-nadu-tnschools-gov-ews-application-begins-lkg-class-1-admissions-apply-may-18-sc-st-parents-family', ''],
+      ['Parents in dilemma on Class 1 entry age — DT Next', 'https://www.dtnext.in/news/tamilnadu/parents-in-dilemma-on-minimum-entry-age-for-class-1-admission-778830', ''],
+    ],
+  },
+  WB: {
+    name: 'West Bengal (Jan–Dec session)',
+    names: [null, null, 'Pre-primary', 'Class 1'],
+    rule: fixed([1, 1], [null, null, 5, 6], [null, null, 6, 7], 'Session 2025 memo · 1 Jan'),
+    calendar: true,
+    relaxDays: 120,
+    note: 'The session runs January to December, so the year shown is the calendar year. Bands are counted at the start of the session. The head of the institution may allow up to 4 months for an underage child. No memo for 2026 or 2027 found yet.',
+    sources: [
+      ['Admission of children in elementary classes, Session 2025 — Memo 382-SED, 26 Nov 2024', 'https://wbxpress.com/admission-children-elementary-classes-session-2025/', ''],
+    ],
+  },
+  GA: {
+    name: 'Goa',
+    names: [null, null, null, 'Class 1'],
+    rule: fixed([6, 1], [null, null, null, 6], null, '2026-27 · 1 Jun'),
+    note: 'Class 1 needs 6+ on 1 June from 2026-27, under the Goa School Education (Amendment) Bill, Jan 2026. Pre-primary bands not published.',
+    sources: [
+      ['Goa: Class 1 minimum age six — Careers360', 'https://news.careers360.com/goa-government-class-1-admission-minimum-age-six-years-assembly-bill-2026-school-entry-higher-classes-eligibility-regulations', ''],
+      ['Admission age for Std I set at 6 — The Goan', 'https://www.thegoan.net/goa-news/admission-age-for-std-i-set-at-6-from-new-academic-year/145312.html', ''],
+    ],
+  },
+};
+
+function fixed(cutoff, mins, maxes, label) {
+  return (y, s) => mins[s] == null ? null : { cutoff, min: mins[s], max: maxes ? maxes[s] : null, label };
+}
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const yl = (st, y) => st.calendar ? `${y}` : `${y}-${pad((y + 1) % 100)}`;
+const nm = (st, s) => (st.names || STAGES)[s];
+const fmt = (y, m, d) => new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+// Completed years/months/days from birth [y,m,d] to date [y,m,d].
+function ageOn(b, t) {
+  let y = t[0] - b[0], m = t[1] - b[1], d = t[2] - b[2];
+  if (d < 0) { m--; d += new Date(Date.UTC(t[0], t[1] - 1, 0)).getUTCDate(); }
+  if (m < 0) { y--; m += 12; }
+  return [y, m, d];
+}
+const ageStr = a => a[0] < 0 ? 'not born yet' : `${a[0]}y ${a[1]}m ${a[2]}d`;
+const days = (y, m, d) => Date.UTC(y, m - 1, d) / 864e5;
+
+// Days short of the min-age birthday on the cutoff (<= 0 means old enough).
+// ponytail: a 29 Feb birthday in a non-leap target year rolls to 1 Mar, same as Date.UTC.
+function shortBy(b, cut, min) { return days(b[0] + min, b[1], b[2]) - days(...cut); }
+
+// For one year: the highest stage the child qualifies for (by min and max age), or the nearest via relaxation.
+function placeFor(st, b, y) {
+  let best = null;
+  for (let s = 0; s < STAGES.length; s++) {
+    const r = st.rule(y, s);
+    if (!r || r.min == null) continue;
+    const cut = [y, ...r.cutoff];
+    const short = shortBy(b, cut, r.min);
+    // ponytail: max age is "under max" with no relaxation applied — conservative; schools may still allow it.
+    if (r.max != null && shortBy(b, cut, r.max) <= 0) continue;
+    if (short <= 0) best = { s, r, cut, kind: 'ok' };
+    else if (short <= (st.relaxDays || 0)) best = { s, r, cut, kind: 'near', short };
+  }
+  return best;
+}
+
+function render() {
+  const v = $('dob').value, st = STATES[$('state').value];
+  renderSources(st);
+  const rows = $('rows'); rows.textContent = '';
+  if (!v) { $('age').textContent = ''; $('verdict').textContent = ''; $('tblwrap').hidden = $('legend').hidden = true; return; }
+  const b = v.split('-').map(Number);
+  const now = new Date(), today = [now.getFullYear(), now.getMonth() + 1, now.getDate()];
+  $('age').textContent = `Age today: ${ageStr(ageOn(b, today))}`;
+
+  const start = Math.max(2026, b[0] + 2), first = { };
+  let html = '';
+  for (let y = start; y < start + 6; y++) {
+    const p = placeFor(st, b, y), ay = yl(st, y);
+    if (p && first.y == null) Object.assign(first, { y, ay, p });
+    if (!p) {
+      const r = st.rule(y, 0) || st.rule(y, 1);
+      const a = r ? ageStr(ageOn(b, [y, ...r.cutoff])) : '—';
+      html += `<tr><td class="yr">${ay}</td><td><span class="pill no">too young</span></td><td>${a}</td><td>${r ? r.label : ''}</td></tr>`;
+      continue;
+    }
+    const pill = p.kind === 'ok' ? `<span class="pill ok">${nm(st, p.s)}</span>`
+      : `<span class="pill near">${nm(st, p.s)}</span><small>${p.short} day${p.short > 1 ? 's' : ''} short — relaxation</small>`;
+    html += `<tr><td class="yr">${ay}</td><td>${pill}</td><td>${ageStr(ageOn(b, p.cut))}<small>on ${fmt(...p.cut)} · min ${p.r.min}${p.r.max != null ? `, max ${p.r.max}` : ''}</small></td><td>${p.r.label}</td></tr>`;
+    if (p.s === STAGES.length - 1) break; // past Class 1 this page has nothing to say
+  }
+  rows.innerHTML = html;
+  $('tblwrap').hidden = $('legend').hidden = false;
+
+  // Headline: next academic year (June start) the parent is likely applying for.
+  const next = today[1] >= 6 ? today[0] + 1 : today[0];
+  const p = placeFor(st, b, next), nay = yl(st, next);
+  $('verdict').innerHTML = p
+    ? `<b>${nay}: ${nm(st, p.s)}${p.kind === 'near' ? ' (with relaxation)' : ''}</b><span>Age on ${fmt(...p.cut)}: ${ageStr(ageOn(b, p.cut))}. Rule: ${p.r.label}.</span>`
+    : first.y
+      ? `<b>${nay}: too young</b><span>First eligible: ${nm(st, first.p.s)} in ${first.ay}.</span>`
+      : `<b>${nay}: too young</b><span>Not eligible in the next six years.</span>`;
+}
+
+function renderSources(st) {
+  $('src').innerHTML = st.sources.map(([t, u, n]) =>
+    `<li><a href="${u}" rel="noopener" target="_blank">${t}</a>${n ? `<span>${n}</span>` : ''}</li>`).join('');
+  $('srccnt').textContent = `${st.sources.length} links`;
+  $('rules').hidden = $('state').value !== 'MH';
+  $('stnote').textContent = st.note || '';
+  $('stnote').hidden = !st.note;
+}
+
+$('state').innerHTML = Object.entries(STATES).map(([k, s]) => `<option value="${k}">${s.name}</option>`).join('');
+$('dob').max = new Date().toISOString().slice(0, 10);
+$('dob').addEventListener('input', render);
+$('state').addEventListener('change', render);
+render();
+</script>
+</body>
+</html>
