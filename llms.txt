@@ -1,9 +1,9 @@
 # Valerian Pereira
 
-> Head of Data Team at BookMyShow, based in Mumbai, India — the data platform,
-> analytics and data science. Fifteen years building data
-> platforms, APIs and the infrastructure underneath them. Builds developer
-> tooling and command-line utilities in the open.
+> Head of Data Team at BookMyShow, based in Mumbai, India — data platform,
+> analytics, data science and personalisation. Fifteen years building and
+> running platforms, the last eleven at BookMyShow. Builds developer tooling
+> and command-line utilities in the open.
 
 The home page at https://valerianpereira.in/ has two views of the same
 content: a SQL console you can query, and a conventional CV below it. Each
@@ -13,21 +13,30 @@ present in the pages' rendered HTML and in their schema.org JSON-LD.
 ## Current role
 
 - **Head of Data Team (Engineering Manager III)**, BookMyShow, Apr 2024 –
-  present. Owns the data function end to end across three groups: the data
-  platform (Databricks and AWS infrastructure, ingestion and warehousing, data
-  operations), analytics and the reporting and reconciliation systems the
-  business runs on, and data science.
+  present. Leads the data tribe: strategy, platform and delivery for 11
+  engineers across four groups — data platform (Databricks and AWS), analytics
+  and the reporting and reconciliation systems the business runs on, data
+  science, and personalisation. Led the Redshift-to-Databricks lakehouse move
+  (Medallion architecture on Unity Catalog, workloads 2x faster) and self-serve
+  data on 80+ Genie agents (data-engineering tickets down 90%), featured as a
+  Databricks customer story in 2026.
 
 ## What the team has shipped
 
-Nine initiatives, queryable on the page as `SELECT * FROM shipped;`.
+Twelve initiatives, queryable on the page as `SELECT * FROM shipped;`.
 
 Data platform:
-- Legacy back-office reports migrated onto a Databricks app reading the lake.
-- Daily pipelines across every payment gateway into one reconciliation report.
+- Redshift moved to a Databricks Medallion lakehouse on Unity Catalog; EMR
+  jobs rebuilt as Spark pipelines, workloads 2x faster.
+- EventStore: an in-house clickstream with an MCP interface, replacing a
+  CleverTap dependency at ~40% lower cost.
+- 65 legacy back-office reports rebuilt on Databricks Apps reading the lake.
+- Daily reconciliation across 18 payment gateways into one report.
 - Drop-off widget moved from a third-party SDK onto in-house event data.
 
 Analytics:
+- Self-serve data on 80+ Genie agents, cutting data-engineering tickets by
+  90%; featured as a Databricks customer story (2026).
 - Experiment reporting moved onto analytics data; the experimentation vendor
   scoped down to assignment only.
 - AWS QuickSight sunset onto Databricks, which already held the data.
@@ -40,13 +49,31 @@ Data science:
 
 ## Experience
 
-- Engineering Manager III — Head of Data Team, BookMyShow (Apr 2024 – present)
-- Engineering Manager II, BookMyShow (Feb 2022 – Apr 2024)
-- Engineering Manager I, BookMyShow (Apr 2020 – Feb 2022)
-- Assistant Manager, BookMyShow (Oct 2016 – Apr 2020)
-- Senior Software Developer, BookMyShow (Jun 2015 – Oct 2016)
-- Senior Software Developer, Softaculous (Mar 2013 – Jun 2015)
-- Software Developer, Softaculous (Jun 2011 – Mar 2013)
+- Engineering Manager III — Head of Data Team, BookMyShow (Apr 2024 – present).
+  Data tribe lead; see above.
+- Engineering Manager II, BookMyShow (Feb 2022 – Apr 2024). Led the Data team
+  on a multi-TB platform; cut data platform costs by 80%+ with no downtime by
+  retiring Cloudera, Qlik, Alteryx, TiDB and Cassandra and standardising on
+  Redshift and EMR. Automated 500+ Kafka connectors; led DataEngine for the UAE
+  launch; brought in Statsig for experimentation.
+- Engineering Manager I, BookMyShow (Apr 2020 – Feb 2022). Cutover lead for the
+  move from the Mumbai and Bangalore datacenters to AWS; DataEngine from VMs to
+  Kubernetes; cinema data sync across 3,000+ cinemas cut from ~4 hours to ~10
+  minutes; relaunched the Superstar loyalty programme (~2M users); shipped
+  WatchGuide, an OTT aggregator, in a week at the start of COVID-19.
+- Assistant Manager, BookMyShow (Oct 2016 – Apr 2020). Led 10+ engineers on
+  DataEngine and the backend APIs for the new app and website; API response
+  time cut from ~105 ms to ~35 ms; built IEDB, the movie and OTT content
+  database; launched the Amazon partnership feed (2019).
+- Senior Software Engineer, BookMyShow (Jun 2015 – Oct 2016). Backend engineer
+  on DataEngine (PHP, MySQL, Redis); built the real-time seat-availability
+  module on Redis pub/sub, still in production.
+- Senior Software Developer, Softaculous (Mar 2013 – Jun 2015). Owned Webuzo,
+  the hosting control panel and app stack; published 70+ Webuzo AMIs on the
+  AWS Marketplace and built the Cloud Launcher.
+- Software Developer, Softaculous (Jun 2011 – Mar 2013). Built 30+ install
+  packages for the Softaculous one-click installer and core features in PHP,
+  MySQL and JavaScript on Linux.
 
 ## Apps
 

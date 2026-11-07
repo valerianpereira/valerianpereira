@@ -2,7 +2,9 @@
   <img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif" width="30"/> Hola, I'm Valerian.
 </h1>
 
-<p>I lead the <b>Data team at BookMyShow</b>, from <b>Mumbai, India</b>. Off the clock I build developer tooling, small CLIs, GitHub Actions and voice apps — most of it started as "this chore should automate itself".</p>
+<p>Engineering leader with 15 years of building and running platforms, the last 11+ at <b>BookMyShow</b> in <b>Mumbai, India</b>, where I lead the <b>Data team</b> — data platform, analytics, data science and personalisation. Off the clock I build developer tooling, small CLIs, GitHub Actions and voice apps — most of it started as "this chore should automate itself".</p>
+
+**Lately at work:** moved BookMyShow from Redshift to a Databricks lakehouse (2x faster), made data self-serve with 80+ Genie agents (−90% data-engineering tickets, featured as a Databricks customer story in 2026), and building EventStore — an in-house clickstream with an MCP interface.
 
 [![Email](https://img.shields.io/badge/-valerianpereira25@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:valerianpereira25@gmail.com?subject=%5BGitHub%5D%20%F0%9F%94%A5Contact&body=Hello%20Valerian%2C%0D%0A%0D%0AI've%20seen%20your%20Github%20Profile%2C%20I%20want%20to)
 [![LinkedIn](https://img.shields.io/badge/-Valerian_Pereira-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/valerianpereira)

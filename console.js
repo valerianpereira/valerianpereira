@@ -444,12 +444,12 @@
   var ABOUT = [
     'Valerian Pereira — Head of Data Team at BookMyShow, in Mumbai.',
     '',
-    'Fifteen years building the things other people’s traffic runs on: data',
-    'platforms, APIs, and the infrastructure underneath them. Today that runs three',
-    'ways — the platform on Databricks and AWS, the analytics and reconciliation a',
-    'ticketing business actually runs on, and data science.',
+    'Fifteen years building and running the things other people’s traffic runs on:',
+    'data platforms, APIs, and the infrastructure underneath them. Today that is a',
+    'data tribe of 11 engineers across four groups — the platform on Databricks and',
+    'AWS, analytics, data science and personalisation.',
     '',
-    'Nine of the things those teams shipped are in here: `select * from shipped;`.',
+    'Twelve of the things those teams shipped are in here: `select * from shipped;`.',
     '',
     'Before that, seven years at BookMyShow working up from writing the platform',
     'to running it, and four at Softaculous building hosting-control-panel software',
@@ -489,10 +489,10 @@
 
   var QA = [
     { k: ['what do you do', 'what does he do', 'role', 'job', 'title', 'current', 'work on'],
-      a: 'He leads the Data team at BookMyShow — India\'s largest entertainment ticketing platform.\nThree groups report in: the data platform (Databricks and AWS, ingestion and warehousing),\nanalytics and the reporting the business runs on, and data science.\nRun `work` for the full run of roles.' },
+      a: 'He leads the Data team at BookMyShow — India\'s largest entertainment ticketing platform.\nFour groups and 11 engineers report in: the data platform (Databricks and AWS),\nanalytics and the reporting the business runs on, data science, and personalisation.\nRun `work` for the full run of roles.' },
 
     { k: ['experience', 'how long', 'years', 'seniority', 'background'],
-      a: 'Fifteen years, all of it shipping. Four at Softaculous (2011–2015) building Webuzo, a\nhosting control panel that ran on other people\'s servers, then eleven at BookMyShow —\nstarting as a senior developer in 2015 and working up to Head of Data Team in 2024.\nRun `work` to see the whole ladder.' },
+      a: 'Fifteen years, all of it shipping. Four at Softaculous (2011–2015) building Webuzo, a\nhosting control panel that ran on other people\'s servers, then eleven at BookMyShow —\nstarting as a senior engineer in 2015 and working up to Head of Data Team in 2024.\nRun `work` to see the whole ladder.' },
 
     { k: ['stack', 'technolog', 'tools', 'languages', 'tech'],
       a: 'Data: Databricks, Spark, Delta Lake, MySQL, MariaDB, Postgres, MongoDB, MSSQL, Redis.\nPlatform: AWS, Docker, Kubernetes, GitHub Actions, Jenkins, Linux.\nLanguages: TypeScript, JavaScript, Node, Python, PHP, Bash, SQL.\nRun `skills` for the categorised list.' },
@@ -516,7 +516,7 @@
       a: 'MCA from Indira Gandhi National Open University (2013–2017) and a B.Sc. in Information\nTechnology from L. S. Raheja College, Mumbai University (2008–2011). Professional Scrum\nMaster I, and Google Cloud Architecture training. Run `psql` then SELECT * FROM education;' },
 
     { k: ['databricks', 'warehouse', 'pipeline', 'data platform', 'scale', 'etl'],
-      a: 'The platform runs on Databricks over AWS: ingestion from the transactional estate into\nthe warehouse, the data operations around it, and the reporting layer the business and\nfinance teams query. Day to day that is as much about reconciliation and correctness as\nit is about throughput.' },
+      a: 'The platform runs on a Databricks lakehouse over AWS — moved off Redshift, with workloads\nrunning 2x faster. 80+ Genie agents make it self-serve and cut data-engineering tickets by\n90%, which got it written up as a Databricks customer story in 2026. Day to day it is as much\nabout reconciliation and correctness as it is about throughput.' },
 
     { k: ['site', 'this website', 'how did you build', 'made this', 'built this'],
       a: 'Two files and no framework: one HTML document and one script. The CV you can switch to\nis the real document; this shell reads its data-* attributes, which is why the two can\nnever disagree. The SQL is a small hand-written tokeniser and evaluator — no library.' }
