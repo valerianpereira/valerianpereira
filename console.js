@@ -13,6 +13,7 @@
  *
  * Edit the markup and the tables follow. Rename an attribute and you must
  * update the readers below.
+ * Consider all points
  */
 (function () {
   'use strict';
